@@ -2,43 +2,44 @@ event_inherited();
 
 #region //player data
 
-	function plyData(_src) constructor{
+	function plyData(_src, _hp) constructor{
 	
 		src = _src;
+		
+		uiCol = $FFFFFF;
+		
+		hp = _hp;
+		hpMax = hp;
+		hpRegen = hp;
 		
 		airOK = true; //used to make sure up/down attacks can only be used in air once
 		
 		s_idle = spr_imo_idle;
 		s_move = spr_imo_move;
 	
-		fn_tryAtk = function(){ return true; /*abstract*/ }
-		fn_state_atk1 = function(){ /*abstract*/
-			with src{ switchState(noone); }
-		}
+		state_atk = addAct(_src);
 		
-		fn_tryAtkUp = function(){ return true; /*abstract*/ }
-		fn_state_atkUp1 = function(){ /*abstract*/
-			with src{ switchState(noone); }
-		}
+		state_atkUp = addAct(_src);
+		state_atkUp.airLimit = true;
+		state_atkUp.enCost = 1;
 		
-		fn_tryAtkDn = function(){ return true; /*abstract*/ }
-		fn_state_atkDn1 = function(){ /*abstract*/
-			with src{ switchState(noone); }
-		}
+		state_atkDn = addAct(_src);
+		state_atkDn.airLimit = true;
+		state_atkDn.enCost = 1;
 		
-		fn_tryDef = function(){ return true; /*abstract*/ }
-		fn_state_def1 = function(){ /*abstract*/
-			with src{ switchState(noone); }
-		}
+		state_def = addAct(_src);
+		state_def.enCost = 1;
 	
 	}
 
-	function plyData_imo(_src) : plyData(_src) constructor{
+	function plyData_imo(_src) : plyData(_src, 4) constructor{
 	
+		uiCol = $c3c3ff
+		
 		s_idle = spr_imo_idle;
 		s_move = spr_imo_move;
 	
-		fn_state_atk1 = function(){
+		state_atk.run = function(){
 
 			with(src){
 				
@@ -59,7 +60,7 @@ event_inherited();
 	
 				if(cstate_time > 0.05){
 	
-					switchState(currPly.fn_state_atk2);
+					switchState(currPly.state_atk.run2);
 	
 				}
 			
@@ -67,7 +68,7 @@ event_inherited();
 
 		}
 
-		fn_state_atk2 = function(){
+		state_atk.run2 = function(){
 
 			with(src){
 			
@@ -99,7 +100,7 @@ event_inherited();
 
 		}
 		
-		fn_state_atkUp1 = function(){
+		state_atkUp.run = function(){
 
 			with(src){
 				
@@ -112,7 +113,7 @@ event_inherited();
 					
 					if(!on_ground()){
 					
-						switchState(currPly.fn_state_atkUp2);
+						switchState(currPly.state_atkUp.run2);
 					
 					}else{
 					
@@ -128,7 +129,7 @@ event_inherited();
 	
 				if(cstate_time > 0.2){
 	
-					switchState(currPly.fn_state_atkUp2);
+					switchState(currPly.state_atkUp.run2);
 	
 				}
 			
@@ -136,7 +137,7 @@ event_inherited();
 
 		}
 
-		fn_state_atkUp2 = function(){
+		state_atkUp.run2 = function(){
 
 			static
 			_s_aftImg = noone,
@@ -203,7 +204,7 @@ event_inherited();
 	
 					instance_destroy(_s_aftImg);
 					instance_destroy(_s_slash);
-					switchState(currPly.fn_state_atkUp3);
+					switchState(currPly.state_atkUp.run3);
 	
 				}
 			
@@ -211,7 +212,7 @@ event_inherited();
 
 		}
 		
-		fn_state_atkUp3 = function(){
+		state_atkUp.run3 = function(){
 
 			with(src){
 			
@@ -221,19 +222,11 @@ event_inherited();
 					cstate_new = false;	
 		
 					sprite_index = spr_imo_atkUp3;
-		
-					//create slash
-					//var _atk = scr_place(obj_pAtk_imo, x + (image_xscale * 12), y);
-					//_atk.image_xscale = image_xscale;
 				
 				}
 				
 				if(cstate_time > 0.2){
 					input_lock = false;
-				}
-				
-				if(cstate_time < 0.3){
-					//spd_y = min(spd_y, 0);
 				}
 	
 				if(on_ground()){
@@ -250,7 +243,7 @@ event_inherited();
 
 		}
 	
-		fn_state_atkDn1 = function(){
+		state_atkDn.run = function(){
 
 			with(src){
 				
@@ -286,7 +279,7 @@ event_inherited();
 						_atk.image_angle += -10 * image_xscale;
 					}
 					
-					switchState(currPly.fn_state_atkDn2);
+					switchState(currPly.state_atkDn.run2);
 	
 				}
 			
@@ -294,7 +287,7 @@ event_inherited();
 
 		}
 
-		fn_state_atkDn2 = function(){
+		state_atkDn.run2 = function(){
 			
 			with(src){
 			
@@ -327,12 +320,14 @@ event_inherited();
 		
 	}
 
-	function plyData_ari(_src) : plyData(_src) constructor{
+	function plyData_ari(_src) : plyData(_src, 5) constructor{
 	
+		uiCol = $c3ffd9;
+		
 		s_idle = spr_ari_idle;
 		s_move = spr_ari_move;
 		
-		fn_state_atk1 = function(){
+		state_atk.run = function(){
 
 			with(src){
 				
@@ -374,7 +369,7 @@ event_inherited();
 
 		}
 		
-		fn_state_atkUp1 = function(){
+		state_atkUp.run = function(){
 
 			with(src){
 				
@@ -394,7 +389,7 @@ event_inherited();
 	
 				if(cstate_time > 0.3){
 	
-					switchState(currPly.fn_state_atkUp2);
+					switchState(currPly.state_atkUp.run2);
 	
 				}
 			
@@ -402,7 +397,7 @@ event_inherited();
 
 		}
 
-		fn_state_atkUp2 = function(){
+		state_atkUp.run2 = function(){
 			
 			static _s_ariAtkUpLoop = 0;
 
@@ -454,7 +449,7 @@ event_inherited();
 
 		}
 		
-		fn_state_atkDn1 = function(){
+		state_atkDn.run = function(){
 
 			with(src){
 				
@@ -473,12 +468,11 @@ event_inherited();
 				
 				}
 				
-				//spd_x = max(abs(spd_x), 0.1) * image_xscale;
 				spd_y = min(spd_y, 0);
 	
 				if(cstate_time > 0.3){
 	
-					switchState(currPly.fn_state_atkDn2);
+					switchState(currPly.state_atkDn.run2);
 	
 				}
 			
@@ -486,7 +480,7 @@ event_inherited();
 
 		}
 		
-		fn_state_atkDn2 = function(){
+		state_atkDn.run2 = function(){
 
 			static
 			_s_aftImg = noone,
@@ -546,7 +540,7 @@ event_inherited();
 					shakeCam(random_range(-2, 2), random_range(10, 12));
 					
 					instance_destroy(_s_aftImg);
-					switchState(currPly.fn_state_atkDn3);
+					switchState(currPly.state_atkDn.run3);
 	
 				}
 			
@@ -554,7 +548,7 @@ event_inherited();
 
 		}
 		
-		fn_state_atkDn3 = function(){
+		state_atkDn.run3 = function(){
 			
 			with(src){
 			
@@ -580,7 +574,7 @@ event_inherited();
 
 		}
 		
-		fn_state_def1 = function(){
+		state_def.run = function(){
 
 			static _s_aftImg = noone;
 			
@@ -643,6 +637,7 @@ function switchPly(_ply){
 	if(_ply != currPly){
 	
 		currPly = _ply;
+		currPly.hp  = floor(currPly.hp);
 		
 		s_idle = currPly.s_idle;
 		s_move = currPly.s_move;
@@ -652,9 +647,38 @@ function switchPly(_ply){
 
 }
 
+function useEn(_amt){
+
+	en = clamp(en + -_amt, 0, enMax);
+	
+	if(_amt > 0){
+		enDelay = 1.5;
+	}
+
+}
+
+function loseHp(_amt, _ply){
+
+	_amt = is_undefined(_amt) ? 1 : _amt;
+	_ply = is_undefined(_ply) ? currPly : _ply;
+	
+	_ply.hp = clamp(_ply.hp + -_amt, 0, _ply.hpMax);
+	
+	if(_ply.hp <= 0){
+		_ply.hp = -1; //set to -1 to ensure regen is set to the proper value
+	}
+	
+	_ply.hpRegen = clamp(_ply.hpRegen, _ply.hp, _ply.hp + 2);
+
+}
+
 plyTeam = [new plyData_imo(id), new plyData_ari(id)];
 
 player = true;
+
+en = 4;
+enMax = en;
+enDelay = 0;
 
 currPly = noone;
 switchPly(plyTeam[0]);

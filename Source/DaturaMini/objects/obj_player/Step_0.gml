@@ -1,20 +1,43 @@
 event_inherited();
 
-var _num = collCheck(0, 0, objA_actor, true);
+#region //hazard collision
 
-for(var _i = 0; _i < _num; _i++){
+	var _num = collCheck(0, 0, objA_actor, true);
 
-	var _obj = lst_coll[| _i];
+	for(var _i = 0; _i < _num; _i++){
+
+		var _obj = lst_coll[| _i];
 	
-	if(_obj.hazard && iFrames <= 0 && !iState){
+		if(_obj.hazard && iFrames <= 0 && !iState){
 	
-		var _stun = 0.3;
+			var _stun = 0.3;
 		
-		takeDmg(self, 0, 3, 2, _stun, _stun * 3);
+			takeDmg(self, 0, 3, 2, _stun, _stun * 3);
+			loseHp();
 	
+		}
+
 	}
 
-}
+#endregion
+
+#region //en recharge
+
+	if(enDelay > 0){
+		enDelay += -global.timeFlow / room_speed;
+	}else{
+		en = clamp(en + (global.timeFlow / room_speed), 0, enMax);
+	}
+
+#endregion
+
+#region //hp regen
+
+	var _ply = plyTeam[currPly == plyTeam[0]];
+	
+	_ply.hp = clamp(_ply.hp + ((0.2 * global.timeFlow) / room_speed), 0, min(_ply.hpMax, _ply.hpRegen));
+
+#endregion
 
 if(on_ground()){
 	
@@ -31,48 +54,42 @@ if(scr_inputCheck(ord("I"), ev_keypress)){
 	_plyKey = 1;
 }
 
+var _newState = noone;
+
 if(_plyKey != -1 && checkState(noone) && (on_ground() || plyTeam[_plyKey].airOK)){
 
 	switchPly(plyTeam[_plyKey]);
 	
 	if(scr_inputCheck(ord("W"))){
 		
-		if(currPly.fn_tryAtkUp()){
-			
-			switchState(currPly.fn_state_atkUp1);
-			
-			if(!on_ground()){
-				currPly.airOK = false;
-			}
-			
-		}
+		_newState = currPly.state_atkUp;
 		
 	}else if(scr_inputCheck(ord("S"))){
 		
-		if(currPly.fn_tryAtkDn()){
-			
-			switchState(currPly.fn_state_atkDn1);
-			
-			if(!on_ground()){
-				currPly.airOK = false;
-			}
-			
-		}
+		_newState = currPly.state_atkDn;
 		
 	}else{
 		
-		if(currPly.fn_tryAtk()){
-			switchState(currPly.fn_state_atk1);
-		}
+		_newState = currPly.state_atk;
 		
 	}
 
 }else if(scr_inputCheck(ord("P"), ev_keypress) && checkState(noone)){
 
-	if(currPly.fn_tryDef()){
-		switchState(currPly.fn_state_def1);
-	}
+	_newState = currPly.state_def;
 
+}
+
+if(_newState != noone && _newState.canRun() && _newState.enCost <= en){
+			
+	useEn(_newState.enCost);
+	
+	switchState(_newState.run);
+			
+	if(!on_ground() && _newState.airLimit){
+		currPly.airOK = false;
+	}
+			
 }
 
 //camera buffer

@@ -51,7 +51,7 @@ function takeDmg(_inst, _dmg, _push, _lift, _stun, _iFrames){
 		
 		state_current = method(undefined, pstate_air);
 		
-		if(hp <= 0){ instance_destroy(); }
+		if(hp <= 0 && object_is_ancestor(object_index, obj_enemy)){ switchState(fn_state_dead); }
 			
 	}
 	
@@ -66,4 +66,14 @@ function shakeCam(_x, _y){
 		
 	}
 	
+}
+
+function addAct(_src){
+		
+	var _o = scr_place(obj_actState);
+		
+	_o.src = _src;
+		
+	return _o;
+		
 }

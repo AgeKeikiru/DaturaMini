@@ -13,6 +13,8 @@
 	
 	hp = 1;
 	
+	deadspin = 0;
+	
 	input_x = 0;
 	input_y = 0;
 	input_lock = false;
