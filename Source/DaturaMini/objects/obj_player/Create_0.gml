@@ -165,6 +165,8 @@ event_inherited();
 					_s_aftImg.image_blend = c_red;
 					_s_aftImg.sprite_index = sprite_index;
 					_s_aftImg.mask_index = sprite_index;
+					_s_aftImg.slowTo = 1;
+					_s_aftImg.slowDur = 0;
 		
 					//create slash
 					_s_slash = scr_place(obj_pAtkUp_imo, x, y);
@@ -318,6 +320,99 @@ event_inherited();
 
 		}
 		
+		state_def.enCost = 0;
+		state_def.run = function(){
+
+			with(src){
+				
+				//on-enter actions
+				if(cstate_new){
+		
+					cstate_new = false;
+					blocking = true;
+					input_lock = true;
+					
+					if(on_ground()){
+						input_x = 0;
+						spd_x = 0;
+					}
+					
+					sprite_index = spr_imo_def;
+				
+				}
+				
+				enDelay = 0.1;
+				input_lock = true;
+	
+				if(!scr_inputCheck(ord("P"), ev_keyboard, true)){
+	
+					input_lock = false;
+					blocking = false;
+					sprite_index = s_idle;
+		
+					switchState(noone);
+	
+				}else if(scr_inputCheck(ord("A"), ev_keypress, true) || scr_inputCheck(ord("D"), ev_keypress, true)){
+					
+					image_xscale = scr_inputCheck(ord("A"), ev_keypress, true) ? 1 : -1;
+					
+					switchState(currPly.state_def.run2);
+					
+				}
+			
+			}
+
+		}
+		
+		state_def.run2 = function(){
+
+			static _s_aftImg = noone;
+			
+			with(src){
+				
+				//on-enter actions
+				if(cstate_new){
+		
+					cstate_new = false;
+					iState = true;
+					input_x = 0;
+					input_lock = true;
+					
+					force_x = image_xscale * -4;
+					
+					sprite_index = spr_imo_atkDn1;
+					
+					_s_aftImg = scr_place(obj_pAtk_afterimage, x, y);
+					_s_aftImg.depth = depth + -99;
+					_s_aftImg.image_xscale = image_xscale;
+					_s_aftImg.image_blend = c_red;
+					_s_aftImg.sprite_index = sprite_index;
+					_s_aftImg.mask_index = sprite_index;
+					_s_aftImg.atkStun = 0;
+					_s_aftImg.slowTo = 1;
+					_s_aftImg.slowDur = 0;
+				
+				}
+				
+				if(instance_exists(_s_aftImg)){
+					_s_aftImg.x = x;
+					_s_aftImg.y = y;
+				}
+	
+				if(abs(force_x) < 0.05){
+	
+					iState = false;
+					
+					instance_destroy(_s_aftImg);
+		
+					switchState(currPly.state_def.run);
+	
+				}
+			
+			}
+
+		}
+		
 	}
 
 	function plyData_ari(_src) : plyData(_src, 5) constructor{
@@ -355,7 +450,7 @@ event_inherited();
 						cstate_time = 0;
 						cstate_new = true;
 						
-					}else if(cstate_time > 0.3){
+					}else if(cstate_time > 0.15){
 	
 						sprite_index = s_idle;
 					
@@ -588,9 +683,9 @@ event_inherited();
 					input_x = 0;
 					input_lock = true;
 					
-					state_current = method(undefined, pstate_air);
-					force_x = image_xscale * (on_ground() ? 3 : 2);
-					spd_y = -jumpSpd / 2;
+					//state_current = method(undefined, pstate_air);
+					//force_x = image_xscale * (on_ground() ? 3 : 2);
+					//spd_y = -jumpSpd / 2;
 					
 					sprite_index = spr_ari_def;
 					

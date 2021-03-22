@@ -2,6 +2,8 @@ event_inherited();
 
 hp = 5;
 
+value = 150;
+
 moveSpd = 0.6;
 
 moveWait = 2;

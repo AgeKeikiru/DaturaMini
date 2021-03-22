@@ -39,6 +39,7 @@
 	stun = 0;
 	iFrames = 0;
 	iState = false;
+	blocking = false;
 	
 	arr_timers = [0];
 	
@@ -67,24 +68,30 @@
 	
 	}
 	
-	function scr_inputCheck(_key, _type){
+	function scr_inputCheck(_key, _type, _ignoreLock){
 		
 		if(is_undefined(_type)){ _type = ev_keyboard; }
+		if(is_undefined(_ignoreLock)){ _ignoreLock = false; }
+		
+		var _check = false;
 		
 		switch(_type){
 			
 			case ev_keyboard:
-				return !input_lock && stun <= 0 && keyboard_check(_key);
+				_check = keyboard_check(_key);
+				break;
 				
 			case ev_keypress:
-				return !input_lock && stun <= 0 && keyboard_check_pressed(_key);
+				_check = keyboard_check_pressed(_key);
+				break;
 				
 			case ev_keyrelease:
-				return !input_lock && stun <= 0 && keyboard_check_released(_key);
+				_check = keyboard_check_released(_key);
+				break;
 				
 		}
 		
-		return false;
+		return (!input_lock || _ignoreLock) && stun <= 0 && _check;
 
 	}
 	

@@ -1,0 +1,10 @@
+enemies drop 1 EN worth of energy orbs on death (10 orbs, each worth 0.1)
+low chance to drop health orb based on how much red HP acive character has (5% * red pip count)
+drop point orbs
+orbs track towards player after a short delay
+
+blaze down, downward angle shot if used in air, create ice block platform if used on the ground
+blaze neutral, hitscan shot, use this effect in aerial down
+blaze up, ice grenade toss
+blaze def, 8-way move, invincible, cancels any action
+blaze up > def > neutral, projectiles detonate grenade for a larger explosion

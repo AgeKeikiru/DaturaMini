@@ -7,6 +7,8 @@ event_inherited();
 var
 _camX = camera_get_view_x(view_camera[0]),
 _camY = camera_get_view_y(view_camera[0]),
+_camW = camera_get_view_width(view_camera[0]),
+_camH = camera_get_view_height(view_camera[0]),
 _uiX = _camX + 20,
 _uiY = _camY + 20,
 _uiW = 6,
@@ -102,6 +104,14 @@ for(var _i = 0; _i < 5; _i++){
 	
 }
 
+//draw score
+draw_set_font(ft_small);
+draw_set_halign(fa_right);
+
+styleTxt("SCORE \n" + string_replace_all(string_format(global.points, 10, 0), " ", "0"), _camX + _camW + -8, _camY + 6);
+
+draw_set_halign(fa_left);
+
 if(checkDebugView()){
 
 	//player = true; //idk why this is here
@@ -116,6 +126,6 @@ if(checkDebugView()){
 		"\ncam_x: " + string(cam_x)
 	);
 
-	draw_set_color(c_white);
-
 }
+
+draw_set_color(c_white);

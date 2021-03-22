@@ -4,6 +4,10 @@ if(!hazard && object_is_ancestor(other.object_index, obj_enemy) && !other.checkS
 	
 	ds_list_add(lst_hits, other.id);
 	
+	if(ds_list_find_index(other.lst_uniqueHits, object_index) == -1){
+		ds_list_add(other.lst_uniqueHits, object_index);
+	}
+	
 	takeDmg(other, dmg, push, lift, atkStun);
 	
 	if(other.hp <= 0){

@@ -57,6 +57,27 @@ function takeDmg(_inst, _dmg, _push, _lift, _stun, _iFrames){
 	
 }
 
+function styleTxt(_txt, _x, _y, _col, _sCol){
+
+	if(is_undefined(_col)){ _col = c_white; }
+	if(is_undefined(_sCol)){ _sCol = c_dkgray; }
+	
+	var _cc = draw_get_color();
+
+	draw_set_color(_sCol);
+
+	draw_text(_x + -1, _y, _txt);
+	draw_text(_x, _y + 1, _txt);
+	draw_text(_x + -1, _y + 1, _txt);
+	
+	draw_set_color(_col);
+
+	draw_text(_x, _y, _txt);
+	
+	draw_set_color(_cc);
+
+}
+
 function shakeCam(_x, _y){
 	
 	with obj_player{

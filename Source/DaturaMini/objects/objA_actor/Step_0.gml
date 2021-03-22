@@ -77,4 +77,16 @@ force_y = scr_approach(force_y, 0, 0.15 * global.timeFlow);
 
 #endregion
 
+#region //sudden wall-clip handling
+
+	if(collision_rectangle(bbox_left, bbox_top, x, bbox_bottom, obj_cb_wall, false, true)){
+		x++;
+	}
+	
+	if(collision_rectangle(bbox_right, bbox_top, x, bbox_bottom, obj_cb_wall, false, true)){
+		x--;
+	}
+
+#endregion
+
 image_speed = global.timeFlow;

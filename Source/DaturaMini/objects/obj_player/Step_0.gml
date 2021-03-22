@@ -10,10 +10,25 @@ event_inherited();
 	
 		if(_obj.hazard && iFrames <= 0 && !iState){
 	
-			var _stun = 0.3;
+			var
+			_push = 3,
+			_lift = 2,
+			_stun = 0.3,
+			_if = _stun * 3;
+			
+			if(blocking && en >= 1){
+				
+				useEn(1);
+				
+				_push = 2;
+				_lift = 0;
+				_stun = 0;
+				
+			}else{
+				loseHp();
+			}
 		
-			takeDmg(self, 0, 3, 2, _stun, _stun * 3);
-			loseHp();
+			takeDmg(self, 0, _push, _lift, _stun, _if);
 	
 		}
 

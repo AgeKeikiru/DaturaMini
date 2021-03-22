@@ -2,6 +2,10 @@ event_inherited();
 
 arr_timers[0] = 1;
 
+value = 0; //point value
+
+lst_uniqueHits = ds_list_create(); //points multiplier
+
 //hazard = true;
 
 fn_state_dead = function(){
