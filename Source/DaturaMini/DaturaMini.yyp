@@ -99,6 +99,7 @@
     {"id":{"name":"intf_tagging","path":"scripts/intf_tagging/intf_tagging.yy",},"order":4,},
     {"id":{"name":"obj_cb_slopeWall","path":"objects/obj_cb_slopeWall/obj_cb_slopeWall.yy",},"order":6,},
     {"id":{"name":"rm_test","path":"rooms/rm_test/rm_test.yy",},"order":0,},
+    {"id":{"name":"obj_ui","path":"objects/obj_ui/obj_ui.yy",},"order":10,},
   ],
   "Options": [
     {"name":"Linux","path":"options/linux/options_linux.yy",},

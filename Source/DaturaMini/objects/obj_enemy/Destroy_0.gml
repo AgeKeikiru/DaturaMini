@@ -29,11 +29,10 @@ repeat(10){
 }
 
 var
-_rate = 0,
-_player = instance_find(obj_player, 0);
+_rate = 0;
 
-if(instance_exists(_player)){
-	_rate = clamp(_player.currPly.hpRegen + -_player.currPly.hp, 0, 2) * 0.05;
+if(instance_exists(obj_player)){
+	_rate = clamp(obj_player.currPly.hpRegen + -obj_player.currPly.hp, 0, 2) * 0.05;
 }
 
 if(random(1) < _rate){

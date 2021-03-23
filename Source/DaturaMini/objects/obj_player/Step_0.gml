@@ -107,49 +107,60 @@ if(_newState != noone && _newState.canRun() && _newState.enCost <= en){
 			
 }
 
-//camera buffer
-//NOTE: camera x and y behave slightly differently, lead is used for x only
-var
-_cb_size = 8,
-_cx,
-_cy,
-_csc = 0.5, //camera shake correction rate
-_p1 = 0.8, //parallax factor
-_p2 = 0.9;
+#region //camera buffer
+    
+    //NOTE: camera x and y behave slightly differently, lead is used for x only
+    
+    var
+    _cb_size = 8,
+    _cx = 0,
+    _cy = 0,
+    _csc = 0.5, //camera shake correction rate
+    _p1 = 0.8, //parallax factor
+    _p2 = 0.9;
+    
+    cam_shakeX = lerp(cam_shakeX, 0, _csc * global.timeFlow);
+    cam_shakeY = lerp(cam_shakeY, 0, _csc * global.timeFlow);
+    
+    if(cam_xTgt <= 0 && cam_yTgt <= 0){
+    	
+    	cam_lead = lerp(cam_lead, image_xscale * _cb_size, 0.2);
+    	cam_x = x;
+    	_cx = cam_x + -(camera_get_view_width(view_camera[0]) / 2) + cam_lead;
+    	
+    	//cam_y = clamp(lerp(cam_y, y, 0.2), y + -_cb_size, y + _cb_size);
+    	cam_y = lerp(cam_y, y, 0.2);
+    	_cy = cam_y + -(camera_get_view_height(view_camera[0]) * 0.7);
+    	
+    }else{
+    
+    	cam_lead = lerp(cam_lead, cam_xTgt, 0.2);
+    	_cx = cam_x + -(camera_get_view_width(view_camera[0]) / 2) + cam_lead;
+    	
+    	cam_y = lerp(cam_y, cam_yTgt, 0.2);
+    	_cy = cam_y + -(camera_get_view_height(view_camera[0]) * 0.7);
+    
+    }
+    
+    _cx = clamp(_cx, 0, room_width + -camera_get_view_width(view_camera[0])) + cam_shakeX;
+    _cy = clamp(_cy, 0, room_height + -camera_get_view_height(view_camera[0])) + cam_shakeY;
+    
+    camera_set_view_pos(view_camera[0], _cx, _cy);
+    
+    layer_x("BG_pFront", _cx * _p1);
+    layer_y("BG_pFront", _cy * _p1);
+    
+    layer_x("BG_pRear", _cx * _p2);
+    layer_y("BG_pRear", _cy * _p2);
+    
+    if(instance_number(obj_ui)){
+        
+        obj_ui.x = _cx;
+        obj_ui.y = _cy;
+        
+    }
 
-cam_shakeX = lerp(cam_shakeX, 0, _csc * global.timeFlow);
-cam_shakeY = lerp(cam_shakeY, 0, _csc * global.timeFlow);
-
-if(cam_xTgt <= 0 && cam_yTgt <= 0){
-	
-	cam_lead = lerp(cam_lead, image_xscale * _cb_size, 0.2);
-	cam_x = x;
-	_cx = cam_x + -(camera_get_view_width(view_camera[0]) / 2) + cam_lead;
-	
-	//cam_y = clamp(lerp(cam_y, y, 0.2), y + -_cb_size, y + _cb_size);
-	cam_y = lerp(cam_y, y, 0.2);
-	_cy = cam_y + -(camera_get_view_height(view_camera[0]) * 0.7);
-	
-}else{
-
-	cam_lead = lerp(cam_lead, cam_xTgt, 0.2);
-	_cx = cam_x + -(camera_get_view_width(view_camera[0]) / 2) + cam_lead;
-	
-	cam_y = lerp(cam_y, cam_yTgt, 0.2);
-	_cy = cam_y + -(camera_get_view_height(view_camera[0]) * 0.7);
-
-}
-
-_cx = clamp(_cx, 0, room_width + -camera_get_view_width(view_camera[0])) + cam_shakeX;
-_cy = clamp(_cy, 0, room_height + -camera_get_view_height(view_camera[0])) + cam_shakeY;
-
-camera_set_view_pos(view_camera[0], _cx, _cy);
-
-layer_x("BG_pFront", _cx * _p1);
-layer_y("BG_pFront", _cy * _p1);
-
-layer_x("BG_pRear", _cx * _p2);
-layer_y("BG_pRear", _cy * _p2);
+#endregion
 
 if(keyboard_check_pressed(vk_tab)){
 	
