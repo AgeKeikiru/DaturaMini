@@ -1,10 +1,12 @@
-// 2021-03-22 22:11:28
+// 2021-03-23 15:43:59
 #event properties (no comments/etc. here are saved)
 parent_index = objA_actor;
 uses_physics = false;
 
 #event create
 event_inherited();
+
+input_lock = true;
 
 #region //player data
 

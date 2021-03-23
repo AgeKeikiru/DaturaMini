@@ -1,5 +1,5 @@
 /*
-small enemy encounter
+small enemy encounter (1 slime + 3 flyers)
 
 enemy arena
 	flyer wave

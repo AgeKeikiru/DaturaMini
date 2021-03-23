@@ -100,6 +100,7 @@
     {"id":{"name":"obj_cb_slopeWall","path":"objects/obj_cb_slopeWall/obj_cb_slopeWall.yy",},"order":6,},
     {"id":{"name":"rm_test","path":"rooms/rm_test/rm_test.yy",},"order":0,},
     {"id":{"name":"obj_ui","path":"objects/obj_ui/obj_ui.yy",},"order":10,},
+    {"id":{"name":"intf_flowchart","path":"scripts/intf_flowchart/intf_flowchart.yy",},"order":0,},
   ],
   "Options": [
     {"name":"Linux","path":"options/linux/options_linux.yy",},
@@ -142,7 +143,8 @@
     {"folderPath":"folders/CHARACTERS/enemies.yy","order":1,"resourceVersion":"1.0","name":"enemies","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/CHARACTERS/ari.yy","order":0,"resourceVersion":"1.0","name":"ari","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Backgrounds.yy","order":16,"resourceVersion":"1.0","name":"Backgrounds","tags":[],"resourceType":"GMFolder",},
-    {"folderPath":"folders/UI.yy","order":17,"resourceVersion":"1.0","name":"UI","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/UI.yy","order":18,"resourceVersion":"1.0","name":"UI","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/Flowcharts.yy","order":16,"resourceVersion":"1.0","name":"Flowcharts","tags":[],"resourceType":"GMFolder",},
   ],
   "AudioGroups": [
     {"targets":-1,"resourceVersion":"1.3","name":"audiogroup_default","resourceType":"GMAudioGroup",},

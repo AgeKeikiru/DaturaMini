@@ -184,7 +184,7 @@ if(keyboard_check_pressed(vk_tab)){
 
 if(keyboard_check_pressed(vk_home)){
 	
-	room_restart();
+	game_restart();
 	
 }
 

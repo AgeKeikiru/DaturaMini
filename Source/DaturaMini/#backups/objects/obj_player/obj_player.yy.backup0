@@ -1,10 +1,12 @@
-// 2021-03-22 22:12:37
+// 2021-03-23 16:02:29
 #event properties (no comments/etc. here are saved)
 parent_index = objA_actor;
 uses_physics = false;
 
 #event create
 event_inherited();
+
+input_lock = true;
 
 #region //player data
 
@@ -989,7 +991,7 @@ if(keyboard_check_pressed(vk_tab)){
 
 if(keyboard_check_pressed(vk_home)){
 	
-	room_restart();
+	game_restart();
 	
 }
 

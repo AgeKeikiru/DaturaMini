@@ -1,5 +1,7 @@
 event_inherited();
 
+input_lock = true;
+
 #region //player data
 
 	function plyData(_src, _hp) constructor{
