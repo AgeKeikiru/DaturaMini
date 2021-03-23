@@ -28,4 +28,14 @@ repeat(10){
 	scr_place(obj_itemGlow_en, x, y);
 }
 
-scr_place(obj_itemGlow_hp, x, y);
+var
+_rate = 0,
+_player = instance_find(obj_player, 0);
+
+if(instance_exists(_player)){
+	_rate = clamp(_player.currPly.hpRegen + -_player.currPly.hp, 0, 2) * 0.05;
+}
+
+if(random(1) < _rate){
+	scr_place(obj_itemGlow_hp, x, y);
+}
