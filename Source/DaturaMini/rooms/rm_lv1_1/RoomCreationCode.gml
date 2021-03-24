@@ -12,14 +12,4 @@ __|____ can see behind wall, but must jump over, possibly showing an item/breaka
 light platforming, fight mixed enemies in groups of 2-5
 */
 
-var _scale = 0.5;
-
-layer_background_xscale(layer_background_get_id("BG_pRear"), _scale);
-layer_background_yscale(layer_background_get_id("BG_pRear"), _scale);
-
-with obj_ui{
-
-	fc_next = fc_segment_fadeIn_1;
-    fc_delay = 0.3;
-
-}
+scr_segmentInit();

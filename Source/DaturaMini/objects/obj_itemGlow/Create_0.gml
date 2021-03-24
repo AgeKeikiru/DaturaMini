@@ -6,7 +6,7 @@ y += random_range(-8, 8);
 delay = random_range(0.2, 0.5);
 size = 1;
 
-spd = random_range(-2, 2) * 60;
+spd = random_range(2, 6) * 60;
 direction = random(360);
 
 lockOn = noone;

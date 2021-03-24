@@ -1,3 +1,5 @@
+intf_flowchart_implement();
+
 fn_trigger = function(){
 	//abstract
 }
