@@ -1,0 +1,14 @@
+// 2021-03-24 20:50:34
+#event properties (no comments/etc. here are saved)
+parent_index = objA_pAtk;
+sprite_index = spr_imo_atkUpF;
+uses_physics = false;
+
+#event create
+event_inherited();
+
+dmg = 2;
+
+slowTo = SLOW_STD;
+
+shakeY = [-10, -8];

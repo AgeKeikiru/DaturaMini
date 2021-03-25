@@ -1,3 +1,4 @@
+// 2021-03-24 20:50:34
 #macro TICK (1 / room_speed)
 
 global.debugView = false;
@@ -97,14 +98,4 @@ function addAct(_src){
 		
 	return _o;
 		
-}
-
-function addHyper(_amt){
-    
-    if(global.hyperActive){
-        _amt *= 2;
-    }
-    
-    global.hyper = clamp(global.hyper + _amt, 0, 1);
-    
 }

@@ -1,0 +1,25 @@
+// 2021-03-24 18:56:22
+#event properties (no comments/etc. here are saved)
+parent_index = -1;
+uses_physics = false;
+
+#event create
+open = false;
+
+onHit = function(){ /*abstract*/ }
+
+#event collision:objA_pAtk
+if(!other.hazard && !open && other.dmg > 0){
+	
+	open = true;
+	
+	shakeCam(random_range(-1, 1), random_range(-1, 1));
+	
+	onHit();
+	
+}
+
+#event draw
+if(sprite_exists(sprite_index)){
+	draw_sprite(sprite_index, open, x, y);
+}

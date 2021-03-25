@@ -39,9 +39,9 @@ event_inherited();
 #region //en recharge
 
 	if(enDelay > 0){
-		enDelay += -global.timeFlow / room_speed;
+		enDelay += -(global.timeFlow / room_speed) * (global.hyperActive ? 4 : 1);
 	}else{
-		en = clamp(en + (global.timeFlow / room_speed), 0, enMax);
+		en = clamp(en + ((global.timeFlow / room_speed) * (global.hyperActive ? 4 : 1)), 0, enMax);
 	}
 
 #endregion
@@ -106,6 +106,61 @@ if(_newState != noone && _newState.canRun() && _newState.enCost <= en){
 	}
 			
 }
+
+#region //hyper
+
+    if(scr_inputCheck(vk_shift) && checkState(noone) && !global.hyperActive && global.hyper >= 1){
+        
+        global.hyperActive = true;
+        global.hyperTime = HYPER_DURATION;
+        global.hyper = 0;
+        
+        global.hyperAfterImg = scr_place(obj_pAtk_afterimage, x, y);
+    	global.hyperAfterImg.depth = depth + 99;
+    	global.hyperAfterImg.image_blend = c_fuchsia;
+    	global.hyperAfterImg.sprite_index = sprite_index;
+    	global.hyperAfterImg.dmg = 0;
+    	global.hyperAfterImg.atkStun = 0;
+    	global.hyperAfterImg.slowTo = 1;
+    	global.hyperAfterImg.slowDur = 0;
+        
+    }
+    
+    if(instance_exists(global.hyperAfterImg)){
+        
+        global.hyperAfterImg.x = x;
+        global.hyperAfterImg.y = y;
+        global.hyperAfterImg.image_xscale = image_xscale * (2 + -global.hyperAfterImg.image_alpha);
+        global.hyperAfterImg.image_yscale = abs(global.hyperAfterImg.image_xscale);
+        global.hyperAfterImg.sprite_index = sprite_index;
+        
+    }
+    
+    if(global.hyperActive){
+        
+        global.hyperTime += -TICK * global.timeFlow;
+        
+        if(global.hyperTime <= 0){
+            
+            if(global.hyper >= 1){
+                
+                global.hyperTime = HYPER_DURATION;
+                global.hyper = 0;
+                
+            }else{
+            
+                global.hyperActive = false;
+                global.hyper = 0;
+                
+                instance_destroy(global.hyperAfterImg);
+            
+            }
+            
+        }
+        
+    }
+
+#endregion
 
 #region //camera buffer
     

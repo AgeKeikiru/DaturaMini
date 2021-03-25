@@ -1,3 +1,9 @@
+// 2021-03-24 21:28:32
+#event properties (no comments/etc. here are saved)
+parent_index = -1;
+uses_physics = false;
+
+#event create
 #region //vars
 
 	#macro GRAVITY 0.23
@@ -186,7 +192,7 @@
 					
 					if(player && global.hyperActive){
 					    
-					    spd_y *= 1.4;
+					    spd_y *= 1.2;
 					    
 					}
 				
@@ -207,3 +213,130 @@
 #endregion
 
 state_current = method(undefined, pstate_ground);
+
+#event step
+var
+_state = state_current;
+
+if(stun <= 0){
+
+	if(player && !input_lock){
+		
+		input_x = scr_inputCheck(ord("D")) + -scr_inputCheck(ord("A"));
+		
+	}
+
+	if(abs(input_x)){
+	
+		image_xscale = input_x;
+		spd_x = input_x * moveSpd;
+		
+		if(player && global.hyperActive){
+		    
+		    spd_x *= 1.5;
+		    
+		}
+		
+		if(sprite_index == s_idle && s_idle != s_move){
+			sprite_index = s_move;
+		}
+	
+	}else{
+
+		spd_x = 0;
+		
+		if(sprite_index == s_move && s_idle != s_move){
+			sprite_index = s_idle;
+		}
+
+	}
+
+}
+
+if(state_current != noone){
+	state_current();
+}
+
+if(cstate_curr != noone){
+	cstate_curr();
+}
+
+state_is_new = _state != state_current;
+state_timer = state_is_new ? 0 : (state_timer + global.timeFlow);
+
+if(stun > 0){
+	stun += -global.timeFlow / room_speed;
+}else{
+	cstate_time += global.timeFlow / room_speed;
+}
+
+if(iFrames > 0){
+	iFrames += -global.timeFlow / room_speed;
+}
+
+for(var _i = 0; _i < array_length(arr_timers); _i++){
+	
+	if(arr_timers[_i] > 0){ arr_timers[_i] += -global.timeFlow / room_speed; }
+	
+}
+
+force_x = scr_approach(force_x, 0, 0.15 * global.timeFlow);
+force_y = scr_approach(force_y, 0, 0.15 * global.timeFlow);
+
+#region //movement calculation
+
+	roundSpd();
+
+	// Let the instance decide what to do when it can't move
+	if(!move_x((spdInt_x + force_x) * global.timeFlow, true)){
+	    spd_x = 0;
+	    spdFrac_x = 0;
+	}
+
+	if(!move_y((spdInt_y + force_y) * global.timeFlow)){
+	    spd_y = 0;
+	    spdFrac_y = 0;
+	}
+
+#endregion
+
+#region //sudden wall-clip handling
+
+	if(collision_rectangle(bbox_left, bbox_top, x, bbox_bottom, obj_cb_wall, false, true)){
+		x++;
+	}
+	
+	if(collision_rectangle(bbox_right, bbox_top, x, bbox_bottom, obj_cb_wall, false, true)){
+		x--;
+	}
+
+#endregion
+
+image_speed = global.timeFlow;
+
+#event draw
+var
+_a = 1;
+
+if(iFrames > 0 && (current_time mod room_speed) > (room_speed / 2)){
+	_a = 0.5;
+}
+
+if(sprite_index != noone){
+	draw_sprite_ext(sprite_index, -1, x, y, image_xscale, image_yscale, image_angle + deadspin, (stun > 0) ? c_red : c_white, _a);
+}
+
+#event draw_end
+drawMask();
+
+if(aggro_w >= 1 && aggro_h >= 1 && checkDebugView()){
+
+	draw_set_color(c_red);
+	
+	var _box = fn_getAggroRect();
+	
+	draw_rectangle(_box.x1, _box.y1, _box.x2, _box.y2, true);
+	
+	draw_set_color(c_white);
+
+}

@@ -60,7 +60,7 @@ input_lock = true;
 				
 				}
 	
-				if(cstate_time > 0.05){
+				if(cstate_time > (global.hyperActive ? 0 : 0.05)){
 	
 					switchState(currPly.state_atk.run2);
 	
@@ -86,10 +86,17 @@ input_lock = true;
 					//create slash
 					var _atk = scr_place(obj_pAtk_imo, x + (image_xscale * 12), y);
 					_atk.image_xscale = image_xscale;
+					
+					if(global.hyperActive){
+					    
+					    _atk.image_xscale *= 2;
+					    _atk.pv_x = image_xscale * 4;
+					    
+					}
 				
 				}
 	
-				if(cstate_time > 0.2){
+				if(cstate_time > (global.hyperActive ? 0.05 : 0.2)){
 	
 					input_lock = false;
 					sprite_index = s_idle;
@@ -113,15 +120,19 @@ input_lock = true;
 					input_x = 0;
 					input_lock = true;
 					
-					if(!on_ground()){
+					if(!global.hyperActive){
 					
-						switchState(currPly.state_atkUp.run2);
-					
-					}else{
-					
-						force_x = image_xscale * 2;
-					
-						sprite_index = spr_imo_atkUp1;
+    					if(!on_ground()){
+    					
+    						switchState(currPly.state_atkUp.run2);
+    					
+    					}else{
+    					
+    						force_x = image_xscale * 2;
+    					
+    						sprite_index = spr_imo_atkUp1;
+    					
+    					}
 					
 					}
 				
@@ -129,7 +140,7 @@ input_lock = true;
 				
 				spd_y = 0;
 	
-				if(cstate_time > 0.2){
+				if(cstate_time > (global.hyperActive ? 0 : 0.2)){
 	
 					switchState(currPly.state_atkUp.run2);
 	
@@ -151,36 +162,58 @@ input_lock = true;
 		
 					cstate_new = false;
 					iState = true;
-		
-					force_x = image_xscale * 3;
-		
-					sprite_index = spr_imo_atkUp2;
 					
-					//move_y(-12);
 					state_current = method(undefined, pstate_air);
-					
-					//create afterimage
-					_s_aftImg = scr_place(obj_pAtk_afterimage, x, y);
-					_s_aftImg.depth = depth + -99;
-					_s_aftImg.image_xscale = image_xscale;
-					_s_aftImg.image_blend = c_red;
-					_s_aftImg.sprite_index = sprite_index;
-					_s_aftImg.mask_index = sprite_index;
-					_s_aftImg.slowTo = 1;
-					_s_aftImg.slowDur = 0;
 		
-					//create slash
-					_s_slash = scr_place(obj_pAtkUp_imo, x, y);
-					_s_slash.image_xscale = image_xscale;
+		            if(global.hyperActive){
+		                
+		                force_x = image_xscale * -3;
+		                
+		                spd_y = 0;
+					    force_y = -4.5;
+					    
+					    sprite_index = spr_imo_atkDn2;
+		                
+		            }else{
+		
+    					force_x = image_xscale * 3;
+    		
+    					sprite_index = spr_imo_atkUp2;
+    					
+    					//create afterimage
+    					_s_aftImg = scr_place(obj_pAtk_afterimage, x, y);
+    					_s_aftImg.depth = depth + -99;
+    					_s_aftImg.image_xscale = image_xscale;
+    					_s_aftImg.image_blend = c_red;
+    					_s_aftImg.sprite_index = sprite_index;
+    					_s_aftImg.mask_index = sprite_index;
+    					_s_aftImg.dmg = 0;
+    					_s_aftImg.atkStun = 0;
+    					_s_aftImg.slowTo = 1;
+    					_s_aftImg.slowDur = 0;
+    		
+    					//create slash
+    					_s_slash = scr_place(obj_pAtkUp_imo, x, y);
+    					_s_slash.image_xscale = image_xscale;
+					
+		            }
 					
 					//ground slash
-					if(on_ground()){
+					if(on_ground() || global.hyperActive){
 						
 						var
 						_atk = scr_place(obj_pAtkUp_imo_ground, x + (20 * image_xscale), y);
 					
 						_atk.image_xscale = image_xscale * 2;
 						_atk.pv_x = 2 * image_xscale;
+						
+						if(global.hyperActive){
+						    
+						    _atk.image_xscale *= 1.5;
+						    _atk.image_yscale = 5;
+						    _atk.dmg = 2;
+						    
+						}
 					
 					}
 				
@@ -196,7 +229,7 @@ input_lock = true;
 					_s_slash.y = y;
 				}
 				
-				if(cstate_time < 0.15){
+				if(cstate_time < 0.15 && !global.hyperActive){
 					
 					spd_y = 0;
 					force_y = -4.5;
@@ -232,7 +265,7 @@ input_lock = true;
 					input_lock = false;
 				}
 	
-				if(on_ground()){
+				if(on_ground() || global.hyperActive){
 	
 					iState = false;
 					sprite_index = s_idle;
@@ -262,7 +295,7 @@ input_lock = true;
 					
 					state_current = method(undefined, pstate_air);
 					force_x = image_xscale * -2.5;
-					spd_y = -2;
+					spd_y = global.hyperActive ? -4 : -2;
 		
 					input_lock = true;
 					
@@ -272,15 +305,21 @@ input_lock = true;
 				
 				spd_y = min(spd_y, 0);
 	
-				if(cstate_time > 0.3){
+				if(cstate_time > (global.hyperActive ? 0.15 : 0.3)){
 	
 					//create slash
 					var _atk = scr_place(obj_pAtkDn_imo, x + (image_xscale * 0), y + -9);
 					_atk.image_xscale = image_xscale;
 					
-					if(_s_air){
+					if(_s_air || global.hyperActive){
 						_atk.image_angle += -10 * image_xscale;
 					}
+					
+					if(global.hyperActive){
+					    _atk.image_xscale *= 2;
+					}
+					
+					_atk.image_yscale = abs(_atk.image_xscale);
 					
 					switchState(currPly.state_atkDn.run2);
 	
@@ -308,7 +347,7 @@ input_lock = true;
 				spd_x = 0;
 				spd_y = 0;
 	
-				if(cstate_time > 0.4){
+				if(cstate_time > (global.hyperActive ? 0.1 : 0.4)){
 	
 					input_lock = false;
 					sprite_index = s_idle;

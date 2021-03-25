@@ -11,3 +11,11 @@ global.timeSlow = 0;
 global.timeDebug = false;
 
 global.points = 0;
+
+global.hyperActive = false;
+global.hyperAfterImg = noone;
+global.hyperTime = 0;
+global.hyper = 1;
+
+#macro HYPER_DURATION 8
+#macro CC_HYPINK $feaeff

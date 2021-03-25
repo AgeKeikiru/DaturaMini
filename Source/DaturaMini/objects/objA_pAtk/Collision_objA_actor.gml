@@ -8,10 +8,16 @@ if(!hazard && object_is_ancestor(other.object_index, obj_enemy) && !other.checkS
 		ds_list_add(other.lst_uniqueHits, object_index);
 	}
 	
-	takeDmg(other, dmg, push, lift, atkStun);
+	takeDmg(other, dmg * (global.hyperActive ? 2 : 1), push, lift, atkStun);
+	
+	addHyper(0.01);
 	
 	if(other.hp <= 0){
+		
+		addHyper(0.1);
+		
 		other.switchState(other.fn_state_dead);
+		
 	}
 	
 	if(slowTo > 0 && slowDur > 0){

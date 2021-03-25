@@ -1,0 +1,116 @@
+// 2021-03-24 21:53:58
+#event properties (no comments/etc. here are saved)
+parent_index = objA_actor;
+uses_physics = false;
+
+#event create
+event_inherited();
+
+intf_platforming_implement();
+
+depth = -999;
+
+lst_hits = ds_list_create(); //keep track of enemies hit
+
+dmg = 0;
+duration = -1;
+weight = 0;
+push = 3;
+lift = 2;
+atkStun = 0.3;
+
+#macro SLOW_STD 0.2
+slowTo = -1;
+slowDur = 0.2;
+
+passWall = true;
+passEnemy = true;
+
+//projectile velocity
+pv_x = 0;
+pv_y = 0;
+pv_d = 0; //directional
+
+//cam shake effects
+shakeX = [-1, 1];
+shakeY = [-1, 1];
+shake_onDeath = false;
+
+#event destroy Insert description here
+// You can write your code in this editor
+
+
+#event step
+event_inherited();
+
+if(duration > 0){
+	
+	duration += -global.timeFlow;
+	
+	if(duration <= 0){ instance_destroy(); }
+	
+}
+
+if(pv_d != 0){
+	speed = pv_d * global.timeFlow;
+}else{
+	
+	hspeed = pv_x * global.timeFlow;
+	vspeed = pv_y * global.timeFlow;
+	
+}
+
+#event collision:objA_actor
+event_inherited();
+
+if(!hazard && object_is_ancestor(other.object_index, obj_enemy) && !other.checkState(other.fn_state_dead) && !other.player && ds_list_find_index(lst_hits, other.id) == -1){
+	
+	ds_list_add(lst_hits, other.id);
+	
+	if(ds_list_find_index(other.lst_uniqueHits, object_index) == -1){
+		ds_list_add(other.lst_uniqueHits, object_index);
+	}
+	
+	takeDmg(other, dmg * (global.hyperActive ? 2 : 1), push, lift, atkStun);
+	
+	addHyper(0.01);
+	
+	if(other.hp <= 0){
+		
+		addHyper(0.1);
+		
+		other.switchState(other.fn_state_dead);
+		
+	}
+	
+	if(slowTo > 0 && slowDur > 0){
+		
+		global.timeFlow = slowTo;
+		global.timeSlow = slowDur;
+		
+	}
+	
+	if(!passEnemy){
+		instance_destroy();
+	}
+	
+	shakeCam(random_range(shakeX[0], shakeX[1]), random_range(shakeY[0], shakeY[1]));
+	
+}
+
+#event collision:objA_solid
+event_inherited();
+
+if(!passWall){
+	instance_destroy();
+}
+
+#event draw_end
+event_inherited();
+
+drawMask();
+
+#event cleanup
+event_inherited();
+
+ds_list_destroy(lst_hits);

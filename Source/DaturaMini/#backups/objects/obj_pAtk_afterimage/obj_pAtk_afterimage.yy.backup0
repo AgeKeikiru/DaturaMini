@@ -1,0 +1,38 @@
+// 2021-03-24 20:50:34
+#event properties (no comments/etc. here are saved)
+parent_index = objA_pAtk;
+uses_physics = false;
+
+#event create
+event_inherited();
+
+dmg = 0;
+push = 0;
+lift = 0;
+
+drawX = x;
+drawY = y;
+
+slowTo = 0.4;
+slowDur = 0.3;
+
+shakeX = [0, 0];
+shakeY = [0, 0];
+
+#event step
+event_inherited();
+
+if(image_alpha > 0.2){
+	image_alpha += -(10 * global.timeFlow) / room_speed;
+}else{
+	
+	image_alpha = 1;
+	drawX = x;
+	drawY = y;
+	
+}
+
+#event draw
+//do not inherit
+
+draw_sprite_ext(sprite_index, -1, drawX, drawY, image_xscale, image_yscale, 0, image_blend, image_alpha);

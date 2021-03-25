@@ -14,6 +14,12 @@ if(stun <= 0){
 		image_xscale = input_x;
 		spd_x = input_x * moveSpd;
 		
+		if(player && global.hyperActive){
+		    
+		    spd_x *= 1.5;
+		    
+		}
+		
 		if(sprite_index == s_idle && s_idle != s_move){
 			sprite_index = s_move;
 		}
