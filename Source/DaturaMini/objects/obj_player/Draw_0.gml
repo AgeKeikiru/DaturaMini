@@ -47,6 +47,18 @@ if(global.hyperActive){
     
     fn_drawArc(_r);
     
+    draw_set_font(ft_small);
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_bottom);
+    
+    if(sin(current_time / 15) > 0){
+        
+        draw_set_color(c_yellow);
+        
+    }
+    
+    draw_text_transformed(x + 10, y + -22, "x" + string(global.hyperChain), 1, 1, 0);
+    
 }
 
 draw_set_color(c_white);

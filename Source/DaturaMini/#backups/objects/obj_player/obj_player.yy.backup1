@@ -1,4 +1,4 @@
-// 2021-03-24 22:04:54
+// 2021-03-25 16:25:56
 #event properties (no comments/etc. here are saved)
 parent_index = objA_actor;
 uses_physics = false;
@@ -486,17 +486,31 @@ input_lock = true;
 					var _atk = scr_place(obj_pAtk_ari, x + (image_xscale * 12), y + random_range(-2, 2));
 					_atk.image_xscale = image_xscale;
 					_atk.pv_x = image_xscale * 4;
+					
+					if(global.hyperActive){
+					    
+					    _atk.y = y + 8;
+					    _atk.image_xscale *= 2;
+					    _atk.image_yscale = abs(_atk.image_xscale);
+					    _atk.pv_x *= 2;
+					    
+					    var _atk2 = scr_place(obj_pAtk_ari, _atk.x, _atk.y + 4);
+					    _atk2.image_xscale = _atk.image_xscale;
+					    _atk2.image_yscale = _atk.image_yscale;
+					    _atk2.pv_x = _atk.pv_x;
+					    
+					}
 				
 				}
 				
-				if(cstate_time > 0.07){
+				if(cstate_time > (global.hyperActive ? 0.04 : 0.07)){
 					
 					if(scr_inputCheck(ord(_key))){
 						
 						cstate_time = 0;
 						cstate_new = true;
 						
-					}else if(cstate_time > 0.15){
+					}else if(cstate_time > (global.hyperActive ? 0 : 0.15)){
 	
 						sprite_index = s_idle;
 					
@@ -808,10 +822,24 @@ function loseHp(_amt, _ply){
 	_amt = is_undefined(_amt) ? 1 : _amt;
 	_ply = is_undefined(_ply) ? currPly : _ply;
 	
+	if(global.hyperActive){
+	    endHyper();
+	}
+	
+	addHyper(-0.2);
+	
 	_ply.hp = clamp(_ply.hp + -_amt, 0, _ply.hpMax);
 	
 	if(_ply.hp <= 0){
+	    
 		_ply.hp = -1; //set to -1 to ensure regen is set to the proper value
+		
+		if(_ply == plyTeam[0]){
+		    switchPly(plyTeam[1]);
+		}else{
+		    switchPly(plyTeam[0]);
+		}
+		
 	}
 	
 	_ply.hpRegen = clamp(_ply.hpRegen, _ply.hp, _ply.hp + 2);
@@ -871,7 +899,9 @@ event_inherited();
 				_stun = 0;
 				
 			}else{
+				
 				loseHp();
+				
 			}
 		
 			takeDmg(self, 0, _push, _lift, _stun, _if);
@@ -917,7 +947,7 @@ if(scr_inputCheck(ord("I"), ev_keypress)){
 
 var _newState = noone;
 
-if(_plyKey != -1 && checkState(noone) && (on_ground() || plyTeam[_plyKey].airOK)){
+if(_plyKey != -1 && checkState(noone) && (on_ground() || plyTeam[_plyKey].airOK) && plyTeam[_plyKey].hp >= 1){
 
 	switchPly(plyTeam[_plyKey]);
 	
@@ -960,6 +990,7 @@ if(_newState != noone && _newState.canRun() && _newState.enCost <= en){
         global.hyperActive = true;
         global.hyperTime = HYPER_DURATION;
         global.hyper = 0;
+        global.hyperChain = 1;
         
         global.hyperAfterImg = scr_place(obj_pAtk_afterimage, x, y);
     	global.hyperAfterImg.depth = depth + 99;
@@ -992,13 +1023,11 @@ if(_newState != noone && _newState.canRun() && _newState.enCost <= en){
                 
                 global.hyperTime = HYPER_DURATION;
                 global.hyper = 0;
+                global.hyperChain++;
                 
             }else{
             
-                global.hyperActive = false;
-                global.hyper = 0;
-                
-                instance_destroy(global.hyperAfterImg);
+                endHyper();
             
             }
             
@@ -1123,7 +1152,7 @@ if(global.hyperActive){
         
         draw_primitive_begin(pr_linestrip);
     
-        for(var _angle = 0; _angle < (360 * _factor); _angle += 36){
+        for(var _angle = 0; _angle < (360 * _factor); _angle += 10){
             
             draw_vertex(_cx + lengthdir_x(__r, _angle + 90), _cy + lengthdir_y(__r, _angle + 90));
             
@@ -1155,6 +1184,18 @@ if(global.hyperActive){
     draw_set_color(CC_HYPINK);
     
     fn_drawArc(_r);
+    
+    draw_set_font(ft_small);
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_bottom);
+    
+    if(sin(current_time / 15) > 0){
+        
+        draw_set_color(c_yellow);
+        
+    }
+    
+    draw_text_transformed(x + 10, y + -22, "x" + string(global.hyperChain), 1, 1, 0);
     
 }
 

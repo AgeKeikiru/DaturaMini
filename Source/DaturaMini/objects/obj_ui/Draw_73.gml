@@ -196,6 +196,7 @@ _camH = camera_get_view_height(view_camera[0]);
         
             draw_set_font(ft_small);
             draw_set_halign(fa_right);
+            draw_set_valign(fa_top);
             
             styleTxt("SCORE \n" + string_replace_all(string_format(global.points, 10, 0), " ", "0"), x + _camW + -8, y + 6 + -(40 * uiOffset[0]));
             

@@ -1,4 +1,4 @@
-// 2021-03-24 21:52:43
+// 2021-03-25 16:00:43
 #event properties (no comments/etc. here are saved)
 parent_index = objA_actor;
 uses_physics = false;
@@ -7,6 +7,33 @@ uses_physics = false;
 event_inherited();
 
 intf_platforming_implement();
+
+#region //hyper decay
+
+    #macro HYPER_DECAY 0.1
+    
+    var
+    _map = global.map_hyperValue;
+    
+    if(!ds_map_exists(_map, object_index)){
+        
+        _map[? object_index] = 1 + HYPER_DECAY;
+        
+    }
+    
+    var _key = ds_map_find_first(_map);
+    
+    while(ds_map_exists(_map, _key)){
+        
+        _map[? _key] += (_key == object_index) ? -HYPER_DECAY : HYPER_DECAY;
+        
+        _map[? _key] = clamp(_map[? _key], 0, 1 + HYPER_DECAY);
+        
+        _key = ds_map_find_next(_map, _key);
+        
+    }
+
+#endregion
 
 depth = -999;
 
@@ -73,11 +100,11 @@ if(!hazard && object_is_ancestor(other.object_index, obj_enemy) && !other.checkS
 	
 	takeDmg(other, dmg * (global.hyperActive ? 2 : 1), push, lift, atkStun);
 	
-	addHyper(0.01);
+	addHyper(global.map_hyperValue[? object_index] * 0.05);
 	
 	if(other.hp <= 0){
 		
-		global.hyper = clamp(global.hyper + 0.1, 0, 1);
+		addHyper(0.05);
 		
 		other.switchState(other.fn_state_dead);
 		

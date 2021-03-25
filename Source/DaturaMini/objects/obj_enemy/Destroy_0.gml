@@ -1,6 +1,6 @@
 event_inherited();
 
-value *= 1 + (ds_list_size(lst_uniqueHits) * 0.25);
+value *= 1 + (ds_list_size(lst_uniqueHits) * 0.25) + (global.hyperChain * 0.5);
 
 while(value > 0){
 	

@@ -480,17 +480,31 @@ input_lock = true;
 					var _atk = scr_place(obj_pAtk_ari, x + (image_xscale * 12), y + random_range(-2, 2));
 					_atk.image_xscale = image_xscale;
 					_atk.pv_x = image_xscale * 4;
+					
+					if(global.hyperActive){
+					    
+					    _atk.y = y + 8;
+					    _atk.image_xscale *= 2;
+					    _atk.image_yscale = abs(_atk.image_xscale);
+					    _atk.pv_x *= 2;
+					    
+					    var _atk2 = scr_place(obj_pAtk_ari, _atk.x, _atk.y + 4);
+					    _atk2.image_xscale = _atk.image_xscale;
+					    _atk2.image_yscale = _atk.image_yscale;
+					    _atk2.pv_x = _atk.pv_x;
+					    
+					}
 				
 				}
 				
-				if(cstate_time > 0.07){
+				if(cstate_time > (global.hyperActive ? 0.04 : 0.07)){
 					
 					if(scr_inputCheck(ord(_key))){
 						
 						cstate_time = 0;
 						cstate_new = true;
 						
-					}else if(cstate_time > 0.15){
+					}else if(cstate_time > (global.hyperActive ? 0 : 0.15)){
 	
 						sprite_index = s_idle;
 					
@@ -549,10 +563,10 @@ input_lock = true;
 				}
 				
 				spd_y = 0;
-	
-				if(cstate_time > 0.05){
+	            
+				if(cstate_time > 0.05){ //hyper 0
 					
-					if(_s_ariAtkUpLoop == 0 || (_s_ariAtkUpLoop > 0 && cstate_time > 0.13)){
+					if(_s_ariAtkUpLoop == 0 || (_s_ariAtkUpLoop > 0 && cstate_time > 0.13)){ //hyper 0.05
 					
 						if(_s_ariAtkUpLoop < 3){
 						
@@ -560,14 +574,14 @@ input_lock = true;
 		
 							//create missile
 							var _atk = scr_place(obj_pAtk_ariUp, x + (image_xscale * -8), y + -15);
-							_atk.direction = 90 + -((60 + -(15 * _s_ariAtkUpLoop)) * image_xscale);
+							_atk.direction = 90 + -((60 + -(15 * _s_ariAtkUpLoop)) * image_xscale); //hyper x3, random direction
 						
 							_s_ariAtkUpLoop++;
 							cstate_time = 0;
 						
 						}
 						
-						if(_s_ariAtkUpLoop == 3 && cstate_time > 0.3){
+						if(_s_ariAtkUpLoop == 3 && cstate_time > 0.3){ //hyper 0.05
 						
 							input_lock = false;
 							sprite_index = s_idle;
@@ -802,10 +816,24 @@ function loseHp(_amt, _ply){
 	_amt = is_undefined(_amt) ? 1 : _amt;
 	_ply = is_undefined(_ply) ? currPly : _ply;
 	
+	if(global.hyperActive){
+	    endHyper();
+	}
+	
+	addHyper(-0.2);
+	
 	_ply.hp = clamp(_ply.hp + -_amt, 0, _ply.hpMax);
 	
 	if(_ply.hp <= 0){
+	    
 		_ply.hp = -1; //set to -1 to ensure regen is set to the proper value
+		
+		if(_ply == plyTeam[0]){
+		    switchPly(plyTeam[1]);
+		}else{
+		    switchPly(plyTeam[0]);
+		}
+		
 	}
 	
 	_ply.hpRegen = clamp(_ply.hpRegen, _ply.hp, _ply.hp + 2);

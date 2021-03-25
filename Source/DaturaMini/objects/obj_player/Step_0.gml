@@ -25,7 +25,9 @@ event_inherited();
 				_stun = 0;
 				
 			}else{
+				
 				loseHp();
+				
 			}
 		
 			takeDmg(self, 0, _push, _lift, _stun, _if);
@@ -71,7 +73,7 @@ if(scr_inputCheck(ord("I"), ev_keypress)){
 
 var _newState = noone;
 
-if(_plyKey != -1 && checkState(noone) && (on_ground() || plyTeam[_plyKey].airOK)){
+if(_plyKey != -1 && checkState(noone) && (on_ground() || plyTeam[_plyKey].airOK) && plyTeam[_plyKey].hp >= 1){
 
 	switchPly(plyTeam[_plyKey]);
 	
@@ -114,6 +116,7 @@ if(_newState != noone && _newState.canRun() && _newState.enCost <= en){
         global.hyperActive = true;
         global.hyperTime = HYPER_DURATION;
         global.hyper = 0;
+        global.hyperChain = 1;
         
         global.hyperAfterImg = scr_place(obj_pAtk_afterimage, x, y);
     	global.hyperAfterImg.depth = depth + 99;
@@ -146,13 +149,11 @@ if(_newState != noone && _newState.canRun() && _newState.enCost <= en){
                 
                 global.hyperTime = HYPER_DURATION;
                 global.hyper = 0;
+                global.hyperChain++;
                 
             }else{
             
-                global.hyperActive = false;
-                global.hyper = 0;
-                
-                instance_destroy(global.hyperAfterImg);
+                endHyper();
             
             }
             

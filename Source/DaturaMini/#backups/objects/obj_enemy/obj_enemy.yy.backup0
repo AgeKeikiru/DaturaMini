@@ -1,4 +1,4 @@
-// 2021-03-22 21:05:37
+// 2021-03-25 15:52:41
 #event properties (no comments/etc. here are saved)
 parent_index = objA_actor;
 uses_physics = false;
@@ -42,7 +42,7 @@ fn_state_dead = function(){
 #event destroy
 event_inherited();
 
-value *= 1 + (ds_list_size(lst_uniqueHits) * 0.25);
+value *= 1 + (ds_list_size(lst_uniqueHits) * 0.25) + (global.hyperChain * 0.5);
 
 while(value > 0){
 	

@@ -1,4 +1,4 @@
-// 2021-03-24 21:47:10
+// 2021-03-24 21:47:28
 #event properties (no comments/etc. here are saved)
 parent_index = -1;
 persistent = true;
@@ -190,7 +190,7 @@ _camH = camera_get_view_height(view_camera[0]);
             		
         		drawUI(spr_ui_hyperFill, c_dkgray, _uiX, _uiY);
         		
-        		draw_sprite_part_ext(spr_ui_hyperFill, 0, 0, 0, floor(sprite_get_width(spr_ui_hyperFill) * global.hyper), sprite_get_height(spr_ui_hyperFill), _uiX + -13, _uiY, 1, 1, (global.hyper >= 1 && sin(current_time / 20) > 0) ? c_yellow : CC_HYPINK, 1);
+        		draw_sprite_part_ext(spr_ui_hyperFill, 0, 0, 0, floor(sprite_get_width(spr_ui_hyperFill) * global.hyper), sprite_get_height(spr_ui_hyperFill), _uiX + -13, _uiY, 1, 1, (global.hyper >= 1 && sin(current_time / 15) > 0) ? c_yellow : CC_HYPINK, 1);
         		
         		drawUI(spr_ui_hyperOver, c_white, _uiX, _uiY);
             	

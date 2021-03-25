@@ -108,3 +108,13 @@ function addHyper(_amt){
     global.hyper = clamp(global.hyper + _amt, 0, 1);
     
 }
+
+function endHyper(){
+    
+    global.hyperActive = false;
+    global.hyper = 0;
+    global.hyperChain = 0;
+    
+    instance_destroy(global.hyperAfterImg);
+    
+}

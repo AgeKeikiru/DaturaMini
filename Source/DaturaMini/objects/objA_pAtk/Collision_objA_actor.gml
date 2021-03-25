@@ -10,11 +10,11 @@ if(!hazard && object_is_ancestor(other.object_index, obj_enemy) && !other.checkS
 	
 	takeDmg(other, dmg * (global.hyperActive ? 2 : 1), push, lift, atkStun);
 	
-	addHyper(0.01);
+	addHyper(global.map_hyperValue[? object_index] * 0.02);
 	
 	if(other.hp <= 0){
 		
-		addHyper(0.1);
+		addHyper(0.05);
 		
 		other.switchState(other.fn_state_dead);
 		
