@@ -536,7 +536,7 @@ input_lock = true;
 				spd_x = 0;
 				spd_y = 0;
 	
-				if(cstate_time > 0.3){
+				if(cstate_time > (global.hyperActive ? 0 : 0.3)){
 	
 					switchState(currPly.state_atkUp.run2);
 	
@@ -564,24 +564,34 @@ input_lock = true;
 				
 				spd_y = 0;
 	            
-				if(cstate_time > 0.05){ //hyper 0
+				if(cstate_time > (global.hyperActive ? 0 : 0.05)){ //hyper 0
 					
-					if(_s_ariAtkUpLoop == 0 || (_s_ariAtkUpLoop > 0 && cstate_time > 0.13)){ //hyper 0.05
+					if(_s_ariAtkUpLoop == 0 || (_s_ariAtkUpLoop > 0 && cstate_time > (global.hyperActive ? 0.05 : 0.13))){ //hyper 0.05
 					
 						if(_s_ariAtkUpLoop < 3){
 						
 							force_x = image_xscale * -2;
 		
 							//create missile
-							var _atk = scr_place(obj_pAtk_ariUp, x + (image_xscale * -8), y + -15);
-							_atk.direction = 90 + -((60 + -(15 * _s_ariAtkUpLoop)) * image_xscale); //hyper x3, random direction
-						
+							repeat(global.hyperActive ? 3 : 1){
+							
+								var _atk = scr_place(obj_pAtk_ariUp, x + (image_xscale * -8), y + -15);
+								_atk.direction = 90 + -((60 + -(15 * _s_ariAtkUpLoop)) * image_xscale); //hyper x3, random direction
+								
+								if(global.hyperActive){
+								
+									_atk.direction = 90 + -(random_range(30, 60) * image_xscale);
+								
+								}
+							
+							}
+							
 							_s_ariAtkUpLoop++;
 							cstate_time = 0;
 						
 						}
 						
-						if(_s_ariAtkUpLoop == 3 && cstate_time > 0.3){ //hyper 0.05
+						if(_s_ariAtkUpLoop == 3 && cstate_time > (global.hyperActive ? 0.05 : 0.3)){ //hyper 0.05
 						
 							input_lock = false;
 							sprite_index = s_idle;
@@ -619,7 +629,7 @@ input_lock = true;
 				
 				spd_y = min(spd_y, 0);
 	
-				if(cstate_time > 0.3){
+				if(cstate_time > (global.hyperActive ? 0.1 : 0.3)){
 	
 					switchState(currPly.state_atkDn.run2);
 	
@@ -674,16 +684,39 @@ input_lock = true;
 					_atk = scr_place(obj_pAtk_ariDn, x, y),
 					_dist = 15;
 					
+					if(global.hyperActive){
+					
+						_atk.image_xscale *= 4;
+						_atk.image_yscale = abs(_atk.image_xscale);
+					
+					}
+					
 					_atk = scr_place(obj_pAtk_ariDn, x + -_dist, y);
 					_atk.sprite_index = spr_ari_atkDnF_b;
 					_atk.mask_index = _atk.sprite_index;
 					_atk.image_xscale = -1;
 					_atk.pv_x = -_s_ariAtkDnTime;
 					
+					if(global.hyperActive){
+					
+						_atk.image_xscale *= 4;
+						_atk.image_yscale = abs(_atk.image_xscale);
+						_atk.pv_x *= _atk.image_yscale;
+					
+					}
+					
 					_atk = scr_place(obj_pAtk_ariDn, x + _dist, y);
 					_atk.sprite_index = spr_ari_atkDnF_b;
 					_atk.mask_index = _atk.sprite_index;
 					_atk.pv_x = _s_ariAtkDnTime;
+					
+					if(global.hyperActive){
+					
+						_atk.image_xscale *= 4;
+						_atk.image_yscale = abs(_atk.image_xscale);
+						_atk.pv_x *= _atk.image_yscale;
+					
+					}
 					
 					shakeCam(random_range(-2, 2), random_range(10, 12));
 					
@@ -708,7 +741,7 @@ input_lock = true;
 				
 				}
 	
-				if(cstate_time > 0.3){
+				if(cstate_time > (global.hyperActive ? 0.1 : 0.3)){
 					
 					input_lock = false;
 					iState = false;

@@ -80,6 +80,13 @@ function styleTxt(_txt, _x, _y, _col, _sCol){
 
 function shakeCam(_x, _y){
 	
+	if(global.hyperActive){
+	
+		_x *= 2;
+		_y *= 2;
+	
+	}
+	
 	with obj_player{
 		
 		cam_shakeX += _x * image_xscale;

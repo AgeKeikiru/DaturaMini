@@ -143,7 +143,7 @@ if(_newState != noone && _newState.canRun() && _newState.enCost <= en){
         
         global.hyperTime += -TICK * global.timeFlow;
         
-        if(global.hyperTime <= 0){
+        if(global.hyperTime <= 0 && checkState(noone)){
             
             if(global.hyper >= 1){
                 
