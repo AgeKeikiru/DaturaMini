@@ -20,3 +20,5 @@ enemy arena with scattered damage tiles
 crumble platforming over damage tiles with flyers and slimes (slimes only on solid platforms)
 full mixed enemy group with damage tiles
 */
+
+scr_segmentInit();

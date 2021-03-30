@@ -18,7 +18,7 @@ global.hyperActive = false;
 global.hyperAfterImg = noone;
 global.hyperTime = 0;
 global.hyperChain = 0;
-global.hyper = 1;
+global.hyper = 0;
 
 global.map_hyperValue = ds_map_create();
 

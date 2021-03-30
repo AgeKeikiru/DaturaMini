@@ -209,13 +209,12 @@ _camH = camera_get_view_height(view_camera[0]);
         	//player = true; //idk why this is here
         
         	draw_set_font(ft_small);
-        	draw_set_color(c_black);
+        	draw_set_halign(fa_left);
+        	draw_set_valign(fa_bottom);
+        	draw_set_color(c_white);
         
-        	draw_text(x + 2, y + 2,
-        		"onGround: " + string(on_ground()) +
-        		"\nspd_x: " + string(obj_player.spd_x) +
-        		"\nx: " + string(x) +
-        		"\ncam_x: " + string(obj_player.cam_x)
+        	draw_text(x + 2, y + _camH + -2,
+        		"dbg."
         	);
         
         }

@@ -8,6 +8,12 @@ lst_uniqueHits = ds_list_create(); //points multiplier
 
 //hazard = true;
 
+if(instance_exists(obj_player) && x > obj_player.x){
+    
+    image_xscale = -1;
+    
+}
+
 fn_state_dead = function(){
 
 	//on-enter actions

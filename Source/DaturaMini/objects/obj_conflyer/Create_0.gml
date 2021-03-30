@@ -39,6 +39,7 @@ fn_state_move = function(){
 		
 	}
 	
+	state_current = method(undefined, pstate_air);
 	spd_x = lengthdir_x(moveSpd, direction);
 	spd_y = lengthdir_y(moveSpd, direction);
 	

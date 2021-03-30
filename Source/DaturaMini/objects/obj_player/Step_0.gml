@@ -2,37 +2,47 @@ event_inherited();
 
 #region //hazard collision
 
-	var _num = collCheck(0, 0, objA_actor, true);
-
-	for(var _i = 0; _i < _num; _i++){
-
-		var _obj = lst_coll[| _i];
-	
-		if(_obj.hazard && iFrames <= 0 && !iState){
-	
-			var
-			_push = 3,
-			_lift = 2,
-			_stun = 0.3,
-			_if = _stun * 3;
-			
-			if(blocking && en >= 1){
-				
-				useEn(1);
-				
-				_push = 2;
-				_lift = 0;
-				_stun = 0;
-				
-			}else{
-				
-				loseHp();
-				
-			}
+    var
+    _num = collCheck(0, 0, objA_actor, true),
+    _hit = false;
+    
+    if(collision_rectangle(bbox_left + -1, bbox_top + -1, bbox_right + 1, bbox_bottom + 1, obj_cb_hazard, false, true) != noone){
+        _hit = true;
+    }
+    
+    for(var _i = 0; _i < _num; _i++){
+    
+    	var _obj = lst_coll[| _i];
+    
+    	if(_obj.hazard){
+    		_hit = true;
+    	}
+    
+    }
+    
+    if(_hit && iFrames <= 0 && !iState){
+    
+		var
+		_push = 3,
+		_lift = 2,
+		_stun = 0.3,
+		_if = _stun * 3;
 		
-			takeDmg(self, 0, _push, _lift, _stun, _if);
-	
+		if(blocking && en >= 1){
+			
+			useEn(1);
+			
+			_push = 2;
+			_lift = 0;
+			_stun = 0;
+			
+		}else{
+			
+			loseHp();
+			
 		}
+	
+		takeDmg(self, 0, _push, _lift, _stun, _if);
 
 	}
 
@@ -139,7 +149,20 @@ if(_newState != noone && _newState.canRun() && _newState.enCost <= en){
         
     }
     
-    if(global.hyperActive){
+    globalvar G_nim;
+	G_nim = false;
+    
+    with obj_ui{
+        
+        if(uiOffset[1] == 1){
+            
+            G_nim = true;
+            
+        }
+        
+    }
+    
+    if(global.hyperActive && !G_nim){
         
         global.hyperTime += -TICK * global.timeFlow;
         

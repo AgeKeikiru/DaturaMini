@@ -1,4 +1,4 @@
-// 2021-03-22 21:05:37
+// 2021-03-26 19:40:28
 #event properties (no comments/etc. here are saved)
 parent_index = objA_actor;
 uses_physics = false;
@@ -13,6 +13,12 @@ value = 0; //point value
 lst_uniqueHits = ds_list_create(); //points multiplier
 
 //hazard = true;
+
+if(instance_exists(obj_player) && x > obj_player.x){
+    
+    image_xscale = -1;
+    
+}
 
 fn_state_dead = function(){
 
@@ -42,7 +48,7 @@ fn_state_dead = function(){
 #event destroy
 event_inherited();
 
-value *= 1 + (ds_list_size(lst_uniqueHits) * 0.25);
+value *= 1 + (ds_list_size(lst_uniqueHits) * 0.25) + (global.hyperChain * 0.5);
 
 while(value > 0){
 	

@@ -1,5 +1,4 @@
 {
-  "name": "ts_vr",
   "spriteId": {
     "name": "spr_vr",
     "path": "sprites/spr_vr/spr_vr.yy",
@@ -137,6 +136,7 @@
     "path": "folders/Tile Sets.yy",
   },
   "resourceVersion": "1.0",
+  "name": "ts_vr",
   "tags": [],
   "resourceType": "GMTileSet",
 }

@@ -1,5 +1,7 @@
 event_inherited();
 
+visible = true;
+
 roundSpd();
 
 if(!platMove_x(spdInt_x)){

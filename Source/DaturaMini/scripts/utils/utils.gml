@@ -125,3 +125,50 @@ function endHyper(){
     instance_destroy(global.hyperAfterImg);
     
 }
+
+function startNim(){ //non-interactive mode
+    
+    with obj_player{
+        
+        switchState(noone);
+        input_lock = true;
+        input_x = 0;
+        input_y = 0;
+        iState = true;
+        
+    }
+    
+    with obj_ui{
+        
+        uiOffset[1] = 1;
+        
+    }
+    
+    with objA_pAtk{
+        
+        if(id != global.hyperAfterImg){
+            
+            instance_destroy();
+            
+        }
+        
+    }
+    
+}
+
+function endNim(){
+    
+    with obj_player{
+        
+        input_lock = false;
+        iState = false;
+        
+    }
+    
+    with obj_ui{
+        
+        uiOffset[1] = 0;
+        
+    }
+    
+}

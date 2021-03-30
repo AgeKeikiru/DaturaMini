@@ -1,0 +1,67 @@
+// 2021-03-28 19:15:34
+#event properties (no comments/etc. here are saved)
+parent_index = obj_cb_passThru;
+sprite_index = spr_cb_passMove;
+uses_physics = false;
+
+#event create
+event_inherited();
+
+intf_platforming_implement();
+
+#event step_begin
+event_inherited();
+
+visible = true;
+
+roundSpd();
+
+if(!platMove_x(spdInt_x)){
+	
+    spd_x *= -1;    // Reverse the speed in case of collision
+    spdFrac_x = 0;
+	
+}
+
+if(!platMove_y(spdInt_y)){
+	
+    spd_y *= -1;    // Reverse the speed in case of collision
+    spdFrac_y = 0;
+	
+}
+
+#event draw
+
+var
+_x = x,
+_y = y,
+_spr = spr_3s_vr,
+_midCount = (sprite_get_width(_spr) / 8) + -2,
+_iMid = 0,
+_shakeX = 0;
+
+image_alpha = lerp(image_alpha, !crumbled, 0.2);
+draw_set_alpha(image_alpha);
+
+if(crumbleTime > 0){
+    
+    _shakeX = sin(current_time / 10);
+    
+}
+
+draw_sprite_part(_spr, 0, 0, 0, 8, 8, _x + _shakeX, _y);
+
+_x += 8;
+
+while(_x < bbox_right + -8){
+    
+    draw_sprite_part(_spr, 0, ((_iMid mod _midCount) + 1) * 8, 0, 8, 8, _x + _shakeX, _y);
+    
+    _x += 8;
+    _iMid++;
+    
+}
+
+draw_sprite_part(_spr, 0, sprite_get_width(_spr) + -8, 0, 8, 8, _x + _shakeX, _y);
+
+draw_set_alpha(1);

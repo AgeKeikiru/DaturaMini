@@ -1,4 +1,4 @@
-// 2021-03-25 16:04:53
+// 2021-03-25 16:15:30
 function scr_init(){
 	
 	randomize();
@@ -19,7 +19,7 @@ global.hyperActive = false;
 global.hyperAfterImg = noone;
 global.hyperTime = 0;
 global.hyperChain = 0;
-global.hyper = 0;
+global.hyper = 1;
 
 global.map_hyperValue = ds_map_create();
 

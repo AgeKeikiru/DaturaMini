@@ -564,13 +564,13 @@ input_lock = true;
 				
 				spd_y = 0;
 	            
-				if(cstate_time > (global.hyperActive ? 0 : 0.05)){ //hyper 0
+				if(cstate_time > (global.hyperActive ? 0.05 : 0.05)){ //hyper 0
 					
-					if(_s_ariAtkUpLoop == 0 || (_s_ariAtkUpLoop > 0 && cstate_time > (global.hyperActive ? 0.05 : 0.13))){ //hyper 0.05
+					if(_s_ariAtkUpLoop == 0 || (_s_ariAtkUpLoop > 0 && cstate_time > (global.hyperActive ? 0.13 : 0.13))){ //hyper 0.05
 					
 						if(_s_ariAtkUpLoop < 3){
 						
-							force_x = image_xscale * -2;
+							force_x = image_xscale * (global.hyperActive ? -2.5 : -2);
 		
 							//create missile
 							repeat(global.hyperActive ? 3 : 1){
@@ -591,7 +591,7 @@ input_lock = true;
 						
 						}
 						
-						if(_s_ariAtkUpLoop == 3 && cstate_time > (global.hyperActive ? 0.05 : 0.3)){ //hyper 0.05
+						if(_s_ariAtkUpLoop == 3 && cstate_time > (global.hyperActive ? 0.1 : 0.3)){ //hyper 0.05
 						
 							input_lock = false;
 							sprite_index = s_idle;
@@ -673,6 +673,10 @@ input_lock = true;
 				if(instance_exists(_s_aftImg)){
 					_s_aftImg.x = x;
 					_s_aftImg.y = y;
+				}
+				
+				if(global.hyperActive){
+				    spd_y = maxFall * 2;
 				}
 	
 				if(on_ground()){

@@ -1,4 +1,4 @@
-// 2021-03-25 16:25:56
+// 2021-03-29 15:02:40
 #event properties (no comments/etc. here are saved)
 parent_index = objA_actor;
 uses_physics = false;
@@ -542,7 +542,7 @@ input_lock = true;
 				spd_x = 0;
 				spd_y = 0;
 	
-				if(cstate_time > 0.3){
+				if(cstate_time > (global.hyperActive ? 0 : 0.3)){
 	
 					switchState(currPly.state_atkUp.run2);
 	
@@ -569,25 +569,35 @@ input_lock = true;
 				}
 				
 				spd_y = 0;
-	
-				if(cstate_time > 0.05){
+	            
+				if(cstate_time > (global.hyperActive ? 0.05 : 0.05)){ //hyper 0
 					
-					if(_s_ariAtkUpLoop == 0 || (_s_ariAtkUpLoop > 0 && cstate_time > 0.13)){
+					if(_s_ariAtkUpLoop == 0 || (_s_ariAtkUpLoop > 0 && cstate_time > (global.hyperActive ? 0.13 : 0.13))){ //hyper 0.05
 					
 						if(_s_ariAtkUpLoop < 3){
 						
-							force_x = image_xscale * -2;
+							force_x = image_xscale * (global.hyperActive ? -2.5 : -2);
 		
 							//create missile
-							var _atk = scr_place(obj_pAtk_ariUp, x + (image_xscale * -8), y + -15);
-							_atk.direction = 90 + -((60 + -(15 * _s_ariAtkUpLoop)) * image_xscale);
-						
+							repeat(global.hyperActive ? 3 : 1){
+							
+								var _atk = scr_place(obj_pAtk_ariUp, x + (image_xscale * -8), y + -15);
+								_atk.direction = 90 + -((60 + -(15 * _s_ariAtkUpLoop)) * image_xscale); //hyper x3, random direction
+								
+								if(global.hyperActive){
+								
+									_atk.direction = 90 + -(random_range(30, 60) * image_xscale);
+								
+								}
+							
+							}
+							
 							_s_ariAtkUpLoop++;
 							cstate_time = 0;
 						
 						}
 						
-						if(_s_ariAtkUpLoop == 3 && cstate_time > 0.3){
+						if(_s_ariAtkUpLoop == 3 && cstate_time > (global.hyperActive ? 0.1 : 0.3)){ //hyper 0.05
 						
 							input_lock = false;
 							sprite_index = s_idle;
@@ -625,7 +635,7 @@ input_lock = true;
 				
 				spd_y = min(spd_y, 0);
 	
-				if(cstate_time > 0.3){
+				if(cstate_time > (global.hyperActive ? 0.1 : 0.3)){
 	
 					switchState(currPly.state_atkDn.run2);
 	
@@ -670,6 +680,10 @@ input_lock = true;
 					_s_aftImg.x = x;
 					_s_aftImg.y = y;
 				}
+				
+				if(global.hyperActive){
+				    spd_y = maxFall * 2;
+				}
 	
 				if(on_ground()){
 	
@@ -680,16 +694,39 @@ input_lock = true;
 					_atk = scr_place(obj_pAtk_ariDn, x, y),
 					_dist = 15;
 					
+					if(global.hyperActive){
+					
+						_atk.image_xscale *= 4;
+						_atk.image_yscale = abs(_atk.image_xscale);
+					
+					}
+					
 					_atk = scr_place(obj_pAtk_ariDn, x + -_dist, y);
 					_atk.sprite_index = spr_ari_atkDnF_b;
 					_atk.mask_index = _atk.sprite_index;
 					_atk.image_xscale = -1;
 					_atk.pv_x = -_s_ariAtkDnTime;
 					
+					if(global.hyperActive){
+					
+						_atk.image_xscale *= 4;
+						_atk.image_yscale = abs(_atk.image_xscale);
+						_atk.pv_x *= _atk.image_yscale;
+					
+					}
+					
 					_atk = scr_place(obj_pAtk_ariDn, x + _dist, y);
 					_atk.sprite_index = spr_ari_atkDnF_b;
 					_atk.mask_index = _atk.sprite_index;
 					_atk.pv_x = _s_ariAtkDnTime;
+					
+					if(global.hyperActive){
+					
+						_atk.image_xscale *= 4;
+						_atk.image_yscale = abs(_atk.image_xscale);
+						_atk.pv_x *= _atk.image_yscale;
+					
+					}
 					
 					shakeCam(random_range(-2, 2), random_range(10, 12));
 					
@@ -714,7 +751,7 @@ input_lock = true;
 				
 				}
 	
-				if(cstate_time > 0.3){
+				if(cstate_time > (global.hyperActive ? 0.1 : 0.3)){
 					
 					input_lock = false;
 					iState = false;
@@ -876,37 +913,49 @@ event_inherited();
 
 #region //hazard collision
 
-	var _num = collCheck(0, 0, objA_actor, true);
-
-	for(var _i = 0; _i < _num; _i++){
-
-		var _obj = lst_coll[| _i];
-	
-		if(_obj.hazard && iFrames <= 0 && !iState){
-	
-			var
-			_push = 3,
-			_lift = 2,
-			_stun = 0.3,
-			_if = _stun * 3;
-			
-			if(blocking && en >= 1){
-				
-				useEn(1);
-				
-				_push = 2;
-				_lift = 0;
-				_stun = 0;
-				
-			}else{
-				
-				loseHp();
-				
-			}
+    var
+    _num = collCheck(0, 0, objA_actor, true),
+    _hit = false;
+    
+    if(collision_rectangle(bbox_left + -1, bbox_top + -1, bbox_right + 1, bbox_bottom + 1, obj_cb_hazard, false, true) != noone){
+        _hit = true;
+    }
+    
+    for(var _i = 0; _i < _num; _i++){
+    
+    	var _obj = lst_coll[| _i];
+    
+    	if(_obj.hazard){
+    
+    		_hit = true;
+    
+    	}
+    
+    }
+    
+    if(_hit && iFrames <= 0 && !iState){
+    
+		var
+		_push = 3,
+		_lift = 2,
+		_stun = 0.3,
+		_if = _stun * 3;
 		
-			takeDmg(self, 0, _push, _lift, _stun, _if);
-	
+		if(blocking && en >= 1){
+			
+			useEn(1);
+			
+			_push = 2;
+			_lift = 0;
+			_stun = 0;
+			
+		}else{
+			
+			loseHp();
+			
 		}
+	
+		takeDmg(self, 0, _push, _lift, _stun, _if);
 
 	}
 
@@ -1013,11 +1062,24 @@ if(_newState != noone && _newState.canRun() && _newState.enCost <= en){
         
     }
     
-    if(global.hyperActive){
+    globalvar G_nim;
+	G_nim = false;
+    
+    with obj_ui{
+        
+        if(uiOffset[1] == 1){
+            
+            G_nim = true;
+            
+        }
+        
+    }
+    
+    if(global.hyperActive && !G_nim){
         
         global.hyperTime += -TICK * global.timeFlow;
         
-        if(global.hyperTime <= 0){
+        if(global.hyperTime <= 0 && checkState(noone)){
             
             if(global.hyper >= 1){
                 

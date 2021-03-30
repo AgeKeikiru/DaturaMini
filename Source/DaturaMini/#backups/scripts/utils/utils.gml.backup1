@@ -1,4 +1,4 @@
-// 2021-03-25 16:07:39
+// 2021-03-27 09:28:11
 #macro TICK (1 / room_speed)
 
 global.debugView = false;
@@ -81,6 +81,13 @@ function styleTxt(_txt, _x, _y, _col, _sCol){
 
 function shakeCam(_x, _y){
 	
+	if(global.hyperActive){
+	
+		_x *= 2;
+		_y *= 2;
+	
+	}
+	
 	with obj_player{
 		
 		cam_shakeX += _x * image_xscale;
@@ -112,6 +119,57 @@ function addHyper(_amt){
 
 function endHyper(){
     
+    global.hyperActive = false;
+    global.hyper = 0;
+    global.hyperChain = 0;
     
+    instance_destroy(global.hyperAfterImg);
+    
+}
+
+function startNim(){ //non-interactive mode
+    
+    with obj_player{
+        
+        switchState(noone);
+        input_lock = true;
+        input_x = 0;
+        input_y = 0;
+        iState = true;
+        
+    }
+    
+    with obj_ui{
+        
+        uiOffset[1] = 1;
+        
+    }
+    
+    with objA_pAtk{
+        
+        if(id != global.hyperAfterImg){
+            
+            instance_destroy();
+            
+        }
+        
+    }
+    
+}
+
+function endNim(){
+    
+    with obj_player{
+        
+        input_lock = false;
+        iState = false;
+        
+    }
+    
+    with obj_ui{
+        
+        uiOffset[1] = 0;
+        
+    }
     
 }

@@ -19,11 +19,7 @@ uiOffset = [1, 1];
     
     fc_segment_fadeIn_2 = function(){
         
-        with obj_player{
-            input_lock = false;
-        }
-        
-        uiOffset[1] = 0;
+        endNim();
         
     }
     
@@ -32,12 +28,9 @@ uiOffset = [1, 1];
         fc_next = fc_segment_fadeOut_2;
         fc_delay = 0.5;
         
-        with obj_player{
-            input_lock = false;
-        }
+        startNim();
         
         fade = [0, 1];
-        uiOffset[1] = 1;
         
     }
     

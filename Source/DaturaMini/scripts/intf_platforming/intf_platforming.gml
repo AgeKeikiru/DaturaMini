@@ -11,6 +11,8 @@ function intf_platforming_implement(){
 	//left, top, right, bottom
 	moveBounds = [x, y, x, y];
 	
+	oneWay = false; //for moving platforms
+	
 	lst_coll = ds_list_create(); //multiple collision list
 
 }
@@ -64,6 +66,8 @@ function on_passThru(){
 	//DO NOT replace with collCheck, results in strange behavior when multiple passThru objects are vertically close
 	_on = collision_rectangle(bbox_left, bbox_bottom + 1, bbox_right, bbox_bottom + 1, obj_cb_passThru, false, true),
 	_in = collision_rectangle(bbox_left, bbox_bottom, bbox_right, bbox_bottom, obj_cb_passThru, false, true);
+	
+	if(instance_exists(_on) && _on.crumbled){ return noone; }
 
 	if(!_on){ return noone; }
 
@@ -168,8 +172,21 @@ function platMove_x(_amt){
 		//change direction when reaching movement boundaries
 		if(moveBounds[0] != moveBounds[2]){
 			
-			if(x < moveBounds[0]){ spd_x = abs(spd_x); }
-			if(x > moveBounds[2]){ spd_x = -abs(spd_x); }
+			if(x < moveBounds[0]){
+			    
+			    spd_x = abs(spd_x);
+			    
+			    if(oneWay){ spd_x = 0; }
+			    
+			}
+			
+			if(x > moveBounds[2]){
+			    
+                spd_x = -abs(spd_x);
+                
+                if(oneWay){ spd_x = 0; }
+			    
+			}
 			
 		}
 	}
@@ -281,8 +298,21 @@ function platMove_y(_amt){
 		//change direction when reaching movement boundaries
 		if(moveBounds[1] != moveBounds[3]){
 			
-			if(y < moveBounds[1]){ spd_y = abs(spd_y); }
-			if(y > moveBounds[3]){ spd_y = -abs(spd_y); }
+			if(y < moveBounds[1]){
+			    
+			    spd_y = abs(spd_y);
+			    
+			    if(oneWay){ spd_y = 0; }
+			    
+			}
+			
+			if(y > moveBounds[3]){
+			    
+			    spd_y = -abs(spd_y);
+			    
+			    if(oneWay){ spd_y = 0; }
+			    
+			}
 			
 		}
 		
