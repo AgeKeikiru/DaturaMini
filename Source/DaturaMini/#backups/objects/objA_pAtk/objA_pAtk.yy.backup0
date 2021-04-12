@@ -1,4 +1,4 @@
-// 2021-03-25 16:04:24
+// 2021-04-10 14:11:41
 #event properties (no comments/etc. here are saved)
 parent_index = objA_actor;
 uses_physics = false;
@@ -87,6 +87,10 @@ if(pv_d != 0){
 	
 }
 
+if(collision_rectangle(bbox_left + -1, bbox_top + -1, bbox_right + 1, bbox_bottom + 1, objA_solid, false, true) && !passWall){
+    instance_destroy();
+}
+
 #event collision:objA_actor
 event_inherited();
 
@@ -123,13 +127,6 @@ if(!hazard && object_is_ancestor(other.object_index, obj_enemy) && !other.checkS
 	
 	shakeCam(random_range(shakeX[0], shakeX[1]), random_range(shakeY[0], shakeY[1]));
 	
-}
-
-#event collision:objA_solid
-event_inherited();
-
-if(!passWall){
-	instance_destroy();
 }
 
 #event draw_end

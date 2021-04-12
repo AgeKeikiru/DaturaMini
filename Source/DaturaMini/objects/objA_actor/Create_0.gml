@@ -22,6 +22,7 @@
 	force_x = 0;
 	force_y = 0;
 
+    fixed = false; //fixed position
 	weight = 1;
 	moveSpd = 1.3;
 	jumpSpd = 2.5;

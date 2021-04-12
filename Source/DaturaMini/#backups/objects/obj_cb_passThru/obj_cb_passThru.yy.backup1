@@ -1,4 +1,4 @@
-// 2021-03-28 19:13:39
+// 2021-04-11 15:08:08
 #event properties (no comments/etc. here are saved)
 parent_index = -1;
 sprite_index = spr_cb_passThru;
@@ -23,7 +23,7 @@ with _p{
     
 }
 
-if(instance_exists(_p) && G_ground && _p.spd_y == 0 && crumbleTime == 0 && !crumbled){
+if(instance_exists(_p) && _p.y <= y && G_ground && _p.spd_y == 0 && crumbleTime == 0 && !crumbled){
     
     crumbleTime = 1;
     
@@ -39,7 +39,7 @@ if(crumbleTime > 0){
         
         if(crumbled){
             
-            crumbleTime = 1;
+            crumbleTime = 0.5;
             
         }
         

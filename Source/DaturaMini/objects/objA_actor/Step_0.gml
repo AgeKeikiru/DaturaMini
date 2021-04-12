@@ -68,18 +68,22 @@ force_y = scr_approach(force_y, 0, 0.15 * global.timeFlow);
 
 #region //movement calculation
 
-	roundSpd();
-
-	// Let the instance decide what to do when it can't move
-	if(!move_x((spdInt_x + force_x) * global.timeFlow, true)){
-	    spd_x = 0;
-	    spdFrac_x = 0;
-	}
-
-	if(!move_y((spdInt_y + force_y) * global.timeFlow)){
-	    spd_y = 0;
-	    spdFrac_y = 0;
-	}
+    if(!fixed){
+        
+    	roundSpd();
+    
+    	// Let the instance decide what to do when it can't move
+    	if(!move_x((spdInt_x + force_x) * global.timeFlow, true)){
+    	    spd_x = 0;
+    	    spdFrac_x = 0;
+    	}
+    
+    	if(!move_y((spdInt_y + force_y) * global.timeFlow)){
+    	    spd_y = 0;
+    	    spdFrac_y = 0;
+    	}
+	
+    }
 
 #endregion
 

@@ -10,7 +10,7 @@ with _p{
     
 }
 
-if(instance_exists(_p) && G_ground && _p.spd_y == 0 && crumbleTime == 0 && !crumbled){
+if(instance_exists(_p) && _p.y <= y && G_ground && _p.spd_y == 0 && crumbleTime == 0 && !crumbled){
     
     crumbleTime = 1;
     
@@ -23,6 +23,8 @@ if(crumbleTime > 0){
     if(crumbleTime <= 0){
         
         crumbled = !crumbled;
+        
+        crumbleTime = 0;
         
         if(crumbled){
             

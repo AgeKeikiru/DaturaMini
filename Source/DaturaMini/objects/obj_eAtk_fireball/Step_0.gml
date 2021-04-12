@@ -1,5 +1,7 @@
 event_inherited();
 
-if(!passWall){
+if(on_ground()){
+
 	instance_destroy();
+
 }

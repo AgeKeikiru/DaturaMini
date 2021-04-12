@@ -1,0 +1,100 @@
+// 2021-04-10 23:40:06
+#event properties (no comments/etc. here are saved)
+parent_index = obj_enemy;
+sprite_index = spr_lily_idle;
+uses_physics = false;
+
+#event create
+event_inherited();
+
+aOff = 8;
+
+hp = 3;
+
+value = 150;
+
+fixed = true;
+
+moveWait = 2;
+
+aggro_w = 100;
+aggro_h = aggro_w * 1.2;
+aggro_ahead = aggro_w * 0.0;
+aggro_above = aggro_h * 0.2;
+
+s_idle = sprite_index;
+s_move = sprite_index;
+mask_index = s_idle;
+
+fn_state_atk_a1 = function(){
+	
+	//on-enter actions
+	if(cstate_new){
+		
+		cstate_new = false;	
+		input_x = 0;
+		
+		sprite_index = spr_lily_atk1;
+				
+	}
+	
+	if(cstate_time > 0.4){
+	
+		s_idle = spr_lily_atk2;
+		
+		sprite_index = s_idle;
+		
+		switchState(noone);
+	
+	}
+	
+}
+
+#event step
+event_inherited();
+
+if(stun <= 0 && sprite_index == spr_lily_idle){
+
+	var _box = fn_getAggroRect();
+
+	if(collision_rectangle(_box.x1, _box.y1, _box.x2, _box.y2, obj_player, false, true) && arr_timers[0] <= 0){
+		switchState(fn_state_atk_a1);
+	}
+
+}
+
+if(fixed && sprite_index == spr_lily_atk2){
+    
+    if(arr_timers[0] > 0){
+        arr_timers[0] += -TICK * global.timeFlow;
+    }else{
+        
+        arr_timers[0] = 0.1;
+        aOff *= -1;
+        
+        var
+        _force = 6.5,
+        _dir = image_angle + aOff + 90,
+        _o = scr_place(obj_eAtk_fireball, x, mean(bbox_bottom,bbox_top));
+		
+		_o.pv_x = lengthdir_x(_force, _dir);
+		_o.spd_y = lengthdir_y(_force, _dir) + 0;
+		_o.weight = 1;
+		_o.depth = depth + 99;
+		
+		with _o{
+		    
+		    state_current = method(undefined, pstate_air);
+		    
+		    if(spd_y > 0){
+		        
+		        pv_x *= 1;
+		        spd_y *= 0.1;
+		        
+		    }
+		    
+		}
+        
+    }
+    
+}

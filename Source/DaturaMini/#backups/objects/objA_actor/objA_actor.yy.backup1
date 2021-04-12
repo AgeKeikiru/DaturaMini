@@ -1,4 +1,4 @@
-// 2021-03-24 21:28:32
+// 2021-04-10 13:12:02
 #event properties (no comments/etc. here are saved)
 parent_index = -1;
 uses_physics = false;
@@ -28,6 +28,7 @@ uses_physics = false;
 	force_x = 0;
 	force_y = 0;
 
+    fixed = false; //fixed position
 	weight = 1;
 	moveSpd = 1.3;
 	jumpSpd = 2.5;
@@ -192,7 +193,7 @@ uses_physics = false;
 					
 					if(player && global.hyperActive){
 					    
-					    spd_y *= 1.2;
+					    spd_y *= 1.4;
 					    
 					}
 				

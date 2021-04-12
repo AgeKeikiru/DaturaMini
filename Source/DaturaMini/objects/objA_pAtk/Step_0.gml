@@ -16,3 +16,7 @@ if(pv_d != 0){
 	vspeed = pv_y * global.timeFlow;
 	
 }
+
+if(collision_rectangle(bbox_left + -1, bbox_top + -1, bbox_right + 1, bbox_bottom + 1, objA_solid, false, true) && !passWall){
+    instance_destroy();
+}

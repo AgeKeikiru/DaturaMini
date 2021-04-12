@@ -1,4 +1,4 @@
-// 2021-03-25 16:00:43
+// 2021-03-25 16:04:24
 #event properties (no comments/etc. here are saved)
 parent_index = objA_actor;
 uses_physics = false;
@@ -100,7 +100,7 @@ if(!hazard && object_is_ancestor(other.object_index, obj_enemy) && !other.checkS
 	
 	takeDmg(other, dmg * (global.hyperActive ? 2 : 1), push, lift, atkStun);
 	
-	addHyper(global.map_hyperValue[? object_index] * 0.05);
+	addHyper(global.map_hyperValue[? object_index] * 0.02);
 	
 	if(other.hp <= 0){
 		

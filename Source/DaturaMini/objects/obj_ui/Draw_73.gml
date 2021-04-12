@@ -2,13 +2,17 @@
 #macro CC_HP_GREEN $75e397
 #macro CC_EN_BLUE $c6ac4f
 #macro CC_EN_RECHARGE $929292
-
-fade[0] = lerp(fade[0], fade[1], 0.18);
-uiOffset[0] = lerp(uiOffset[0], uiOffset[1], 0.2);
+#macro CC_UI_ACCENT $9c3cff
 
 var
 _camW = camera_get_view_width(view_camera[0]),
-_camH = camera_get_view_height(view_camera[0]);
+_camH = camera_get_view_height(view_camera[0]),
+_lerp = 0.18;
+
+fade[0] = lerp(fade[0], fade[1], _lerp);
+fade_stripe[0] = lerp(fade_stripe[0], fade_stripe[1], _lerp);
+fade_txt[0] = lerp(fade_txt[0], fade_txt[1], _lerp);
+uiOffset[0] = lerp(uiOffset[0], uiOffset[1], _lerp);
 
 #region //gameplay
 
@@ -227,6 +231,32 @@ _camH = camera_get_view_height(view_camera[0]);
 
 #region //transitions
 
+    if(clamp(fade_stripe[0], 0.01, 1.99) == fade_stripe[0]){
+        
+        var
+        _x = x + 25 + (50 * (1 + -fade_stripe[0])),
+        _y = y + 50,
+        _h = 10 * (1 + -abs(1 + -fade_stripe[0]));
+        
+        draw_set_color(CC_UI_ACCENT);
+        draw_rectangle(x, _y + -_h, x + _camW, _y + _h, false);
+        
+        draw_set_color(c_black);
+        draw_set_alpha(1 + -abs(1 + -fade_stripe[0]));
+        draw_set_font(ft_title);
+        draw_set_halign(fa_left);
+        draw_set_valign(fa_center);
+        
+        draw_text(_x + 1, _y + 1, "CONTRACT");
+        
+        draw_set_color(c_white);
+        
+        draw_text(_x, _y, "CONTRACT");
+        
+        draw_set_alpha(1);
+        
+    }
+    
     if(clamp(fade[0], 0.1, 1.9) == fade[0]){
         
         var

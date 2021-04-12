@@ -69,6 +69,7 @@
     {"visible":true,"isLocked":false,"blendMode":0,"opacity":40.0,"displayName":"Layer 1","resourceVersion":"1.0","name":"af478cf8-d6e9-4afa-9053-9cc41699938f","tags":[],"resourceType":"GMImageLayer",},
     {"visible":true,"isLocked":false,"blendMode":0,"opacity":25.0,"displayName":"default","resourceVersion":"1.0","name":"4d4163a3-ae01-4dea-acd9-d32ea0137bcb","tags":[],"resourceType":"GMImageLayer",},
   ],
+  "nineSlice": null,
   "parent": {
     "name": "Backgrounds",
     "path": "folders/Backgrounds.yy",

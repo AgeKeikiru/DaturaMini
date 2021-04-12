@@ -27,13 +27,17 @@ fn_state_dead = function(){
 		
 		weight = max(weight, 0.5);
 		
+		image_angle = 0;
+		
 	}
+
+    fixed = false;
 
 	spd_x = -image_xscale * 1;
 	
 	deadspin += (image_xscale * 3600 * global.timeFlow) / room_speed;
 	
-	if(cstate_time > 0.6 || on_ground()){
+	if(cstate_time > 0.6 || on_ground() || collision_rectangle(bbox_left + -1, bbox_top + -1, bbox_right + 1, bbox_bottom + 1, objA_solid, false, true)){
 		instance_destroy();
 	}
 

@@ -1,4 +1,4 @@
-// 2021-03-24 21:28:57
+// 2021-04-10 13:13:20
 #event properties (no comments/etc. here are saved)
 parent_index = -1;
 uses_physics = false;
@@ -28,6 +28,7 @@ uses_physics = false;
 	force_x = 0;
 	force_y = 0;
 
+    fixed = false; //fixed position
 	weight = 1;
 	moveSpd = 1.3;
 	jumpSpd = 2.5;
@@ -285,18 +286,22 @@ force_y = scr_approach(force_y, 0, 0.15 * global.timeFlow);
 
 #region //movement calculation
 
-	roundSpd();
-
-	// Let the instance decide what to do when it can't move
-	if(!move_x((spdInt_x + force_x) * global.timeFlow, true)){
-	    spd_x = 0;
-	    spdFrac_x = 0;
-	}
-
-	if(!move_y((spdInt_y + force_y) * global.timeFlow)){
-	    spd_y = 0;
-	    spdFrac_y = 0;
-	}
+    if(!fixed){
+        
+    	roundSpd();
+    
+    	// Let the instance decide what to do when it can't move
+    	if(!move_x((spdInt_x + force_x) * global.timeFlow, true)){
+    	    spd_x = 0;
+    	    spdFrac_x = 0;
+    	}
+    
+    	if(!move_y((spdInt_y + force_y) * global.timeFlow)){
+    	    spd_y = 0;
+    	    spdFrac_y = 0;
+    	}
+	
+    }
 
 #endregion
 
