@@ -51,8 +51,8 @@ uiOffset = [1, 1];
     
         fc_intro_1 = function(){
             
-            //fc_next = fc_intro_2;
-            //fc_delay = 1;
+            fc_next = fc_intro_2;
+            fc_delay = 0.5;
             
             fade[1] = 0.5;
             fade_stripe[1] = 1;
@@ -61,11 +61,21 @@ uiOffset = [1, 1];
         
         fc_intro_2 = function(){
             
+            fc_next = fc_intro_3;
+            fc_delay = 1;
+            
+            fade_txt[1] = 1.03;
+            
+        }
+        
+        fc_intro_3 = function(){
+            
             fc_next = fc_segment_fadeIn_2;
             fc_delay = 0.5;
             
             fade[1] = 0;
             fade_stripe[1] = 2;
+            fade_txt[1] = 2;
             
         }
     

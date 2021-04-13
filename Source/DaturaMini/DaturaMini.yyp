@@ -67,6 +67,7 @@
     {"id":{"name":"spr_imo_atkDnF","path":"sprites/spr_imo_atkDnF/spr_imo_atkDnF.yy",},"order":14,},
     {"id":{"name":"objA_solid","path":"objects/objA_solid/objA_solid.yy",},"order":4,},
     {"id":{"name":"obj_conflyer","path":"objects/obj_conflyer/obj_conflyer.yy",},"order":8,},
+    {"id":{"name":"ft_titleX","path":"fonts/ft_titleX/ft_titleX.yy",},"order":2,},
     {"id":{"name":"obj_pAtkUp_imo","path":"objects/obj_pAtkUp_imo/obj_pAtkUp_imo.yy",},"order":12,},
     {"id":{"name":"obj_itemGlow_hp","path":"objects/obj_itemGlow_hp/obj_itemGlow_hp.yy",},"order":5,},
     {"id":{"name":"spr_conflyer_atk1","path":"sprites/spr_conflyer_atk1/spr_conflyer_atk1.yy",},"order":4,},
