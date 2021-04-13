@@ -1,5 +1,7 @@
 event_inherited();
 
+cstate_time = -99999;
+
 hp = 100;
 
 s_idle = sprite_index;

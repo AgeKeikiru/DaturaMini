@@ -1,6 +1,6 @@
 event_inherited();
 
-if(checkState(noone) && cstate_time > 4){
+if(checkState(noone) && cstate_time > 1.5){
 
 	facePlayer();
 	

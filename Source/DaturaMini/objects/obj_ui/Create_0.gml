@@ -1,10 +1,20 @@
 
+enum en_fadeType{
+    
+    slant,
+    boss
+    
+}
+
 uiMini = 0;
 
+fadeType = en_fadeType.slant;
 fade = [1, 1];
 fade_stripe = [0, 0];
 fade_txt = [0, 0];
 uiOffset = [1, 1];
+
+txtMain = ["", ""];
 
 #region //flowcharts
 
@@ -25,6 +35,9 @@ uiOffset = [1, 1];
         fc_segment_fadeIn_2 = function(){
             
             endNim();
+            
+            obj_player.cam_xTgt = -1;
+	        obj_player.cam_yTgt = -1;
             
         }
         
@@ -79,17 +92,62 @@ uiOffset = [1, 1];
             
         }
     
-    #region
+    #endregion
     
     #region //boss intro
     
         fc_boss_1 = function(){
             
-            //fc_next = fc_boss_fadeIn_2;
-            //fc_delay = 0.5;
+            fc_next = fc_boss_2;
+            fc_delay = 1;
             
-            //vertical warning tape, 2 stripes, right offset
-            //boss title, left side
+            fadeType = en_fadeType.boss;
+            
+            fade_stripe[1] = 1;
+            fade = [0, 0];
+            
+            txtMain = ["", ""];
+            
+        }
+        
+        fc_boss_2 = function(){
+            
+            fc_next = fc_boss_3;
+            fc_delay = 0.8;
+            
+            fade[1] = 0.2;
+            
+        }
+        
+        fc_boss_3 = function(){
+            
+            fc_next = fc_boss_4;
+            fc_delay = 0.6;
+            
+            txtMain[1] = "ABERRATION\nCLASS";
+            
+        }
+        
+        fc_boss_4 = function(){
+            
+            fc_next = fc_boss_5;
+            fc_delay = 0.8;
+            
+            txtMain[1] += "\n\nDOMINANT\nOOZE";
+            
+        }
+        
+        fc_boss_5 = function(){
+            
+            fc_next = fc_segment_fadeIn_2;
+            fc_delay = 0.5;
+            
+            fade[1] = 1;
+            txtMain = ["", ""];
+            
+            with obj_slimeBoss{
+                cstate_time = 0;
+            }
             
         }
     

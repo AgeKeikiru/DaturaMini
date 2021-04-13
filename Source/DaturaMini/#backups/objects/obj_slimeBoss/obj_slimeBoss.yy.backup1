@@ -1,4 +1,4 @@
-// 2021-04-11 22:31:23
+// 2021-04-12 21:40:51
 #event properties (no comments/etc. here are saved)
 parent_index = obj_enemy;
 sprite_index = spr_slimeBoss_idle;
@@ -6,6 +6,8 @@ uses_physics = false;
 
 #event create
 event_inherited();
+
+cstate_time = -99999;
 
 hp = 100;
 
@@ -177,10 +179,10 @@ fn_state_atk_b2 = function(){
 #event step
 event_inherited();
 
-if(checkState(noone) && cstate_time > 4){
+if(checkState(noone) && cstate_time > 1){
 
 	facePlayer();
 	
-	switchState(choose(fn_state_atk_a1, fn_state_atk_a1));
+	switchState(choose(fn_state_atk_a1, fn_state_atk_b1));
 
 }
