@@ -2,7 +2,9 @@
 enum en_fadeType{
     
     slant,
-    boss
+    boss,
+    clear,
+    gameOver
     
 }
 
@@ -27,6 +29,8 @@ txtMain = ["", ""];
             fc_next = fc_segment_fadeIn_2;
             fc_delay = 0.5;
             
+            fadeType = en_fadeType.slant;
+            
             fade[1] = 2;
             fade_stripe[1] = 2;
             
@@ -45,6 +49,8 @@ txtMain = ["", ""];
             
             fc_next = fc_segment_fadeOut_2;
             fc_delay = 0.5;
+            
+            fadeType = en_fadeType.slant;
             
             startNim();
             
@@ -148,6 +154,23 @@ txtMain = ["", ""];
             with obj_slimeBoss{
                 cstate_time = 0;
             }
+            
+        }
+    
+    #endregion
+    
+    #region //stage clear
+    
+        fc_clear_1 = function(){
+            
+            //fc_next = fc_boss_2;
+            //fc_delay = 1;
+            
+            fadeType = en_fadeType.clear;
+            
+            fade_stripe = [0, 0.2];
+            fade_txt = [0, 1];
+            fade = [0, 0];
             
         }
     

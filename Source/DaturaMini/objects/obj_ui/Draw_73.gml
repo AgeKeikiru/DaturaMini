@@ -216,6 +216,53 @@ repeat(1){
         
         #endregion
         
+        #region //boss hp
+        
+            globalvar G_boss;
+            
+            G_boss = noone;
+            
+            with obj_enemy{
+                
+                if(boss){
+                    G_boss = id;
+                }
+                
+            }
+            
+            if(G_boss != noone){
+                
+                var
+                _boss_xOff = 40,
+                _boss_x = [x + _boss_xOff, x + _camW + -_boss_xOff],
+                _boss_y = y + _camH + -5 + (40 * uiOffset[0]);
+                
+                draw_set_color(_c_uiFrame);
+                
+                draw_rectangle(_boss_x[0], _boss_y + -2, _boss_x[1], _boss_y + 1, false);
+                
+                draw_set_color(CC_HYPINK);
+                
+                draw_rectangle(lerp(_boss_x[1], _boss_x[0], clamp(G_boss.bossStun / BOSS_STUNMAX, 0, 1)), _boss_y + -2, _boss_x[1], _boss_y + 1, false);
+                
+                draw_set_color(c_dkgray);
+                
+                draw_rectangle(_boss_x[0] + 1, _boss_y + -1, _boss_x[1], _boss_y, false);
+                
+                draw_set_color(CC_HP_GREEN);
+                
+                draw_rectangle(lerp(_boss_x[1], _boss_x[0] + 1, clamp(G_boss.hp / G_boss.bossHp, 0, 1)), _boss_y + -1, _boss_x[1], _boss_y, false);
+                
+                draw_set_font(ft_small);
+                draw_set_halign(fa_left);
+                draw_set_valign(fa_bottom);
+                
+                styleTxt("BOSS", _boss_x[1], _boss_y + 4, c_white, _c_uiFrame);
+                
+            }
+        
+        #endregion
+        
         if(checkDebugView()){
         
         	//player = true; //idk why this is here
@@ -241,7 +288,7 @@ repeat(1){
 
     switch fadeType{
     
-        case en_fadeType.slant:    
+        case en_fadeType.slant:
             
             if(clamp(fade_stripe[0], 0.01, 1.99) == fade_stripe[0]){
                 
@@ -372,6 +419,12 @@ repeat(1){
                 }
                 
             }
+            
+            break;
+            
+        case en_fadeType.clear:
+            
+            
             
             break;
     

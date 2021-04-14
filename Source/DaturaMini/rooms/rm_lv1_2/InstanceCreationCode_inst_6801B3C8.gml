@@ -5,6 +5,8 @@ origin = [x + (8 * -10), y + (8 * -14)];
 
 fn_trigger = function(){
 
+	instance_destroy(obj_enemy, false);
+	
 	fcA1();
 
 }

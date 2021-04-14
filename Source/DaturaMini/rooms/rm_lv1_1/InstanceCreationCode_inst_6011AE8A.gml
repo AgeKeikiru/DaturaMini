@@ -4,6 +4,8 @@ lst_spawn = ds_list_create();
 
 fn_trigger = function(){
 	
+	instance_destroy(obj_enemy, false);
+	
 	obj_player.cam_xTgt = x + -obj_player.x + -30;
 	obj_player.cam_yTgt = y + 86;
 	

@@ -1,4 +1,4 @@
-// 2021-04-10 13:13:20
+// 2021-04-13 22:53:17
 #event properties (no comments/etc. here are saved)
 parent_index = -1;
 uses_physics = false;
@@ -8,6 +8,7 @@ uses_physics = false;
 
 	#macro GRAVITY 0.23
 	#macro MAX_JUMP 0.15
+	#macro BOSS_STUNMAX 10
 	
 	depth = 0;
 	
@@ -16,8 +17,12 @@ uses_physics = false;
 	
 	player = false;
 	hazard = false;
+	boss = false;
+	armored = false;
 	
 	hp = 1;
+	bossHp = 1;
+	bossStun = 0;
 	
 	deadspin = 0;
 	
@@ -316,6 +321,12 @@ force_y = scr_approach(force_y, 0, 0.15 * global.timeFlow);
 	}
 
 #endregion
+
+if(boss && bossStun > 0){
+    
+    bossStun += -(0.5 * global.timeFlow) / room_speed;
+    
+}
 
 image_speed = global.timeFlow;
 

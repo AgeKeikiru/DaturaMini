@@ -1,4 +1,4 @@
-// 2021-03-25 16:04:24
+// 2021-04-13 22:30:09
 #event properties (no comments/etc. here are saved)
 parent_index = objA_actor;
 uses_physics = false;
@@ -87,10 +87,14 @@ if(pv_d != 0){
 	
 }
 
+if(collision_rectangle(bbox_left + -1, bbox_top + -1, bbox_right + 1, bbox_bottom + 1, objA_solid, false, true) && !passWall){
+    instance_destroy();
+}
+
 #event collision:objA_actor
 event_inherited();
 
-if(!hazard && object_is_ancestor(other.object_index, obj_enemy) && !other.checkState(other.fn_state_dead) && !other.player && ds_list_find_index(lst_hits, other.id) == -1){
+if(!hazard && object_is_ancestor(other.object_index, obj_enemy) && !other.checkState(other.fn_state_dead) && !other.player && ds_list_find_index(lst_hits, other.id) == -1 && other.iFrames <= 0 && !other.iState){
 	
 	ds_list_add(lst_hits, other.id);
 	
@@ -108,6 +112,8 @@ if(!hazard && object_is_ancestor(other.object_index, obj_enemy) && !other.checkS
 		
 		other.switchState(other.fn_state_dead);
 		
+	}else if(other.boss){
+	    other.bossStun += dmg;
 	}
 	
 	if(slowTo > 0 && slowDur > 0){
@@ -123,13 +129,6 @@ if(!hazard && object_is_ancestor(other.object_index, obj_enemy) && !other.checkS
 	
 	shakeCam(random_range(shakeX[0], shakeX[1]), random_range(shakeY[0], shakeY[1]));
 	
-}
-
-#event collision:objA_solid
-event_inherited();
-
-if(!passWall){
-	instance_destroy();
 }
 
 #event draw_end

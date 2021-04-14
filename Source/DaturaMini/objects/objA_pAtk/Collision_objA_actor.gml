@@ -1,6 +1,6 @@
 event_inherited();
 
-if(!hazard && object_is_ancestor(other.object_index, obj_enemy) && !other.checkState(other.fn_state_dead) && !other.player && ds_list_find_index(lst_hits, other.id) == -1){
+if(!hazard && object_is_ancestor(other.object_index, obj_enemy) && !other.checkState(other.fn_state_dead) && !other.player && ds_list_find_index(lst_hits, other.id) == -1 && other.iFrames <= 0 && !other.iState){
 	
 	ds_list_add(lst_hits, other.id);
 	
@@ -16,8 +16,10 @@ if(!hazard && object_is_ancestor(other.object_index, obj_enemy) && !other.checkS
 		
 		addHyper(0.05);
 		
-		other.switchState(other.fn_state_dead);
+		other.switchState(other.boss ? other.fn_state_bossDead : other.fn_state_dead);
 		
+	}else if(other.boss){
+	    other.bossStun += dmg;
 	}
 	
 	if(slowTo > 0 && slowDur > 0){

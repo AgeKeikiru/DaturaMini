@@ -2,6 +2,7 @@
 
 	#macro GRAVITY 0.23
 	#macro MAX_JUMP 0.15
+	#macro BOSS_STUNMAX 10
 	
 	depth = 0;
 	
@@ -14,6 +15,8 @@
 	armored = false;
 	
 	hp = 1;
+	bossHp = 1;
+	bossStun = 0;
 	
 	deadspin = 0;
 	

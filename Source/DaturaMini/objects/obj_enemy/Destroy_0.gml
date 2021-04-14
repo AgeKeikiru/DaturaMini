@@ -6,14 +6,14 @@ while(value > 0){
 	
 	var _score = scr_place(obj_itemGlow_score, x, y);
 	
-	if(value >= 50){
+	if(value >= 100){
 		
 		_score.size = 2;
 		_score.value = 50;
 		
 	}
 	
-	if(value >= 200){
+	if(value >= 500){
 		
 		_score.size = 3;
 		_score.value = 200;
@@ -24,17 +24,21 @@ while(value > 0){
 	
 }
 
-repeat(10){
-	scr_place(obj_itemGlow_en, x, y);
-}
+if(!boss){
 
-var
-_rate = 0;
+    repeat(10){
+    	scr_place(obj_itemGlow_en, x, y);
+    }
+    
+    var
+    _rate = 0;
+    
+    if(instance_exists(obj_player)){
+    	_rate = clamp(obj_player.currPly.hpRegen + -obj_player.currPly.hp, 0, 2) * 0.05;
+    }
+    
+    if(random(1) < _rate){
+    	scr_place(obj_itemGlow_hp, x, y);
+    }
 
-if(instance_exists(obj_player)){
-	_rate = clamp(obj_player.currPly.hpRegen + -obj_player.currPly.hp, 0, 2) * 0.05;
-}
-
-if(random(1) < _rate){
-	scr_place(obj_itemGlow_hp, x, y);
 }

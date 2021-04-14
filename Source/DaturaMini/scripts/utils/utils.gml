@@ -25,7 +25,7 @@ function takeDmg(_inst, _dmg, _push, _lift, _stun, _iFrames){
 		
 	with(_inst){
 			
-		if(!player){
+		if(!player && !armored){
 			image_xscale = (x > obj_player.x) ? -1 : 1;
 		}
 		
@@ -47,10 +47,22 @@ function takeDmg(_inst, _dmg, _push, _lift, _stun, _iFrames){
 		if(stun > 0){
 			
 			sprite_index = s_idle;
-			animate = false;
-			
 			switchState(noone);
 			
+		}
+		
+		if(boss && bossStun > BOSS_STUNMAX){
+		    
+            force_x = -image_xscale * 3;
+			spd_x = 0;
+			force_y = -2;
+			spd_y = 0;
+			
+			bossStun = 0;
+			
+			sprite_index = s_idle;
+			switchState(fn_state_stun1);
+		    
 		}
 		
 		state_current = method(undefined, pstate_air);
@@ -132,6 +144,8 @@ function endHyper(){
 
 function startNim(){ //non-interactive mode
     
+    global.nim = true;
+    
     with obj_player{
         
         switchState(noone);
@@ -161,6 +175,8 @@ function startNim(){ //non-interactive mode
 }
 
 function endNim(){
+    
+    global.nim = false;
     
     with obj_player{
         

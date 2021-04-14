@@ -39,7 +39,7 @@ event_inherited();
 		}else{
 			
 			loseHp();
-			shakeCam(3, 3);
+			shakeCam(choose(3, -3), choose(3, -3));
 			
 			global.timeFlow = 0.4;
 			global.timeSlow = 0.5;

@@ -116,6 +116,8 @@ fc_end = function(){
 
 fn_trigger = function(){
 	
+	instance_destroy(obj_enemy, false);
+	
 	obj_player.cam_xTgt = x + -obj_player.x + (8 * 3);
 	obj_player.cam_yTgt = y;
 	

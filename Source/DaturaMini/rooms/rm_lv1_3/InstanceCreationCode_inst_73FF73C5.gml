@@ -182,6 +182,8 @@ fc_end = function(){
 
 fn_trigger = function(){
 	
+	instance_destroy(obj_enemy, false);
+	
 	fc_next = fcA1;
 	fc_delay = 0.3;
 	

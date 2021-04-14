@@ -1,4 +1,4 @@
-// 2021-03-29 15:02:40
+// 2021-03-29 15:03:01
 #event properties (no comments/etc. here are saved)
 parent_index = objA_actor;
 uses_physics = false;
@@ -926,9 +926,7 @@ event_inherited();
     	var _obj = lst_coll[| _i];
     
     	if(_obj.hazard){
-    
     		_hit = true;
-    
     	}
     
     }

@@ -1,4 +1,4 @@
-// 2021-03-29 15:03:01
+// 2021-04-13 22:10:32
 #event properties (no comments/etc. here are saved)
 parent_index = objA_actor;
 uses_physics = false;
@@ -950,6 +950,10 @@ event_inherited();
 		}else{
 			
 			loseHp();
+			shakeCam(choose(3, -3), choose(3, -3));
+			
+			global.timeFlow = 0.4;
+			global.timeSlow = 0.5;
 			
 		}
 	

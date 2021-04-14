@@ -1,3 +1,4 @@
+// 2021-04-14 16:14:30
 function intf_boss_implement(_hp){
     
     boss = true;

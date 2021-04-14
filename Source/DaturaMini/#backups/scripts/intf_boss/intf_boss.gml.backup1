@@ -1,3 +1,4 @@
+// 2021-04-13 22:36:52
 function intf_boss_implement(_hp){
     
     boss = true;
@@ -5,8 +6,6 @@ function intf_boss_implement(_hp){
     
     hp = _hp;
     bossHp = _hp;
-    
-    value = 3000;
     
     depth += 99;
     

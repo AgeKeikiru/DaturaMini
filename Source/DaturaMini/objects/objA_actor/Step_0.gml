@@ -99,4 +99,10 @@ force_y = scr_approach(force_y, 0, 0.15 * global.timeFlow);
 
 #endregion
 
+if(boss && bossStun > 0){
+    
+    bossStun += -(0.5 * global.timeFlow) / room_speed;
+    
+}
+
 image_speed = global.timeFlow;

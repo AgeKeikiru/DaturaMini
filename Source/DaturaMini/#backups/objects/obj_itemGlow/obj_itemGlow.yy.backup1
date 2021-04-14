@@ -1,3 +1,26 @@
+// 2021-04-14 17:11:34
+#event properties (no comments/etc. here are saved)
+parent_index = obj_glow;
+uses_physics = false;
+
+#event create
+event_inherited();
+
+x += random_range(-8, 8);
+y += random_range(-8, 8);
+
+delay = random_range(0.2, 0.5);
+size = 1;
+
+spd = random_range(2, 6) * 60;
+turnSpd = 12;
+direction = random(360);
+
+lockOn = noone;
+
+contact = function(){ /*abstract*/ }
+
+#event step
 event_inherited();
 
 turnSpd += 0.1;
@@ -19,7 +42,7 @@ if(!instance_exists(lockOn)){
 	var
 	_dist = point_direction(x, y, lockOn.x, lockOn.y + -6),
 	_angle = dsin(_dist + -direction),
-	_turn = turnSpd;
+	_turn = 12;
 
 	if(_angle > 0){
 		direction += _turn;
