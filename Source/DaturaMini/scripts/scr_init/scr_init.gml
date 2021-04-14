@@ -22,5 +22,7 @@ global.hyper = 0;
 
 global.map_hyperValue = ds_map_create();
 
+global.rmNext = rm_test;
+
 #macro HYPER_DURATION 8
 #macro CC_HYPINK $feaeff

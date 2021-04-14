@@ -17,3 +17,5 @@ exit through rising platform
 */
 
 scr_segmentInit();
+
+global.rmNext = rm_lv1_3;

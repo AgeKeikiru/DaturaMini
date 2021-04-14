@@ -1,5 +1,7 @@
 event_inherited();
 
+intf_boss_implement();
+
 cstate_time = -99999;
 
 hp = 100;

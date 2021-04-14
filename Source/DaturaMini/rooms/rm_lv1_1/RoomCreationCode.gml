@@ -19,3 +19,5 @@ with obj_ui{
 	fc_next = fc_intro_1;
 
 }
+
+global.rmNext = rm_lv1_2;

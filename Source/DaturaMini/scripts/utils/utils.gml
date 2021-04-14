@@ -30,15 +30,19 @@ function takeDmg(_inst, _dmg, _push, _lift, _stun, _iFrames){
 		}
 		
 		hp += -_dmg;
-		
-		stun = max(stun, _stun);
 		iFrames = _iFrames;
-		input_lock = false; //if stunned during an attack, remove lock to prevent infinite lock
 		
-		force_x = -image_xscale * _push;
-		spd_x = 0;
-		force_y = -(_lift + weight);
-		spd_y = 0;
+		if(!armored){
+		
+			stun = max(stun, _stun);
+			input_lock = false; //if stunned during an attack, remove lock to prevent infinite lock
+			
+			force_x = -image_xscale * _push;
+			spd_x = 0;
+			force_y = -(_lift + weight);
+			spd_y = 0;
+		
+		}
 		
 		if(stun > 0){
 			

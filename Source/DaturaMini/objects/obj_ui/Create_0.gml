@@ -54,7 +54,7 @@ txtMain = ["", ""];
         
         fc_segment_fadeOut_2 = function(){
             
-            room_restart();
+            room_goto(global.rmNext);
             
         }
     
@@ -103,7 +103,7 @@ txtMain = ["", ""];
             
             fadeType = en_fadeType.boss;
             
-            fade_stripe[1] = 1;
+            fade_stripe = [0, 1];
             fade = [0, 0];
             
             txtMain = ["", ""];

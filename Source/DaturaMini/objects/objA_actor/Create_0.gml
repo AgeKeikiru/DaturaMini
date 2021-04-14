@@ -10,6 +10,8 @@
 	
 	player = false;
 	hazard = false;
+	boss = false;
+	armored = false;
 	
 	hp = 1;
 	

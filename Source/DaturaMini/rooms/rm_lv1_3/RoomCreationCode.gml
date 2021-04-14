@@ -22,3 +22,5 @@ full mixed enemy group with damage tiles
 */
 
 scr_segmentInit();
+
+global.rmNext = rm_lv1_boss;
