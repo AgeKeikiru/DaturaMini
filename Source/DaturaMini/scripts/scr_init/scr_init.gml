@@ -26,5 +26,10 @@ global.map_hyperValue = ds_map_create();
 
 global.rmNext = rm_test;
 
+global.bonus_time = 0;
+global.bonus_kills = 0;
+global.bonus_token = 0;
+global.bonus_hyper = 3;
+
 #macro HYPER_DURATION 8
 #macro CC_HYPINK $feaeff

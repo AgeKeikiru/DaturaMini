@@ -286,6 +286,9 @@ repeat(1){
 
 #region //transitions
 
+    var
+    _clear_topY = y + 20;
+    
     switch fadeType{
     
         case en_fadeType.slant:
@@ -424,7 +427,29 @@ repeat(1){
             
         case en_fadeType.clear:
             
+            var
+            _x = x + (_camW / 2),
+            _y = y + (_camH / 2),
+            _y2 = lerp(_y + 2, _clear_topY, fade[0]),
+            _offX = lerp(100, 2, fade_txt[0]),
+            _offY = fade_stripe[0] * _camH * 0.5;
             
+            draw_set_color(c_white);
+            draw_set_alpha(0.9);
+            
+            draw_rectangle(x, _y + -_offY, x + _camW, _y + _offY, false);
+            
+            draw_set_color(c_dkgray);
+            draw_set_alpha(fade_txt[0]);
+            draw_set_font(ft_title);
+            draw_set_halign(fa_right);
+            draw_set_valign(fa_center);
+            
+            draw_text(_x + -_offX, _y2, "STAGE");
+            
+            draw_set_halign(fa_left);
+            
+            draw_text(_x + _offX, _y2, "CLEAR");
             
             break;
     
@@ -433,3 +458,4 @@ repeat(1){
 #endregion
 
 draw_set_color(c_white);
+draw_set_alpha(1);

@@ -74,7 +74,7 @@ fn_state_bossDead = function(){
 
     x = _s_x + sin(current_time / 10);
 
-    if(cstate_time > 2){
+    if(cstate_time > 1){
 		
 		with scr_place(obj_itemGlow_score, random_range(bbox_left, bbox_right), random_range(bbox_top, bbox_bottom)){
 		    value = 0;
@@ -82,8 +82,17 @@ fn_state_bossDead = function(){
 		
 	}
 	
-	if(cstate_time > 4){
+	if(cstate_time > 3){
+		
+		with obj_ui{
+			
+			fc_next = fc_clear_1;
+			fc_delay = 0.5;
+			
+		}
+		
 		instance_destroy();
+		
 	}
 
 }

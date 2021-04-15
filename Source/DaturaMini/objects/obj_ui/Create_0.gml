@@ -163,14 +163,24 @@ txtMain = ["", ""];
     
         fc_clear_1 = function(){
             
-            //fc_next = fc_boss_2;
-            //fc_delay = 1;
+            fc_next = fc_clear_2;
+            fc_delay = 0.8;
             
             fadeType = en_fadeType.clear;
             
-            fade_stripe = [0, 0.2];
+            fade_stripe = [0, 0.1];
             fade_txt = [0, 1];
             fade = [0, 0];
+            
+        }
+        
+        fc_clear_2 = function(){
+            
+            //fc_next = fc_clear_2;
+            //fc_delay = 0.5;
+            
+            fade_stripe[1] = 1;
+            fade[1] = 1;
             
         }
     
