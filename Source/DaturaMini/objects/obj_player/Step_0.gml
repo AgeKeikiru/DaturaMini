@@ -126,21 +126,7 @@ if(_newState != noone && _newState.canRun() && _newState.enCost <= en){
 #region //hyper
 
     if(scr_inputCheck(vk_shift) && checkState(noone) && !global.hyperActive && global.hyper >= 1){
-        
-        global.hyperActive = true;
-        global.hyperTime = HYPER_DURATION;
-        global.hyper = 0;
-        global.hyperChain = 1;
-        
-        global.hyperAfterImg = scr_place(obj_pAtk_afterimage, x, y);
-    	global.hyperAfterImg.depth = depth + 99;
-    	global.hyperAfterImg.image_blend = c_fuchsia;
-    	global.hyperAfterImg.sprite_index = sprite_index;
-    	global.hyperAfterImg.dmg = 0;
-    	global.hyperAfterImg.atkStun = 0;
-    	global.hyperAfterImg.slowTo = 1;
-    	global.hyperAfterImg.slowDur = 0;
-        
+        hyperStart();
     }
     
     if(instance_exists(global.hyperAfterImg)){
@@ -265,17 +251,34 @@ if(keyboard_check_pressed(vk_tab)){
 	
 }
 
-if(keyboard_check_pressed(vk_home)){
-	
-	game_restart();
-	
-}
+if(global.debugView){
 
-if(keyboard_check_pressed(vk_pageup)){
-	
-	global.timeDebug = !global.timeDebug;
-	global.timeFlow = global.timeDebug ? 0.5 : 1;
-	
+    if(keyboard_check_pressed(vk_home)){
+    	
+    	game_restart();
+    	
+    }
+    
+    if(keyboard_check_pressed(vk_pageup)){
+    	
+    	loseHp(-99);
+    	
+    }
+    
+    if(keyboard_check_pressed(vk_pagedown)){
+    	
+    	loseHp(99);
+    	
+    }
+    
+    if(keyboard_check_pressed(vk_end)){
+    	
+    	with obj_ui{
+    	    fc_gameOver_1();
+    	}
+    	
+    }
+
 }
 
 if(global.timeSlow > 0){

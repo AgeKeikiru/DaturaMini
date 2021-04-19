@@ -819,6 +819,12 @@ input_lock = true;
 
 function switchPly(_ply){
 
+	if(is_undefined(_ply)){
+	    
+	    _ply = plyTeam[currPly == plyTeam[0]];
+	    
+	}
+	
 	if(_ply != currPly){
 	
 		currPly = _ply;
@@ -865,11 +871,11 @@ function loseHp(_amt, _ply){
 	    
 		_ply.hp = -1; //set to -1 to ensure regen is set to the proper value
 		
-		if(_ply == plyTeam[0]){
-		    switchPly(plyTeam[1]);
-		}else{
-		    switchPly(plyTeam[0]);
-		}
+		switchPly();
+		
+		var _p2 = scr_place(obj_deadPlayer, x, y);
+		
+		_p2.sprite_index = _ply.s_idle;
 		
 	}
 	
@@ -878,10 +884,50 @@ function loseHp(_amt, _ply){
 	with obj_ui{
 	    uiMini = 1.5;
 	}
+	
+	if(plyTeam[0].hp <= 0 && plyTeam[1].hp <= 0){
+	    
+	    with obj_ui{
+	        
+	        uiMini = 0;
+	        fc_gameOver_1();
+	        
+	    }
+	    
+	}
 
 }
 
-plyTeam = [new plyData_imo(id), new plyData_ari(id)];
+function hyperStart(){
+    
+    global.hyperActive = true;
+    global.hyperTime = HYPER_DURATION;
+    global.hyper = 0;
+    global.hyperChain = 1;
+    
+    global.hyperAfterImg = scr_place(obj_pAtk_afterimage, x, y);
+	global.hyperAfterImg.depth = depth + 99;
+	global.hyperAfterImg.image_blend = c_fuchsia;
+	global.hyperAfterImg.sprite_index = sprite_index;
+	global.hyperAfterImg.dmg = 0;
+	global.hyperAfterImg.atkStun = 0;
+	global.hyperAfterImg.slowTo = 1;
+	global.hyperAfterImg.slowDur = 0;
+    
+}
+
+var _roster = [
+    
+    new plyData_imo(id),
+    new plyData_ari(id),
+    new plyData_ari(id),
+    new plyData_ari(id),
+    new plyData_ari(id),
+    new plyData_ari(id)
+    
+];
+
+plyTeam = [_roster[global.arr_team[0]], _roster[global.arr_team[1]]];
 
 player = true;
 
@@ -891,7 +937,7 @@ enDelay = 0;
 
 currPly = noone;
 switchPly(plyTeam[0]);
-mask_index = spr_imo_idle;
+mask_index = currPly.s_idle;
 
 cam_x = x;
 cam_y = y;

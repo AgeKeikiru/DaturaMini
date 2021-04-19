@@ -4,15 +4,23 @@
 #macro CC_EN_RECHARGE $929292
 #macro CC_UI_ACCENT $9c3cff
 
+#macro SCORE_DIGITS 9
+#macro SCORE_CAP 999999999
+#macro HEADER_SIZE 20
+
+camW = camera_get_view_width(view_camera[0]);
+camH = camera_get_view_height(view_camera[0]);
+camMidX = x + (camW / 2);
+camMidY = y + (camH / 2);
+
 var
-_camW = camera_get_view_width(view_camera[0]),
-_camH = camera_get_view_height(view_camera[0]),
 _lerp = 0.18;
 
-fade[0] = lerp(fade[0], fade[1], _lerp);
-fade_stripe[0] = lerp(fade_stripe[0], fade_stripe[1], _lerp);
-fade_txt[0] = lerp(fade_txt[0], fade_txt[1], _lerp * 1.5);
-uiOffset[0] = lerp(uiOffset[0], uiOffset[1], _lerp);
+fade[0]         = lerp(fade[0],         fade[1],        _lerp);
+fade_stripe[0]  = lerp(fade_stripe[0],  fade_stripe[1], _lerp);
+fade_txt[0]     = lerp(fade_txt[0],     fade_txt[1],    _lerp * 1.5);
+uiOffset[0]     = lerp(uiOffset[0],     uiOffset[1],    _lerp);
+clearPhase[0]   = lerp(clearPhase[0],   clearPhase[1],  _lerp);
 
 repeat(1){
     
@@ -210,7 +218,9 @@ repeat(1){
             draw_set_halign(fa_right);
             draw_set_valign(fa_top);
             
-            styleTxt("SCORE \n" + string_replace_all(string_format(global.points, 10, 0), " ", "0"), x + _camW + -8, y + 6 + -(40 * uiOffset[0]));
+            global.points = clamp(global.points, 0, SCORE_CAP);
+            
+            styleTxt("SCORE \n" + string_replace_all(string_format(global.points, SCORE_DIGITS, 0), " ", "0"), x + camW + -8, y + 6 + -(40 * uiOffset[0]));
             
             draw_set_halign(fa_left);
         
@@ -234,8 +244,8 @@ repeat(1){
                 
                 var
                 _boss_xOff = 40,
-                _boss_x = [x + _boss_xOff, x + _camW + -_boss_xOff],
-                _boss_y = y + _camH + -5 + (40 * uiOffset[0]);
+                _boss_x = [x + _boss_xOff, x + camW + -_boss_xOff],
+                _boss_y = y + camH + -5 + (40 * uiOffset[0]);
                 
                 draw_set_color(_c_uiFrame);
                 
@@ -272,7 +282,7 @@ repeat(1){
         	draw_set_valign(fa_bottom);
         	draw_set_color(c_white);
         
-        	draw_text(x + 2, y + _camH + -2,
+        	draw_text(x + 2, y + camH + -2,
         		"dbg."
         	);
         
@@ -286,174 +296,7 @@ repeat(1){
 
 #region //transitions
 
-    var
-    _clear_topY = y + 20;
-    
-    switch fadeType{
-    
-        case en_fadeType.slant:
-            
-            if(clamp(fade_stripe[0], 0.01, 1.99) == fade_stripe[0]){
-                
-                var
-                _x = x + 38 + (50 * (1 + -fade_stripe[0])),
-                _y = y + 50,
-                _h = 10 * (1 + -abs(1 + -fade_stripe[0]));
-                
-                draw_set_color(CC_UI_ACCENT);
-                draw_rectangle(x, _y + -_h, x + _camW, _y + _h, false);
-                
-                draw_set_color(c_black);
-                draw_set_alpha(1 + -abs(1 + -fade_stripe[0]));
-                draw_set_font(ft_title);
-                draw_set_halign(fa_left);
-                draw_set_valign(fa_center);
-                
-                draw_text(_x + 1, _y + 1, "CONTRACT");
-                
-                draw_set_color(c_white);
-                
-                draw_text(_x, _y, "CONTRACT");
-                
-                draw_set_alpha(1);
-                
-            }
-            
-            if(clamp(fade[0], 0.1, 1.9) == fade[0]){
-                
-                var
-                _off = _camH * 1.5,
-                _x = x + ((_camW + _off) * (1 + -fade[0])),
-                _y = y;
-                
-                draw_set_color(c_black);
-                draw_primitive_begin(pr_trianglefan);
-                
-                draw_vertex(_x, _y);
-                draw_vertex(_x + _camW + _off, _y);
-                draw_vertex(_x + _camW, _y + _camH);
-                draw_vertex(_x + -_off, _y + _camH);
-                draw_vertex(_x, _y);
-                
-                draw_primitive_end();
-                
-            }
-            
-            if(clamp(fade_txt[0], 0.01, 1.99) == fade_txt[0]){
-                
-                var
-                _x = x + 186,
-                _y = y + 58,
-                _off = 200 * (1 + -fade_txt[0]);
-                
-                draw_set_color(c_white);
-                draw_set_font(ft_titleX);
-                draw_set_valign(fa_center);
-                
-                draw_set_halign(fa_right);
-                draw_text(_x + 1, _y + -_off, "0");
-                
-                draw_set_halign(fa_left);
-                draw_text(_x + -1, _y + _off, "1");
-                
-                draw_set_alpha(1 + -abs(1 + -fade_txt[0]));
-                draw_set_font(ft_title);
-                draw_set_halign(fa_center);
-                
-                draw_text(x + 180, y + 120, "VR\nZONE I");
-                
-                draw_set_alpha(1);
-                
-            }
-            
-            break;
-            
-        case en_fadeType.boss:
-        
-            if(clamp(fade[0], 0, 0.99) == fade[0]){
-                
-                var
-                _off = 200 * fade[0],
-                _x = x + 160,
-                _y = y;
-                
-                draw_set_color(c_black);
-                
-                draw_rectangle(x, y, _x + -_off, y + _camH, false);
-                draw_rectangle(x + _camW, y, _x + _off, y + _camH, false);
-                
-                draw_set_color(c_white);
-                draw_set_font(ft_small);
-                draw_set_halign(fa_right);
-                draw_set_valign(fa_top);
-                
-                draw_text(x + 90, y + 50, txtMain[0]);
-                
-                
-                if(clamp(fade_stripe[0], 0.01, 1) == fade_stripe[0]){
-                    
-                    var
-                    _w = 15 * fade_stripe[0],
-                    _s1 = "/ WARNING /",
-                    _s2 = "/ NO X-ING /",
-                    _rate = 2000;
-                    
-                    draw_set_color(CC_UI_ACCENT);
-                    draw_rectangle(_x + -_off + 1, y, _x + -_off + -_w, y + _camH, false);
-                    draw_rectangle(_x + _off, y, _x + _off + _w, y + _camH, false);
-                    
-                    draw_set_color(c_black);
-                    draw_set_font(ft_title);
-                    draw_set_halign(fa_center);
-                    draw_set_valign(fa_center);
-                    
-                    draw_text_transformed(
-                        _x + -_off + -7 + 1,
-                        y + (((current_time mod _rate) / _rate) * string_width(_s1)),
-                        string_repeat(_s1, 3), 1, 1, 90
-                    );
-                    
-                    draw_text_transformed(
-                        _x + _off + 7 + 2,
-                        y + _camH + -(((current_time mod _rate) / _rate) * string_width(_s2)),
-                        string_repeat(_s2, 3), 1, 1, -90
-                    );
-                    
-                }
-                
-            }
-            
-            break;
-            
-        case en_fadeType.clear:
-            
-            var
-            _x = x + (_camW / 2),
-            _y = y + (_camH / 2),
-            _y2 = lerp(_y + 2, _clear_topY, fade[0]),
-            _offX = lerp(100, 2, fade_txt[0]),
-            _offY = fade_stripe[0] * _camH * 0.5;
-            
-            draw_set_color(c_white);
-            draw_set_alpha(0.9);
-            
-            draw_rectangle(x, _y + -_offY, x + _camW, _y + _offY, false);
-            
-            draw_set_color(c_dkgray);
-            draw_set_alpha(fade_txt[0]);
-            draw_set_font(ft_title);
-            draw_set_halign(fa_right);
-            draw_set_valign(fa_center);
-            
-            draw_text(_x + -_offX, _y2, "STAGE");
-            
-            draw_set_halign(fa_left);
-            
-            draw_text(_x + _offX, _y2, "CLEAR");
-            
-            break;
-    
-    }
+    drawType();
 
 #endregion
 

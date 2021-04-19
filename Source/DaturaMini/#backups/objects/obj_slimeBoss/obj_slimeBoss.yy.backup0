@@ -1,4 +1,4 @@
-// 2021-04-14 17:17:36
+// 2021-04-19 15:04:49
 #event properties (no comments/etc. here are saved)
 parent_index = obj_enemy;
 sprite_index = spr_slimeBoss_idle;

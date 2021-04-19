@@ -73,14 +73,23 @@ function takeDmg(_inst, _dmg, _push, _lift, _stun, _iFrames){
 	
 }
 
-function styleTxt(_txt, _x, _y, _col, _sCol){
+function styleTxt(_txt, _x, _y, _col, _sCol, _fullStroke){
 
 	if(is_undefined(_col)){ _col = c_white; }
 	if(is_undefined(_sCol)){ _sCol = c_dkgray; }
+	if(is_undefined(_fullStroke)){ _fullStroke = false; }
 	
 	var _cc = draw_get_color();
 
 	draw_set_color(_sCol);
+	
+	if(_fullStroke){
+	    
+	    draw_text(_x + 1, _y, _txt);
+    	draw_text(_x, _y + -1, _txt);
+    	draw_text(_x + 1, _y + -1, _txt);
+	    
+	}
 
 	draw_text(_x + -1, _y, _txt);
 	draw_text(_x, _y + 1, _txt);

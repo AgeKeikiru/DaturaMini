@@ -1,4 +1,4 @@
-// 2021-04-14 17:14:10
+// 2021-04-14 17:17:36
 #event properties (no comments/etc. here are saved)
 parent_index = obj_enemy;
 sprite_index = spr_slimeBoss_idle;
@@ -7,7 +7,7 @@ uses_physics = false;
 #event create
 event_inherited();
 
-intf_boss_implement(50);
+intf_boss_implement(0.1);
 
 cstate_time = -99999;
 

@@ -1,0 +1,28 @@
+// 2021-04-15 17:49:41
+#event properties (no comments/etc. here are saved)
+parent_index = -1;
+uses_physics = false;
+
+#event create
+
+xspd = random_range(-2, 2);
+yspd = random_range(-6,-5);
+
+duration = 2;
+
+#event step
+
+x += xspd * (global.timeFlow);
+y += yspd * (global.timeFlow);
+
+yspd += 0.2 * (global.timeFlow);
+
+image_angle += 60 * (global.timeFlow);
+
+duration += -TICK * global.timeFlow;
+
+if(duration < 0){
+    instance_destroy();
+}
+
+image_alpha = (sin(current_time / 10) / 2) + 0.5;

@@ -1,14 +1,14 @@
-// 2021-04-14 08:07:56
-boss death animation
-stage clear screen
+// 2021-04-15 18:03:11
 player death animation
 continue/game over
+name entry (after game over)
 character select
 hit sparks
 main menu
 options menu
 gamepad support
 audio
+2nd loop (standard loop STD -> exhaust loop EXH)
 
 blaze down, downward angle shot if used in air, create ice block platform if used on the ground
 blaze neutral, hitscan shot, use this effect in aerial down
