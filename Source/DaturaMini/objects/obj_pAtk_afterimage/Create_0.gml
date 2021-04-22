@@ -12,3 +12,5 @@ slowDur = 0.3;
 
 shakeX = [0, 0];
 shakeY = [0, 0];
+
+hitSound = noone;

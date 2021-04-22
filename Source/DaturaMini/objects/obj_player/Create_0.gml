@@ -2,11 +2,15 @@ event_inherited();
 
 input_lock = true;
 
+lastAct = noone;
+
 #region //player data
 
 	function plyData(_src, _hp) constructor{
 	
 		src = _src;
+		
+		slot2 = false; //set true for 2nd party member to determine inputs
 		
 		uiCol = $FFFFFF;
 		
@@ -41,6 +45,7 @@ input_lock = true;
 		s_idle = spr_imo_idle;
 		s_move = spr_imo_move;
 	
+	    state_atk.endLag = 0.3;
 		state_atk.run = function(){
 
 			with(src){
@@ -87,16 +92,24 @@ input_lock = true;
 					var _atk = scr_place(obj_pAtk_imo, x + (image_xscale * 12), y);
 					_atk.image_xscale = image_xscale;
 					
+					audf_playSfx(sfx_cut1);
+					
 					if(global.hyperActive){
 					    
 					    _atk.image_xscale *= 2;
 					    _atk.pv_x = image_xscale * 4;
 					    
+					    audf_playSfx(sfx_shot2);
+					    
 					}
 				
 				}
+				
+				if(cstate_time > lastAct.endLag * lastAct.lagCancel){
+				    input_lock = false;
+				}
 	
-				if(cstate_time > (global.hyperActive ? 0.05 : 0.2)){
+				if(cstate_time > (global.hyperActive ? 0.05 : lastAct.endLag)){
 	
 					input_lock = false;
 					sprite_index = s_idle;
@@ -109,6 +122,8 @@ input_lock = true;
 
 		}
 		
+		state_atkUp.endLag = 99;
+		state_atkUp.lagCancel = 0;
 		state_atkUp.run = function(){
 
 			with(src){
@@ -180,6 +195,10 @@ input_lock = true;
     		
     					sprite_index = spr_imo_atkUp2;
     					
+    					//create slash
+    					_s_slash = scr_place(obj_pAtkUp_imo, x, y);
+    					_s_slash.image_xscale = image_xscale;
+    					
     					//create afterimage
     					_s_aftImg = scr_place(obj_pAtk_afterimage, x, y);
     					_s_aftImg.depth = depth + -99;
@@ -187,14 +206,14 @@ input_lock = true;
     					_s_aftImg.image_blend = c_red;
     					_s_aftImg.sprite_index = sprite_index;
     					_s_aftImg.mask_index = sprite_index;
-    					_s_aftImg.dmg = 0;
-    					_s_aftImg.atkStun = 0;
-    					_s_aftImg.slowTo = 1;
-    					_s_aftImg.slowDur = 0;
-    		
-    					//create slash
-    					_s_slash = scr_place(obj_pAtkUp_imo, x, y);
-    					_s_slash.image_xscale = image_xscale;
+    					_s_aftImg.dmg = _s_slash.dmg;
+    					_s_aftImg.atkStun = _s_slash.atkStun;
+    					_s_aftImg.slowTo = _s_slash.slowTo;
+    					_s_aftImg.slowDur = _s_slash.slowDur;
+    					_s_aftImg.hitSound = _s_slash.hitSound;
+    					
+    					audf_playSfx(sfx_cut1);
+    					audf_playSfx(sfx_whoosh2);
 					
 		            }
 					
@@ -214,6 +233,8 @@ input_lock = true;
 						    _atk.dmg = 2;
 						    
 						}
+						
+						audf_playSfx(sfx_shot2);
 					
 					}
 				
@@ -261,7 +282,7 @@ input_lock = true;
 				
 				}
 				
-				if(cstate_time > 0.2){
+				if(cstate_time > lastAct.endLag * lastAct.lagCancel){
 					input_lock = false;
 				}
 	
@@ -278,7 +299,9 @@ input_lock = true;
 			}
 
 		}
-	
+	    
+	    state_atkDn.endLag = 0.4;
+	    state_atkDn.lagCancel = 0.4;
 		state_atkDn.run = function(){
 
 			with(src){
@@ -316,10 +339,17 @@ input_lock = true;
 					}
 					
 					if(global.hyperActive){
+					    
 					    _atk.image_xscale *= 2;
+					    
+					    audf_playSfx(sfx_shot2);
+					    
 					}
 					
 					_atk.image_yscale = abs(_atk.image_xscale);
+					
+					audf_playSfx(sfx_cut1);
+					audf_playSfx(sfx_cut2);
 					
 					switchState(currPly.state_atkDn.run2);
 	
@@ -346,8 +376,12 @@ input_lock = true;
 				
 				spd_x = 0;
 				spd_y = 0;
+				
+				if(cstate_time > lastAct.endLag * lastAct.lagCancel){
+				    input_lock = false;
+				}
 	
-				if(cstate_time > (global.hyperActive ? 0.1 : 0.4)){
+				if(cstate_time > (global.hyperActive ? 0.1 : lastAct.endLag)){
 	
 					input_lock = false;
 					sprite_index = s_idle;
@@ -360,6 +394,7 @@ input_lock = true;
 
 		}
 		
+		state_def.endLag = 0.01;
 		state_def.enCost = 0;
 		state_def.run = function(){
 
@@ -384,7 +419,7 @@ input_lock = true;
 				enDelay = 0.1;
 				input_lock = true;
 	
-				if(!scr_inputCheck(ord("P"), ev_keyboard, true)){
+				if(!scr_playerIO([en_input.GAME_DEF_CURRENT, en_input.GAME_DEF1 + currPly.slot2], en_ioType.DOWN, true)){
 	
 					input_lock = false;
 					blocking = false;
@@ -392,9 +427,9 @@ input_lock = true;
 		
 					switchState(noone);
 	
-				}else if(scr_inputCheck(ord("A"), ev_keypress, true) || scr_inputCheck(ord("D"), ev_keypress, true)){
+				}else if(scr_playerIO([en_input.UNI_LEFT, en_input.UNI_RIGHT], en_ioType.PRESS, true)){
 					
-					image_xscale = scr_inputCheck(ord("A"), ev_keypress, true) ? 1 : -1;
+					image_xscale = scr_playerIO([en_input.UNI_LEFT], en_ioType.PRESS, true) ? 1 : -1;
 					
 					switchState(currPly.state_def.run2);
 					
@@ -431,7 +466,13 @@ input_lock = true;
 					_s_aftImg.atkStun = 0;
 					_s_aftImg.slowTo = 1;
 					_s_aftImg.slowDur = 0;
+					
+					audf_playSfx(sfx_whoosh1);
 				
+				}
+				
+				if(cstate_time > lastAct.endLag){
+				    input_lock = false;
 				}
 				
 				if(instance_exists(_s_aftImg)){
@@ -462,24 +503,26 @@ input_lock = true;
 		s_idle = spr_ari_idle;
 		s_move = spr_ari_move;
 		
+		state_atk.endLag = 0.07;
 		state_atk.run = function(){
 
 			with(src){
-				
-				var
-				_key = (currPly == plyTeam[0]) ? "I" : "O";
 				
 				//on-enter actions
 				if(cstate_new){
 		
 					cstate_new = false;
+					move_lock = false;
 		
 					sprite_index = spr_ari_atk1;
 					
 					//create shot
-					var _atk = scr_place(obj_pAtk_ari, x + (image_xscale * 12), y + random_range(-2, 2));
+					var
+					_atk = scr_place(obj_pAtk_ari, x + (image_xscale * 12), y + random_range(-2, 2));
 					_atk.image_xscale = image_xscale;
 					_atk.pv_x = image_xscale * 4;
+					
+					audf_playSfx(sfx_shot1);
 					
 					if(global.hyperActive){
 					    
@@ -493,18 +536,24 @@ input_lock = true;
 					    _atk2.image_yscale = _atk.image_yscale;
 					    _atk2.pv_x = _atk.pv_x;
 					    
+					    audf_playSfx(sfx_shot2);
+					    
+					    if(global.hyperTime <= 0){
+					        endHyper(); //manual check to avoid infinite hyper glitch
+					    }
+					    
 					}
 				
 				}
 				
-				if(cstate_time > (global.hyperActive ? 0.04 : 0.07)){
+				if(cstate_time > (global.hyperActive ? 0.04 : lastAct.endLag)){
 					
-					if(scr_inputCheck(ord(_key))){
+					if(scr_playerIO([en_input.GAME_ATK1 + currPly.slot2, en_input.GAME_ATK_CURRENT])){
 						
 						cstate_time = 0;
 						cstate_new = true;
 						
-					}else if(cstate_time > (global.hyperActive ? 0 : 0.15)){
+					}else{
 	
 						sprite_index = s_idle;
 					
@@ -518,6 +567,7 @@ input_lock = true;
 
 		}
 		
+		state_atkUp.endLag = 0.3;
 		state_atkUp.run = function(){
 
 			with(src){
@@ -564,9 +614,9 @@ input_lock = true;
 				
 				spd_y = 0;
 	            
-				if(cstate_time > (global.hyperActive ? 0.05 : 0.05)){ //hyper 0
+				if(cstate_time > (global.hyperActive ? 0.05 : 0.05)){
 					
-					if(_s_ariAtkUpLoop == 0 || (_s_ariAtkUpLoop > 0 && cstate_time > (global.hyperActive ? 0.13 : 0.13))){ //hyper 0.05
+					if(_s_ariAtkUpLoop == 0 || (_s_ariAtkUpLoop > 0 && cstate_time > (global.hyperActive ? 0.13 : 0.13))){
 					
 						if(_s_ariAtkUpLoop < 3){
 						
@@ -575,7 +625,7 @@ input_lock = true;
 							//create missile
 							repeat(global.hyperActive ? 3 : 1){
 							
-								var _atk = scr_place(obj_pAtk_ariUp, x + (image_xscale * -8), y + -15);
+								var _atk = scr_place(obj_pAtk_ariUp, x + (image_xscale * 2), y + -15);
 								_atk.direction = 90 + -((60 + -(15 * _s_ariAtkUpLoop)) * image_xscale); //hyper x3, random direction
 								
 								if(global.hyperActive){
@@ -586,17 +636,27 @@ input_lock = true;
 							
 							}
 							
+							audf_playSfx(sfx_shot2);
+							
 							_s_ariAtkUpLoop++;
 							cstate_time = 0;
 						
 						}
 						
-						if(_s_ariAtkUpLoop == 3 && cstate_time > (global.hyperActive ? 0.1 : 0.3)){ //hyper 0.05
+						if(_s_ariAtkUpLoop == 3){
 						
-							input_lock = false;
-							sprite_index = s_idle;
-		
-							switchState(noone);
+						    if(cstate_time > lastAct.endLag * lastAct.lagCancel){
+						        input_lock = false;
+						    }
+						
+						    if(cstate_time > (global.hyperActive ? 0.1 : lastAct.endLag)){
+						        
+    							input_lock = false;
+    							sprite_index = s_idle;
+    		
+    							switchState(noone);
+							
+						    }
 						
 						}
 					
@@ -608,6 +668,8 @@ input_lock = true;
 
 		}
 		
+		state_atkDn.endLag = 0.3;
+		state_atkDn.lagCancel = 0.01;
 		state_atkDn.run = function(){
 
 			with(src){
@@ -665,6 +727,8 @@ input_lock = true;
 					_s_aftImg.mask_index = sprite_index;
 					_s_aftImg.dmg = 1;
 					_s_aftImg.lift = 2;
+					
+					audf_playSfx(sfx_whoosh1);
 				
 				}
 				
@@ -692,6 +756,8 @@ input_lock = true;
 					
 						_atk.image_xscale *= 4;
 						_atk.image_yscale = abs(_atk.image_xscale);
+						
+						audf_playSfx(sfx_shot2);
 					
 					}
 					
@@ -722,6 +788,8 @@ input_lock = true;
 					
 					}
 					
+					audf_playSfx(sfx_blunt1);
+					
 					shakeCam(random_range(-2, 2), random_range(10, 12));
 					
 					instance_destroy(_s_aftImg);
@@ -744,8 +812,12 @@ input_lock = true;
 					sprite_index = spr_ari_atkDn3;
 				
 				}
+				
+				if(cstate_time > lastAct.endLag * lastAct.lagCancel){
+				    input_lock = false;
+				}
 	
-				if(cstate_time > (global.hyperActive ? 0.1 : 0.3)){
+				if(cstate_time > (global.hyperActive ? 0.1 : lastAct.endLag)){
 					
 					input_lock = false;
 					iState = false;
@@ -759,6 +831,8 @@ input_lock = true;
 
 		}
 		
+		state_def.endLag = 0.4;
+		state_def.lagCancel = 0;
 		state_def.run = function(){
 
 			static _s_aftImg = noone;
@@ -786,6 +860,9 @@ input_lock = true;
 					_s_aftImg.sprite_index = sprite_index;
 					_s_aftImg.mask_index = sprite_index;
 					_s_aftImg.atkStun = 1;
+					_s_aftImg.hitSound = sfx_whish1;
+					
+					audf_playSfx(sfx_whoosh1);
 				
 				}
 				
@@ -796,8 +873,12 @@ input_lock = true;
 					_s_aftImg.x = x;
 					_s_aftImg.y = y;
 				}
+				
+				if(cstate_time > lastAct.endLag * lastAct.lagCancel){
+    				input_lock = false;
+				}
 	
-				if(cstate_time > 0.4){
+				if(cstate_time > lastAct.endLag){
 	
 					input_lock = false;
 					iState = false;
@@ -913,6 +994,9 @@ function hyperStart(){
 	global.hyperAfterImg.atkStun = 0;
 	global.hyperAfterImg.slowTo = 1;
 	global.hyperAfterImg.slowDur = 0;
+	
+	audf_playSfx(sfx_buff);
+	audf_playSfx(sfx_whish1);
     
 }
 
@@ -928,6 +1012,8 @@ var _roster = [
 ];
 
 plyTeam = [_roster[global.arr_team[0]], _roster[global.arr_team[1]]];
+plyTeam[0].slot2 = false;
+plyTeam[1].slot2 = true;
 
 player = true;
 

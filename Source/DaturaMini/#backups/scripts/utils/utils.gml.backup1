@@ -1,4 +1,4 @@
-// 2021-04-14 16:00:36
+// 2021-04-20 18:56:01
 #macro TICK (1 / room_speed)
 
 global.debugView = false;
@@ -74,14 +74,23 @@ function takeDmg(_inst, _dmg, _push, _lift, _stun, _iFrames){
 	
 }
 
-function styleTxt(_txt, _x, _y, _col, _sCol){
+function styleTxt(_txt, _x, _y, _col, _sCol, _fullStroke){
 
 	if(is_undefined(_col)){ _col = c_white; }
 	if(is_undefined(_sCol)){ _sCol = c_dkgray; }
+	if(is_undefined(_fullStroke)){ _fullStroke = false; }
 	
 	var _cc = draw_get_color();
 
 	draw_set_color(_sCol);
+	
+	if(_fullStroke){
+	    
+	    draw_text(_x + 1, _y, _txt);
+    	draw_text(_x, _y + -1, _txt);
+    	draw_text(_x + 1, _y + -1, _txt);
+	    
+	}
 
 	draw_text(_x + -1, _y, _txt);
 	draw_text(_x, _y + 1, _txt);
@@ -193,3 +202,113 @@ function endNim(){
     }
     
 }
+
+#region //input handling
+
+    enum en_input {
+        
+        MENU_ACCEPT,
+        MENU_CANCEL,
+        MENU_START,
+        
+        MENU_UP,
+        MENU_DOWN,
+        MENU_LEFT,
+        MENU_RIGHT,
+        
+        GAME_JUMP,
+        GAME_ATK1,
+        GAME_ATK2,
+        GAME_DEF_CURRENT,
+        GAME_HYPER,
+        
+        GAME_ATK_CURRENT,
+        GAME_DEF1,
+        GAME_DEF2,
+        GAME_SWITCH,
+        
+        LENGTH
+        
+    }
+    
+    lwo_io = function(_name, _key, _joy) constructor{
+    
+        name = _name;
+        key = _key;
+        joy = _joy;
+        
+    }
+
+#endregion
+
+#region //audio functions
+
+    function audf_playBgm(_bgm){
+        
+        with obj_ui{
+        
+            var _gain = global.map_save[? en_save.SET_BGM];
+            
+            if(audio_get_name(bgmCurr) != audio_get_name(_bgm)){
+            
+                audio_stop_sound(bgmCurr);
+                
+                bgmCurr = audio_play_sound(_bgm, 999, true);
+                
+                audio_sound_gain(bgmCurr, _gain, 0);
+            
+            }
+        
+        }
+        
+    }
+    
+    function audf_playSfx(_sfx){
+        
+        with obj_ui{
+        
+            var
+            _gain = global.map_save[? en_save.SET_SFX],
+            _maxSounds = 60,
+            _copies = 0;
+            
+            if(ds_map_exists(global.map_soundMix, _sfx)){
+                _gain *= global.map_soundMix[? _sfx];
+            }
+            
+            //check if max number of same sound is already playing
+            for(var _i = 0; _i < ds_list_size(lst_sfx); _i++){
+                
+                var _check = lst_sfx[| _i];
+                
+                if(audio_get_name(_check) == audio_get_name(_sfx) && audio_is_playing(_check)){
+                    
+                    _copies++;
+                    
+                    if(_copies > 3){
+                        audio_stop_sound(_check);
+                    }
+                    
+                }
+                
+            }
+            
+            var _s = audio_play_sound(_sfx, 0, false);
+        
+            audio_sound_gain(_s, _gain, 0);
+            
+            ds_list_insert(lst_sfx, 0, _s);
+            
+            while(ds_list_size(lst_sfx) > _maxSounds){
+                
+                audio_stop_sound(lst_sfx[| _maxSounds]);
+                
+                ds_list_delete(lst_sfx, _maxSounds);
+                
+            }
+        
+        }
+        
+    }
+
+#endregion

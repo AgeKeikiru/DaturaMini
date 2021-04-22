@@ -1,4 +1,4 @@
-// 2021-04-15 17:49:02
+// 2021-04-20 10:17:58
 #event properties (no comments/etc. here are saved)
 parent_index = -1;
 uses_physics = false;
@@ -10,6 +10,8 @@ yspd = random_range(-6,-5);
 
 duration = 2;
 
+
+
 #event step
 
 x += xspd * (global.timeFlow);
@@ -17,7 +19,7 @@ y += yspd * (global.timeFlow);
 
 yspd += 0.2 * (global.timeFlow);
 
-image_angle += 30 * (global.timeFlow);
+image_angle += 60 * (global.timeFlow);
 
 duration += -TICK * global.timeFlow;
 

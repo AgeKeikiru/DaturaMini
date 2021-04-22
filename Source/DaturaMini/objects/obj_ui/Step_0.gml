@@ -9,11 +9,11 @@ if(menuControl && array_length(arr_menus)){
     
     var _menu = arr_menus[array_length(arr_menus) + -1];
     
-    if(keyboard_check_pressed(vk_enter)){
+    if(io_check(en_ioType.PRESS, [en_input.MENU_ACCEPT, en_input.MENU_START])){
                 
         _menu.fn_menuSelect();
         
-    }else if(keyboard_check_pressed(vk_anykey)){
+    }else if(io_check(en_ioType.PRESS, [en_input.UNI_UP, en_input.UNI_DOWN, en_input.UNI_LEFT, en_input.UNI_RIGHT])){
         
         _menu.fn_menuScroll();
         

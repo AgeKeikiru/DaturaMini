@@ -3,9 +3,9 @@ _state = state_current;
 
 if(stun <= 0){
 
-	if(player && !input_lock){
+	if(player && !input_lock && (cstate_curr == noone || !move_lock)){
 		
-		input_x = scr_inputCheck(ord("D")) + -scr_inputCheck(ord("A"));
+		input_x = scr_playerIO([en_input.UNI_RIGHT]) + -scr_playerIO([en_input.UNI_LEFT]);
 		
 	}
 

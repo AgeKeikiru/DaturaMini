@@ -1,6 +1,6 @@
 event_inherited();
 
-turnSpd += 0.1;
+turnSpd += 0.2;
 
 if(!instance_exists(lockOn)){
 	
@@ -42,6 +42,8 @@ if(collision_point(x, y, obj_player, false, true)){
 	if(live){
 
 		live = false;
+		
+		audf_playSfx(sfx_pointGet);
 	
 		contact();
 

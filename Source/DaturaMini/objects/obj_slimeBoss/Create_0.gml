@@ -1,6 +1,6 @@
 event_inherited();
 
-intf_boss_implement(0.1);
+intf_boss_implement(50);
 
 cstate_time = -99999;
 

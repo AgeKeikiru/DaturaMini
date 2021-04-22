@@ -1,4 +1,4 @@
-// 2021-04-18 10:25:54
+// 2021-04-20 18:56:36
 #macro TICK (1 / room_speed)
 
 global.debugView = false;
@@ -202,3 +202,75 @@ function endNim(){
     }
     
 }
+
+#region //audio functions
+
+    function audf_playBgm(_bgm){
+        
+        with obj_ui{
+        
+            var _gain = global.map_save[? en_save.SET_BGM];
+            
+            if(audio_get_name(bgmCurr) != audio_get_name(_bgm)){
+            
+                audio_stop_sound(bgmCurr);
+                
+                bgmCurr = audio_play_sound(_bgm, 999, true);
+                
+                audio_sound_gain(bgmCurr, _gain, 0);
+            
+            }
+        
+        }
+        
+    }
+    
+    function audf_playSfx(_sfx){
+        
+        with obj_ui{
+        
+            var
+            _gain = global.map_save[? en_save.SET_SFX],
+            _maxSounds = 60,
+            _copies = 0;
+            
+            if(ds_map_exists(global.map_soundMix, _sfx)){
+                _gain *= global.map_soundMix[? _sfx];
+            }
+            
+            //check if max number of same sound is already playing
+            for(var _i = 0; _i < ds_list_size(lst_sfx); _i++){
+                
+                var _check = lst_sfx[| _i];
+                
+                if(audio_get_name(_check) == audio_get_name(_sfx) && audio_is_playing(_check)){
+                    
+                    _copies++;
+                    
+                    if(_copies > 3){
+                        audio_stop_sound(_check);
+                    }
+                    
+                }
+                
+            }
+            
+            var _s = audio_play_sound(_sfx, 0, false);
+        
+            audio_sound_gain(_s, _gain, 0);
+            
+            ds_list_insert(lst_sfx, 0, _s);
+            
+            while(ds_list_size(lst_sfx) > _maxSounds){
+                
+                audio_stop_sound(lst_sfx[| _maxSounds]);
+                
+                ds_list_delete(lst_sfx, _maxSounds);
+                
+            }
+        
+        }
+        
+    }
+
+#endregion

@@ -1,4 +1,4 @@
-// 2021-04-14 17:11:34
+// 2021-04-20 11:43:22
 #event properties (no comments/etc. here are saved)
 parent_index = obj_glow;
 uses_physics = false;
@@ -42,7 +42,7 @@ if(!instance_exists(lockOn)){
 	var
 	_dist = point_direction(x, y, lockOn.x, lockOn.y + -6),
 	_angle = dsin(_dist + -direction),
-	_turn = 12;
+	_turn = turnSpd;
 
 	if(_angle > 0){
 		direction += _turn;
@@ -65,6 +65,8 @@ if(collision_point(x, y, obj_player, false, true)){
 	if(live){
 
 		live = false;
+		
+		audf_playSfx(sfx_pointGet);
 	
 		contact();
 

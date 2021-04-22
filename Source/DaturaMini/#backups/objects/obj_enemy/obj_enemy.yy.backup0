@@ -1,4 +1,4 @@
-// 2021-04-14 17:10:01
+// 2021-04-20 13:09:25
 #event properties (no comments/etc. here are saved)
 parent_index = objA_actor;
 uses_physics = false;
@@ -52,6 +52,7 @@ fn_state_dead = function(){
 fn_state_bossDead = function(){
 
 	static _s_x = 0;
+	static _s_time = 0;
 	
 	globalvar G_id;
 	
@@ -66,6 +67,7 @@ fn_state_bossDead = function(){
 		obj_player.cam_yTgt = max(y, 1);
 		
 		_s_x = x;
+		_s_time = 0;
 		G_id = id;
 		
 		with obj_enemy{
@@ -76,26 +78,49 @@ fn_state_bossDead = function(){
 		    
 		}
 		
+		audio_sound_gain(obj_ui.bgmCurr, 0, 0);
+		
 	}
 
     x = _s_x + sin(current_time / 10);
 
-    if(cstate_time > 2){
+    if(cstate_time > 1){
 		
 		with scr_place(obj_itemGlow_score, random_range(bbox_left, bbox_right), random_range(bbox_top, bbox_bottom)){
 		    value = 0;
 		}
 		
+		_s_time += TICK;
+		
+		if(_s_time > 0.2){
+		    
+		    _s_time = 0;
+		    
+		    audf_playSfx(sfx_explode);
+		    
+		}
+		
 	}
 	
-	if(cstate_time > 4){
+	if(cstate_time > 3){
+		
+		with obj_ui{
+			
+			fc_next = fc_clear_1;
+			fc_delay = 0.5;
+			
+		}
+		
 		instance_destroy();
+		
 	}
 
 }
 
 #event destroy
 event_inherited();
+
+audf_playSfx(sfx_death);
 
 value *= 1 + (ds_list_size(lst_uniqueHits) * 0.25) + (global.hyperChain * 0.5);
 

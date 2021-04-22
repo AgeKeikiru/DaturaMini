@@ -56,3 +56,5 @@ pv_d = 0; //directional
 shakeX = [-1, 1];
 shakeY = [-1, 1];
 shake_onDeath = false;
+
+hitSound = sfx_hit;

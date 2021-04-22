@@ -1,0 +1,17 @@
+// 2021-04-21 20:50:17
+#event properties (no comments/etc. here are saved)
+parent_index = -1;
+uses_physics = false;
+
+#event create
+src = noone;
+enCost = 0;
+airLimit = false; //if air limited, disables midair actions after use
+endLag = 0;
+lagCancel = 0.5; //multiplier, used for action cancel timing
+	
+canRun = function(){ return true; /*abstract*/ }
+		
+run = function(){ /*abstract*/
+	with src{ switchState(noone); }
+}

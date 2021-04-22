@@ -2,6 +2,8 @@ event_inherited();
 
 if(!hazard && object_is_ancestor(other.object_index, obj_enemy) && !other.checkState(other.fn_state_dead) && !other.player && ds_list_find_index(lst_hits, other.id) == -1 && other.iFrames <= 0 && !other.iState){
 	
+	audf_playSfx(hitSound);
+	
 	ds_list_add(lst_hits, other.id);
 	
 	if(ds_list_find_index(other.lst_uniqueHits, object_index) == -1){

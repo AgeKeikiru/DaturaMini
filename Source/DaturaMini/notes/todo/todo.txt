@@ -1,19 +1,37 @@
-player death animation
-continue/game over
-name entry (after game over)
-character select
+stage stat bonuses
 hit sparks
-main menu
 options menu
 gamepad support
-audio
+    gamepad detection
 2nd loop (standard loop STD -> exhaust loop EXH)
+    disable health regen
+    hyper attacks do 25% damage against bosses
 
-blaze down, downward angle shot if used in air, create ice block platform if used on the ground
-blaze neutral, hitscan shot, use this effect in aerial down
-blaze up, ice grenade toss
-blaze def, back step, invincible, cancels any action
-blaze up > def > neutral, projectiles detonate grenade for a larger explosion
+pan camera down
+action cancelling
+    jump cancel
+    if [switch] is pressed during cancelLock and held when [attack/defend current] is pressed after cancelLock ends, switch before performing the next action
+hyper ready notification
+seperate facePlayer from stun effect
+end block state on death
+telegraph extra elevator in area 2
+add 2nd slash to imo neutral (cover upper half)
+dmc4 sprint
+
+blaze
+    down: downward angle shot if used in air, create ice block platform if used on the ground
+    neutral: hitscan shot, use this effect in aerial down
+    up: ice grenade toss
+    def: back step, invincible, cancels any action
+    up > def > neutral, projectiles detonate grenade for a larger explosion
+
+veld
+    A: slash, hold for rapid slash (hits ahead and behind)
+    up A: jumping thrust
+    down A: flying swallow slash
+    B: piercing glare, full screen 1px horizontal hitbox, no damage, short stun, cannot be cancelled
+    up B: swing rifle overhead, shooting 5 shots going from 20-160 degrees
+    down B: back step and 3 downward shots sweeping from 300-330 degrees
 
 stage 2 boss: tear
 stage 3: jungle

@@ -194,7 +194,7 @@ repeat(1){
                     
                     draw_rectangle(_coord[0], _coord[1], _coord[0] + _mW, _coord[1] + _mH, false);
                     
-                    if(_i < obj_player.en){
+                    if(_i < floor(obj_player.en)){
                         draw_set_color(CC_EN_BLUE);
                     }
                     

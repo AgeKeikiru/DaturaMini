@@ -17,6 +17,10 @@ if(pv_d != 0){
 	
 }
 
-if(collision_rectangle(bbox_left + -1, bbox_top + -1, bbox_right + 1, bbox_bottom + 1, objA_solid, false, true) && !passWall){
+if(collision_rectangle(bbox_left + -1, bbox_top + -1, bbox_right + 1, bbox_bottom + 1, objA_solid, true, true) && !passWall){
+    instance_destroy();
+}
+
+if((x != clamp(x, obj_ui.x, obj_ui.x + obj_ui.camW) || y != clamp(y, obj_ui.y, obj_ui.y + obj_ui.camH)) && !hazard){
     instance_destroy();
 }

@@ -77,25 +77,39 @@ if(on_ground()){
 	
 }
 
-var _plyKey = -1;
+var
+_plyKey = -1,
+_defKey = -1;
 
-if(scr_inputCheck(ord("I"), ev_keypress)){
+if(scr_playerIO([en_input.GAME_ATK1], en_ioType.PRESS)){
 	_plyKey = 0;
-}else if(scr_inputCheck(ord("O"), ev_keypress)){
+}else if(scr_playerIO([en_input.GAME_ATK2], en_ioType.PRESS)){
 	_plyKey = 1;
+}else if(scr_playerIO([en_input.GAME_ATK_CURRENT], en_ioType.PRESS)){
+    _plyKey = currPly == plyTeam[1];
+}
+
+if(scr_playerIO([en_input.GAME_DEF1], en_ioType.PRESS)){
+	_defKey = 0;
+}else if(scr_playerIO([en_input.GAME_DEF2], en_ioType.PRESS)){
+	_defKey = 1;
+}else if(scr_playerIO([en_input.GAME_DEF_CURRENT], en_ioType.PRESS)){
+    _defKey = currPly == plyTeam[1];
 }
 
 var _newState = noone;
 
-if(_plyKey != -1 && checkState(noone) && (on_ground() || plyTeam[_plyKey].airOK) && plyTeam[_plyKey].hp >= 1){
+if(_plyKey != -1 && !input_lock && (on_ground() || plyTeam[_plyKey].airOK) && plyTeam[_plyKey].hp >= 1){
 
 	switchPly(plyTeam[_plyKey]);
 	
-	if(scr_inputCheck(ord("W"))){
+	move_lock = true;
+	
+	if(scr_playerIO([en_input.UNI_UP])){
 		
 		_newState = currPly.state_atkUp;
 		
-	}else if(scr_inputCheck(ord("S"))){
+	}else if(scr_playerIO([en_input.UNI_DOWN])){
 		
 		_newState = currPly.state_atkDn;
 		
@@ -105,14 +119,26 @@ if(_plyKey != -1 && checkState(noone) && (on_ground() || plyTeam[_plyKey].airOK)
 		
 	}
 
-}else if(scr_inputCheck(ord("P"), ev_keypress) && checkState(noone)){
+}else if(_defKey != -1 && !input_lock && plyTeam[_defKey].hp >= 1){
 
+	switchPly(plyTeam[_defKey]);
+	
+	move_lock = true;
+	
 	_newState = currPly.state_def;
 
 }
 
-if(_newState != noone && _newState.canRun() && _newState.enCost <= en){
+if(_newState != noone && _newState.canRun() && _newState.enCost <= en && (checkState(noone) || _newState != lastAct)){
 			
+	if(io_check(en_ioType.DOWN, [en_input.UNI_LEFT])){
+	    image_xscale = -1;
+	}else if(io_check(en_ioType.DOWN, [en_input.UNI_RIGHT])){
+	    image_xscale = 1;
+	}
+	
+	lastAct = _newState;
+	
 	useEn(_newState.enCost);
 	
 	switchState(_newState.run);
@@ -125,7 +151,7 @@ if(_newState != noone && _newState.canRun() && _newState.enCost <= en){
 
 #region //hyper
 
-    if(scr_inputCheck(vk_shift) && checkState(noone) && !global.hyperActive && global.hyper >= 1){
+    if(scr_playerIO([en_input.GAME_HYPER]) && checkState(noone) && !global.hyperActive && global.hyper >= 1){
         hyperStart();
     }
     
@@ -231,7 +257,9 @@ if(_newState != noone && _newState.canRun() && _newState.enCost <= en){
 
 #endregion
 
-if(keyboard_check_pressed(vk_tab)){
+//debug keys
+
+if(keyboard_check_pressed(vk_f1)){
 	
 	checkDebugView();
 	
@@ -278,8 +306,16 @@ if(global.debugView){
     	}
     	
     }
+    
+    if(keyboard_check_pressed(vk_delete)){
+    	
+        global.hyper = 1;
+    	
+    }
 
 }
+
+/**/
 
 if(global.timeSlow > 0){
 	

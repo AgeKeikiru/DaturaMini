@@ -1,7 +1,7 @@
 #region //vars
 
 	#macro GRAVITY 0.23
-	#macro MAX_JUMP 0.15
+	#macro MAX_JUMP 0.2
 	#macro BOSS_STUNMAX 10
 	
 	depth = 0;
@@ -23,6 +23,7 @@
 	input_x = 0;
 	input_y = 0;
 	input_lock = false;
+	move_lock = false;
 	
 	force_x = 0;
 	force_y = 0;
@@ -74,30 +75,12 @@
 	
 	}
 	
-	function scr_inputCheck(_key, _type, _ignoreLock){
+	function scr_playerIO(_key, _type, _ignoreLock){
 		
-		if(is_undefined(_type)){ _type = ev_keyboard; }
+		if(is_undefined(_type)){ _type = en_ioType.DOWN; }
 		if(is_undefined(_ignoreLock)){ _ignoreLock = false; }
 		
-		var _check = false;
-		
-		switch(_type){
-			
-			case ev_keyboard:
-				_check = keyboard_check(_key);
-				break;
-				
-			case ev_keypress:
-				_check = keyboard_check_pressed(_key);
-				break;
-				
-			case ev_keyrelease:
-				_check = keyboard_check_released(_key);
-				break;
-				
-		}
-		
-		return (!input_lock || _ignoreLock) && stun <= 0 && _check;
+		return (!input_lock || _ignoreLock) && stun <= 0 && io_check(_type, _key);
 
 	}
 	
@@ -116,6 +99,16 @@
 			cstate_time = 0;
 			cstate_new = true;
 			cstate_curr = _state;
+			iState = false;
+			blocking = false;
+			
+			with obj_pAtk_afterimage{
+			    
+			    if(id != global.hyperAfterImg){
+			        instance_destroy();
+			    }
+			    
+			}
 			
 			hazard = false;
 		
@@ -145,9 +138,9 @@
 
 				jumpTime = -1;
 				
-				if(player && scr_inputCheck(vk_space, ev_keypress)){
+				if(player && scr_playerIO([en_input.GAME_JUMP], en_ioType.PRESS)){
 					
-					if(keyboard_check(ord("S")) && on_passThru() && !on_wall() && !on_slope()){
+					if(scr_playerIO([en_input.UNI_DOWN]) && on_passThru() && !on_wall() && !on_slope()){
 						
 						y++;
 						spd_y = 2;
@@ -183,7 +176,7 @@
 			}else{
 
 				//gravity
-				if(scr_inputCheck(vk_space, ev_keyrelease)){
+				if(scr_playerIO([en_input.GAME_JUMP], en_ioType.RELEASE)){
 					jumpTime = -1;
 				}else if(clamp(jumpTime, 0, MAX_JUMP) == jumpTime){
 				

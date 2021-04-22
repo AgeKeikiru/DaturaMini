@@ -1,0 +1,17 @@
+// 2021-04-21 16:33:39
+#event properties (no comments/etc. here are saved)
+parent_index = objA_pAtk;
+sprite_index = spr_ari_atkF;
+uses_physics = false;
+
+#event create
+event_inherited();
+
+duration = room_speed * 0.5;
+dmg = 0.3;
+push = 1.5;
+lift = 0;
+atkStun = 0;
+
+passWall = false;
+passEnemy = false;

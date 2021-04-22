@@ -28,6 +28,10 @@ camMidX = 0;
 camH = 0;
 camMidY = 0;
 
+bgmCurr = noone;
+
+lst_sfx = ds_list_create();
+
 lwo_menuItem = function(_name, _onRun) constructor{
     
     name = _name;
@@ -47,19 +51,19 @@ lwo_menuBody = function() constructor{
         
         do{
         
-            if(keyboard_check_pressed(ord("W"))){
+            if(io_check(en_ioType.PRESS, [en_input.UNI_UP])){
                 menuY--;
             }
             
-            if(keyboard_check_pressed(ord("S"))){
+            if(io_check(en_ioType.PRESS, [en_input.UNI_DOWN])){
                 menuY++;
             }
             
-            if(keyboard_check_pressed(ord("A"))){
+            if(io_check(en_ioType.PRESS, [en_input.UNI_LEFT])){
                 menuX--;
             }
             
-            if(keyboard_check_pressed(ord("D"))){
+            if(io_check(en_ioType.PRESS, [en_input.UNI_RIGHT])){
                 menuX++;
             }
             
@@ -69,13 +73,13 @@ lwo_menuBody = function() constructor{
         
         }until(!fn_getSelected().skip);
         
+        audf_playSfx(sfx_tick1);
+        
         if(obj_ui.drawType == obj_ui.drawType_charSelect){
             
             obj_ui.fade_txt[0] = 0;
             
         }
-        
-        io_clear();
         
     }
     
@@ -86,7 +90,11 @@ lwo_menuBody = function() constructor{
         io_clear();
         
         if(_scr != noone){
+            
+            audf_playSfx(sfx_confirm);
+            
             _scr();
+            
         }
         
     }
@@ -191,6 +199,7 @@ arr_menus = [];
             
             fade = [1, 0.5];
             fade_stripe = [0, 1];
+            fade_txt = [0, 0];
             
         }
         
@@ -229,6 +238,8 @@ arr_menus = [];
             fade = [0, 0];
             
             txtMain = ["", ""];
+            
+            audf_playBgm(bgm_boss);
             
         }
         
@@ -294,6 +305,8 @@ arr_menus = [];
             fade_txt = [0, 1];
             fade = [0, 0];
             
+            audf_playBgm(bgm_clear);
+            
         }
         
         fc_clear_2 = function(){
@@ -332,6 +345,8 @@ arr_menus = [];
             
             arr_menus = [];
             menuControl = false;
+            
+            audf_playBgm(bgm_ranking);
             
             room_goto(rm_title);
             
@@ -385,6 +400,8 @@ arr_menus = [];
                 
             }
             
+            audf_playSfx(sfx_tick2);
+            
         }
         
         fc_gameOver_4 = function(){
@@ -394,7 +411,16 @@ arr_menus = [];
             fade[1] += 1;
             
             if(fade[1] == 3){
-                fc_delay = 0.8;
+                fc_delay = 1.2;
+            }
+            
+            audio_stop_sound(bgmCurr);
+            
+            if(bgmCurr != noone){
+                
+                audf_playSfx(sfx_gameOver);
+                bgmCurr = noone;
+                
             }
             
             if(fade[1] > 3){
@@ -524,6 +550,8 @@ arr_menus = [];
             
             global.arr_team = [noone, noone];
             
+            audf_playBgm(bgm_select);
+            
         }
         
         fc_charSelect_2 = function(){
@@ -572,6 +600,8 @@ arr_menus = [];
             fade[1] = 1;
             
             txtMain = ["", ""];
+            
+            audio_sound_gain(bgmCurr, 0, 500);
             
         }
         
@@ -630,6 +660,8 @@ arr_menus = [];
             
             arr_menus = [_menu];
             
+            audf_playBgm(bgm_ranking);
+            
         }
         
         fc_nameEntry_2 = function(){
@@ -664,6 +696,8 @@ arr_menus = [];
             fc_delay = 1;
             
             fade[1] = 1;
+            
+            audio_sound_gain(bgmCurr, 0, 1000);
             
         }
         
@@ -750,9 +784,10 @@ arr_menus = [];
             
             draw_sprite(spr_devLogo, 0, _x, _y);
             
-            if(keyboard_check_pressed(vk_enter)){
+            if(io_check(en_ioType.PRESS)){
                 
                 fc_title_5();
+                //audf_playSfx(sfx_confirm);
                 
             }
             
@@ -768,7 +803,7 @@ arr_menus = [];
                 styleTxt("-PRESS START-", _x, _y + 30, c_white, c_gray);
             }
             
-            if(keyboard_check_pressed(vk_enter) && menuControl){
+            if(io_check(en_ioType.PRESS, [en_input.MENU_START, en_input.MENU_ACCEPT]) && menuControl){
                 
                 var _menu = new lwo_menuBody();
                 
@@ -782,6 +817,8 @@ arr_menus = [];
                 menuControl = true;
                 
                 fade_txt[1] += 1;
+                
+                audf_playSfx(sfx_confirm);
                 
             }else{
                 
@@ -1166,10 +1203,12 @@ arr_menus = [];
             
         }
         
-        if(keyboard_check_pressed(vk_enter)){
+        if(io_check(en_ioType.PRESS) && fade[0] == 0){
             
-            io_clear();
-            fc_title_5();
+            //io_clear();
+            fc_scoreTable_2();
+            
+            //audf_playSfx(sfx_confirm);
             
         }
         
@@ -1407,7 +1446,7 @@ arr_menus = [];
             
         }
         
-        if(clearPhase[1] == 5 && keyboard_check_pressed(vk_enter)){
+        if(clearPhase[1] == 5 && io_check(en_ioType.PRESS, [en_input.MENU_ACCEPT, en_input.MENU_START])){
             
             fc_next = fc_allClear_1;
             fc_delay = 1.5;
@@ -1415,6 +1454,8 @@ arr_menus = [];
             fade = [2, 1];
             
             clearPhase[1] = 6;
+            
+            audio_sound_gain(bgmCurr, 0, 500);
             
         }
         
@@ -1478,7 +1519,7 @@ arr_menus = [];
         
         draw_set_color(c_white);
         
-        if(fade[0] == 0 && keyboard_check_pressed(vk_enter)){
+        if(fade[0] == 0 && io_check(en_ioType.PRESS, [en_input.MENU_ACCEPT, en_input.MENU_START])){
             
             fc_next = fc_gameOver_5;
             fc_delay = 1;
@@ -1526,7 +1567,7 @@ arr_menus = [];
             
             styleTxt(string(_fadeTxt), _x + _offX, _y + 2, c_white, CC_UI_ACCENT);
             
-            if(keyboard_check_pressed(vk_enter)){
+            if(io_check(en_ioType.PRESS, [en_input.MENU_START])){
                 
                 fc_next = noone;
                 
@@ -1555,7 +1596,7 @@ arr_menus = [];
                     
                 }
                 
-            }else if(keyboard_check_pressed(ord("I"))){
+            }else if(io_check(en_ioType.PRESS, [en_input.MENU_ACCEPT, en_input.MENU_CANCEL])){
                 fc_next();
             }
         
@@ -1616,10 +1657,12 @@ drawClearStat = function(_y, _s1, _s2, _bonus){
 
 approachStat = function(_val1, _val2){
     
-    var _skip = keyboard_check_pressed(vk_enter);
+    var _skip = io_check(en_ioType.PRESS, [en_input.MENU_ACCEPT, en_input.MENU_START]);
     
     if(_val1 < _val2[0] || _val2[0] == 0){
                 
+        audf_playSfx(sfx_tick2);
+        
         _val1 += ceil(_val2[0] / room_speed);
         
         if(_val1 >= _val2[0] || _skip){
@@ -1627,7 +1670,10 @@ approachStat = function(_val1, _val2){
             _val1 = _val2[0];
             
             if(_val2[0] >= _val2[1] xor _val2 == global.bonus_time){
+                
                 global.points += 5000;
+                audf_playSfx(sfx_cut2);
+                
             }
             
             fc_next = fc_clear_3b;

@@ -1,4 +1,4 @@
-// 2021-04-14 16:19:30
+// 2021-04-21 16:55:40
 #event properties (no comments/etc. here are saved)
 parent_index = objA_actor;
 uses_physics = false;
@@ -63,6 +63,8 @@ shakeX = [-1, 1];
 shakeY = [-1, 1];
 shake_onDeath = false;
 
+hitSound = sfx_hit;
+
 #event destroy Insert description here
 // You can write your code in this editor
 
@@ -87,7 +89,11 @@ if(pv_d != 0){
 	
 }
 
-if(collision_rectangle(bbox_left + -1, bbox_top + -1, bbox_right + 1, bbox_bottom + 1, objA_solid, false, true) && !passWall){
+if(collision_rectangle(bbox_left + -1, bbox_top + -1, bbox_right + 1, bbox_bottom + 1, objA_solid, true, true) && !passWall){
+    instance_destroy();
+}
+
+if((x != clamp(x, obj_ui.x, obj_ui.x + obj_ui.camW) || y != clamp(y, obj_ui.y, obj_ui.y + obj_ui.camH)) && !hazard){
     instance_destroy();
 }
 
@@ -95,6 +101,8 @@ if(collision_rectangle(bbox_left + -1, bbox_top + -1, bbox_right + 1, bbox_botto
 event_inherited();
 
 if(!hazard && object_is_ancestor(other.object_index, obj_enemy) && !other.checkState(other.fn_state_dead) && !other.player && ds_list_find_index(lst_hits, other.id) == -1 && other.iFrames <= 0 && !other.iState){
+	
+	audf_playSfx(hitSound);
 	
 	ds_list_add(lst_hits, other.id);
 	
