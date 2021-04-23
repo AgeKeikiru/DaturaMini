@@ -99,33 +99,37 @@ if(scr_playerIO([en_input.GAME_DEF1], en_ioType.PRESS)){
 
 var _newState = noone;
 
-if(_plyKey != -1 && !input_lock && (on_ground() || plyTeam[_plyKey].airOK) && plyTeam[_plyKey].hp >= 1){
+if(!input_lock){
 
-	switchPly(plyTeam[_plyKey]);
+	if(_plyKey != -1 && (on_ground() || plyTeam[_plyKey].airOK) && plyTeam[_plyKey].hp >= 1){
 	
-	move_lock = true;
+		switchPly(plyTeam[_plyKey]);
+		
+		move_lock = true;
+		
+		if(scr_playerIO([en_input.UNI_UP])){
+			
+			_newState = currPly.state_atkUp;
+			
+		}else if(scr_playerIO([en_input.UNI_DOWN])){
+			
+			_newState = currPly.state_atkDn;
+			
+		}else{
+			
+			_newState = currPly.state_atk;
+			
+		}
 	
-	if(scr_playerIO([en_input.UNI_UP])){
+	}else if(_defKey != -1 && plyTeam[_defKey].hp >= 1){
+	
+		switchPly(plyTeam[_defKey]);
 		
-		_newState = currPly.state_atkUp;
+		move_lock = true;
 		
-	}else if(scr_playerIO([en_input.UNI_DOWN])){
-		
-		_newState = currPly.state_atkDn;
-		
-	}else{
-		
-		_newState = currPly.state_atk;
-		
+		_newState = currPly.state_def;
+	
 	}
-
-}else if(_defKey != -1 && !input_lock && plyTeam[_defKey].hp >= 1){
-
-	switchPly(plyTeam[_defKey]);
-	
-	move_lock = true;
-	
-	_newState = currPly.state_def;
 
 }
 
@@ -212,7 +216,22 @@ if(_newState != noone && _newState.canRun() && _newState.enCost <= en && (checkS
     _cy = 0,
     _csc = 0.5, //camera shake correction rate
     _p1 = 0.8, //parallax factor
-    _p2 = 0.9;
+    _p2 = 0.9,
+    _panTgt = 0;
+    
+    if(!io_check(en_ioType.DOWN, [en_input.UNI_LEFT, en_input.UNI_RIGHT]) && io_check(en_ioType.DOWN, [en_input.UNI_UP, en_input.UNI_DOWN]) && checkState(noone) && !global.nim){
+    	
+    	if(panTimer < 1.5){
+    		panTimer += TICK;
+    	}else{
+    		_panTgt = io_check(en_ioType.DOWN, [en_input.UNI_DOWN]) ? 1 : -1;
+    	}
+    	
+    }else{
+    	panTimer = 0;
+    }
+    
+    vertPan = lerp(vertPan, _panTgt * 50, 0.2);
     
     cam_shakeX = lerp(cam_shakeX, 0, _csc * global.timeFlow);
     cam_shakeY = lerp(cam_shakeY, 0, _csc * global.timeFlow);
@@ -238,7 +257,7 @@ if(_newState != noone && _newState.canRun() && _newState.enCost <= en && (checkS
     }
     
     _cx = clamp(_cx, 0, room_width + -camera_get_view_width(view_camera[0])) + cam_shakeX;
-    _cy = clamp(_cy, 0, room_height + -camera_get_view_height(view_camera[0])) + cam_shakeY;
+    _cy = clamp(_cy + vertPan, 0, room_height + -camera_get_view_height(view_camera[0])) + cam_shakeY;
     
     camera_set_view_pos(view_camera[0], _cx, _cy);
     

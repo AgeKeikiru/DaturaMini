@@ -152,6 +152,7 @@
 						
 					}
 					
+					move_lock = false;
 					state_current = method(undefined, pstate_air);
 					exit;
 					

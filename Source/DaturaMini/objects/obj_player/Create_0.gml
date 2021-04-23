@@ -4,6 +4,9 @@ input_lock = true;
 
 lastAct = noone;
 
+panTimer = 0;
+vertPan = 0;
+
 #region //player data
 
 	function plyData(_src, _hp) constructor{

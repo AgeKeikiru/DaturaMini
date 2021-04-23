@@ -29,6 +29,7 @@ F                       Switch characters
 
 =v0.0.2=
 - Attacks and defensive actions (including jumping) can now cancel into each-other
+- Holding Up or Down while stationary will now pan the camera
 - Added rudimentary xinput support (only reads slot 0)
 - Added placeholder audio
 - Added additional controls to allow alternate methods of controlling the party
@@ -36,3 +37,5 @@ F                       Switch characters
 - Ari Up-Atk no longer fails to spawn missiles if her back is against a wall
 - Fixed inconsistent collision between Ari Atk and slopes
 - Player projectiles now despawn upon exiting screen boundaries
+- Imo now properly loses her blocking property if she is KO'd while blocking
+- Attacks will no longer reverse the movement of moving platforms
