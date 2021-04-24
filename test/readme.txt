@@ -1,4 +1,4 @@
-==Datura Mini v0.0.2, x/xx/2021 Prototype Build==
+==Datura Mini v0.0.2, 4/24/2021 Prototype Build==
 
 By @A.Kei.KI, in GameMaker Studio 2
 
@@ -19,6 +19,14 @@ A           [LB]        Defend (character 1)
 S           [RB]        Defend (character 2)
 F                       Switch characters
 
+=Debug Controls=
+F1                      Debug mode toggle (during a stage)
+Home                    Restart game
+PgUp                    Heal current character
+PgDn                    KO current character
+End                     Game Over shortcut
+Del                     Fill hyper gauge
+
 
 ==Patch Notes==
 
@@ -29,10 +37,15 @@ F                       Switch characters
 
 =v0.0.2=
 - Attacks and defensive actions (including jumping) can now cancel into each-other
+- Holding Up or Down while stationary will now pan the camera
 - Added rudimentary xinput support (only reads slot 0)
 - Added placeholder audio
 - Added additional controls to allow alternate methods of controlling the party
 - Increased maximum jump height
+- Imo Neutral-Atk now attacks twice (individual damage has been halved to remain consistent). The second attack has a higher hitbox to assist in attacking enemies while going up mild slopes
 - Ari Up-Atk no longer fails to spawn missiles if her back is against a wall
 - Fixed inconsistent collision between Ari Atk and slopes
 - Player projectiles now despawn upon exiting screen boundaries
+- Imo now properly loses her blocking property if she is KO'd while blocking
+- Attacks will no longer reverse the movement of moving platforms
+- Stage clear screen now properly reflects the player's performance

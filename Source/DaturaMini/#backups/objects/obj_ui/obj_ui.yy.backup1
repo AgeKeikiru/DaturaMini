@@ -1,4 +1,4 @@
-// 2021-04-20 20:52:11
+// 2021-04-24 14:28:52
 #event properties (no comments/etc. here are saved)
 parent_index = -1;
 persistent = true;
@@ -1670,9 +1670,9 @@ approachStat = function(_val1, _val2){
                 
         audf_playSfx(sfx_tick2);
         
-        _val1 += ceil(_val2[0] / room_speed);
+        _val1 += max(ceil(_val2[0] / room_speed), 1);
         
-        if(_val1 >= _val2[0] || _skip){
+        if(_val1 >= _val2[0] || _skip || _val2[0] == 0){
             
             _val1 = _val2[0];
             
@@ -1783,6 +1783,10 @@ if(menuControl && array_length(arr_menus)){
         
     }
     
+}
+
+if(!global.nim){
+    global.bonus_time[0] += 1;
 }
 
 flowchart_step();
@@ -2067,13 +2071,13 @@ repeat(1){
         
         	//player = true; //idk why this is here
         
-        	draw_set_font(ft_small);
+        	draw_set_font(ft_micro);
         	draw_set_halign(fa_left);
         	draw_set_valign(fa_bottom);
         	draw_set_color(c_white);
         
         	draw_text(x + 2, y + camH + -2,
-        		"dbg."
+        		"dbg. K:" + string(global.bonus_kill[0]) + "/" + string(global.bonus_kill[1])
         	);
         
         }

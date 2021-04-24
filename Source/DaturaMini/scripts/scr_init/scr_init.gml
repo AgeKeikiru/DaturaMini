@@ -1,3 +1,5 @@
+#macro TESTING_MODE false
+
 function scr_init(){
 	
 	randomize();
@@ -162,7 +164,7 @@ function scr_init(){
         
     }
     
-    global.points = 999999;
+    global.points = TESTING_MODE ? 999999 : 0;
     global.pointName = "";
     global.pointRank = 0;
 
@@ -330,9 +332,12 @@ function scr_init(){
     global.map_save[? en_save.SET_BGM] = 0.35;
     global.map_save[? en_save.SET_SFX] = 0.3;
     
-    //testing
-    global.map_save[? en_save.SET_BGM] = 0;
-    //global.map_save[? en_save.SET_SFX] = 0.2;
+    if(TESTING_MODE){
+    
+        //global.map_save[? en_save.SET_BGM] = 0;
+        //global.map_save[? en_save.SET_SFX] = 0.2;
+    
+    }
 
 #endregion
 
@@ -346,7 +351,7 @@ function scr_init(){
 
 #endregion
 
-global.arr_team = [0, 1];
+global.arr_team = [1, 0];
 
 global.nim = false;
 
@@ -364,10 +369,10 @@ global.map_hyperValue = ds_map_create();
 
 global.rmNext = rm_test;
 
-global.bonus_time = [6052, 6000];
+global.bonus_time = [0, 6000];
 global.bonus_kill = [28, 0];
 global.bonus_token = [16, 0];
-global.bonus_hyper = [2, 3];
+global.bonus_hyper = [0, 3];
 
 #macro HYPER_DURATION 8
 #macro CC_HYPINK $feaeff

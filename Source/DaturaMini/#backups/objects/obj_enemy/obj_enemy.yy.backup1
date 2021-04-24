@@ -1,10 +1,13 @@
-// 2021-04-20 13:09:01
+// 2021-04-24 11:07:38
 #event properties (no comments/etc. here are saved)
 parent_index = objA_actor;
 uses_physics = false;
 
 #event create
 event_inherited();
+
+noCount = false; //if true, not counted towards enemy kill count
+global.bonus_kill[1] += 1;
 
 arr_timers[0] = 1;
 
@@ -92,7 +95,7 @@ fn_state_bossDead = function(){
 		
 		_s_time += TICK;
 		
-		if(_s_time > 0.5){
+		if(_s_time > 0.2){
 		    
 		    _s_time = 0;
 		    

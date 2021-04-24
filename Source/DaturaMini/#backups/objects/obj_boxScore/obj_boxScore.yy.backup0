@@ -1,0 +1,29 @@
+// 2021-04-24 11:00:17
+#event properties (no comments/etc. here are saved)
+parent_index = obj_box;
+sprite_index = spr_pointBox;
+uses_physics = false;
+
+#event create
+event_inherited();
+
+loop = -1;
+
+onHit = function(){
+
+	loop = 0;
+	global.bonus_token[0] += 1;
+
+}
+
+global.bonus_token[1] += 1;
+
+#event step
+event_inherited();
+
+if(clamp(loop, 0, 9) == loop){
+
+	scr_place(obj_itemGlow_score, x + 8, y + 8);
+	loop++;
+
+}

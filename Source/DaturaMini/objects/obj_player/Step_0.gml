@@ -6,7 +6,7 @@ event_inherited();
     _num = collCheck(0, 0, objA_actor, true),
     _hit = false;
     
-    if(collision_rectangle(bbox_left + -1, bbox_top + -1, bbox_right + 1, bbox_bottom + 1, obj_cb_hazard, false, true) != noone){
+    if(collision_rectangle(bbox_left + -1, bbox_top + -1, bbox_right + 1, bbox_bottom + 1, obj_cb_hazard, false, true) != noone && !global.nim){
         _hit = true;
     }
     
@@ -97,37 +97,69 @@ if(scr_playerIO([en_input.GAME_DEF1], en_ioType.PRESS)){
     _defKey = currPly == plyTeam[1];
 }
 
+if(io_check(en_ioType.RELEASE, [en_input.GAME_SWITCH])){
+    switching = false;
+}
+
+if(io_check(en_ioType.PRESS, [en_input.GAME_SWITCH])){
+    
+    var _sChar = currPly == plyTeam[0];
+    
+    if(checkState(noone) && plyTeam[_sChar].hp >= 1){
+        switchPly();
+    }else{
+        switching = true;
+    }
+    
+}
+
 var _newState = noone;
 
 if(!input_lock){
 
-	if(_plyKey != -1 && (on_ground() || plyTeam[_plyKey].airOK) && plyTeam[_plyKey].hp >= 1){
+	if(_plyKey != -1){
 	
-		switchPly(plyTeam[_plyKey]);
+    	if(switching){
+    	    _plyKey = !_plyKey;
+    	}
+    	
+    	if((on_ground() || plyTeam[_plyKey].airOK) && plyTeam[_plyKey].hp >= 1){
+    		
+    		switchPly(plyTeam[_plyKey]);
+    		
+    		move_lock = true;
+    		
+    		if(scr_playerIO([en_input.UNI_UP])){
+    			
+    			_newState = currPly.state_atkUp;
+    			
+    		}else if(scr_playerIO([en_input.UNI_DOWN])){
+    			
+    			_newState = currPly.state_atkDn;
+    			
+    		}else{
+    			
+    			_newState = currPly.state_atk;
+    			
+    		}
 		
-		move_lock = true;
-		
-		if(scr_playerIO([en_input.UNI_UP])){
-			
-			_newState = currPly.state_atkUp;
-			
-		}else if(scr_playerIO([en_input.UNI_DOWN])){
-			
-			_newState = currPly.state_atkDn;
-			
-		}else{
-			
-			_newState = currPly.state_atk;
-			
 		}
 	
-	}else if(_defKey != -1 && plyTeam[_defKey].hp >= 1){
+	}else if(_defKey != -1){
 	
-		switchPly(plyTeam[_defKey]);
+		if(switching){
+    	    _defKey = !_defKey;
+    	}
 		
-		move_lock = true;
+		if(plyTeam[_defKey].hp >= 1){
 		
-		_newState = currPly.state_def;
+    		switchPly(plyTeam[_defKey]);
+    		
+    		move_lock = true;
+    		
+    		_newState = currPly.state_def;
+		
+		}
 	
 	}
 
@@ -193,6 +225,8 @@ if(_newState != noone && _newState.canRun() && _newState.enCost <= en && (checkS
                 global.hyperTime = HYPER_DURATION;
                 global.hyper = 0;
                 global.hyperChain++;
+                
+                global.bonus_hyper[0] = max(global.bonus_hyper[0], global.hyperChain);
                 
             }else{
             

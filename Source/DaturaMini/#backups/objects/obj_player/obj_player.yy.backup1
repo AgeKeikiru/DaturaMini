@@ -1,4 +1,4 @@
-// 2021-04-21 22:00:45
+// 2021-04-24 10:42:31
 #event properties (no comments/etc. here are saved)
 parent_index = objA_actor;
 uses_physics = false;
@@ -9,6 +9,11 @@ event_inherited();
 input_lock = true;
 
 lastAct = noone;
+
+switching = false;
+
+panTimer = 0;
+vertPan = 0;
 
 #region //player data
 
@@ -83,22 +88,34 @@ lastAct = noone;
 
 		state_atk.run2 = function(){
 
+			static _s_atk2 = false;
+			
 			with(src){
 			
+				var _f_atk = function(){
+				    
+				    var _r = scr_place(obj_pAtk_imo, x + (image_xscale * 12), y);
+					_r.image_xscale = image_xscale;
+					
+					audf_playSfx(sfx_cut1);
+					
+					return _r;
+				    
+				}
+				
 				//on-enter actions
 				if(cstate_new){
 		
 					cstate_new = false;	
+					
+					_s_atk2 = false;
 		
 					force_x = image_xscale * 2;
 		
 					sprite_index = spr_imo_atk2;
 		
 					//create slash
-					var _atk = scr_place(obj_pAtk_imo, x + (image_xscale * 12), y);
-					_atk.image_xscale = image_xscale;
-					
-					audf_playSfx(sfx_cut1);
+					var _atk = _f_atk();
 					
 					if(global.hyperActive){
 					    
@@ -109,6 +126,18 @@ lastAct = noone;
 					    
 					}
 				
+				}
+				
+				if(cstate_time > lastAct.endLag * lastAct.lagCancel * 0.5 && !_s_atk2 && !global.hyperActive){
+				        
+			        _s_atk2 = true;
+			        
+			        var _atk = _f_atk();
+			        
+			        _atk.image_yscale = -1;
+			        _atk.y += -14;
+			        _atk.x += 2 * image_xscale;
+				    
 				}
 				
 				if(cstate_time > lastAct.endLag * lastAct.lagCancel){
@@ -129,7 +158,7 @@ lastAct = noone;
 		}
 		
 		state_atkUp.endLag = 99;
-		state_atkUp.lagCancel = 1;//0;//delee
+		state_atkUp.lagCancel = 0;
 		state_atkUp.run = function(){
 
 			with(src){
@@ -307,7 +336,7 @@ lastAct = noone;
 		}
 	    
 	    state_atkDn.endLag = 0.4;
-	    state_atkDn.lagCancel = 1;//0.4;//delee
+	    state_atkDn.lagCancel = 0.4;
 		state_atkDn.run = function(){
 
 			with(src){
@@ -400,7 +429,7 @@ lastAct = noone;
 
 		}
 		
-		state_def.endLag = 99;//0.01;//delee
+		state_def.endLag = 0.01;
 		state_def.enCost = 0;
 		state_def.run = function(){
 
@@ -1049,7 +1078,7 @@ event_inherited();
     _num = collCheck(0, 0, objA_actor, true),
     _hit = false;
     
-    if(collision_rectangle(bbox_left + -1, bbox_top + -1, bbox_right + 1, bbox_bottom + 1, obj_cb_hazard, false, true) != noone){
+    if(collision_rectangle(bbox_left + -1, bbox_top + -1, bbox_right + 1, bbox_bottom + 1, obj_cb_hazard, false, true) != noone && !global.nim){
         _hit = true;
     }
     
@@ -1140,35 +1169,71 @@ if(scr_playerIO([en_input.GAME_DEF1], en_ioType.PRESS)){
     _defKey = currPly == plyTeam[1];
 }
 
+if(io_check(en_ioType.RELEASE, [en_input.GAME_SWITCH])){
+    switching = false;
+}
+
+if(io_check(en_ioType.PRESS, [en_input.GAME_SWITCH])){
+    
+    var _sChar = currPly == plyTeam[0];
+    
+    if(checkState(noone) && plyTeam[_sChar].hp >= 1){
+        switchPly();
+    }else{
+        switching = true;
+    }
+    
+}
+
 var _newState = noone;
 
-if(_plyKey != -1 && !input_lock && (on_ground() || plyTeam[_plyKey].airOK) && plyTeam[_plyKey].hp >= 1){
+if(!input_lock){
 
-	switchPly(plyTeam[_plyKey]);
+	if(_plyKey != -1){
 	
-	move_lock = true;
+    	if(switching){
+    	    _plyKey = !_plyKey;
+    	}
+    	
+    	if((on_ground() || plyTeam[_plyKey].airOK) && plyTeam[_plyKey].hp >= 1){
+    		
+    		switchPly(plyTeam[_plyKey]);
+    		
+    		move_lock = true;
+    		
+    		if(scr_playerIO([en_input.UNI_UP])){
+    			
+    			_newState = currPly.state_atkUp;
+    			
+    		}else if(scr_playerIO([en_input.UNI_DOWN])){
+    			
+    			_newState = currPly.state_atkDn;
+    			
+    		}else{
+    			
+    			_newState = currPly.state_atk;
+    			
+    		}
+		
+		}
 	
-	if(scr_playerIO([en_input.UNI_UP])){
+	}else if(_defKey != -1){
+	
+		if(switching){
+    	    _defKey = !_defKey;
+    	}
 		
-		_newState = currPly.state_atkUp;
+		if(plyTeam[_defKey].hp >= 1){
 		
-	}else if(scr_playerIO([en_input.UNI_DOWN])){
+    		switchPly(plyTeam[_defKey]);
+    		
+    		move_lock = true;
+    		
+    		_newState = currPly.state_def;
 		
-		_newState = currPly.state_atkDn;
-		
-	}else{
-		
-		_newState = currPly.state_atk;
-		
+		}
+	
 	}
-
-}else if(_defKey != -1 && !input_lock && plyTeam[_defKey].hp >= 1){
-
-	switchPly(plyTeam[_defKey]);
-	
-	move_lock = true;
-	
-	_newState = currPly.state_def;
 
 }
 
@@ -1255,7 +1320,22 @@ if(_newState != noone && _newState.canRun() && _newState.enCost <= en && (checkS
     _cy = 0,
     _csc = 0.5, //camera shake correction rate
     _p1 = 0.8, //parallax factor
-    _p2 = 0.9;
+    _p2 = 0.9,
+    _panTgt = 0;
+    
+    if(!io_check(en_ioType.DOWN, [en_input.UNI_LEFT, en_input.UNI_RIGHT]) && io_check(en_ioType.DOWN, [en_input.UNI_UP, en_input.UNI_DOWN]) && checkState(noone) && !global.nim){
+    	
+    	if(panTimer < 1.5){
+    		panTimer += TICK;
+    	}else{
+    		_panTgt = io_check(en_ioType.DOWN, [en_input.UNI_DOWN]) ? 1 : -1;
+    	}
+    	
+    }else{
+    	panTimer = 0;
+    }
+    
+    vertPan = lerp(vertPan, _panTgt * 50, 0.2);
     
     cam_shakeX = lerp(cam_shakeX, 0, _csc * global.timeFlow);
     cam_shakeY = lerp(cam_shakeY, 0, _csc * global.timeFlow);
@@ -1281,7 +1361,7 @@ if(_newState != noone && _newState.canRun() && _newState.enCost <= en && (checkS
     }
     
     _cx = clamp(_cx, 0, room_width + -camera_get_view_width(view_camera[0])) + cam_shakeX;
-    _cy = clamp(_cy, 0, room_height + -camera_get_view_height(view_camera[0])) + cam_shakeY;
+    _cy = clamp(_cy + vertPan, 0, room_height + -camera_get_view_height(view_camera[0])) + cam_shakeY;
     
     camera_set_view_pos(view_camera[0], _cx, _cy);
     

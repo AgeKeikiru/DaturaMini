@@ -15,3 +15,14 @@ function scr_segmentInit(){
 	}
 
 }
+
+function scr_stageInit(){
+    
+    scr_segmentInit();
+    
+    global.bonus_time = [0, 0];
+    global.bonus_kill = [0, 0];
+    global.bonus_token = [0, 0];
+    global.bonus_hyper = [1, 2];
+    
+}

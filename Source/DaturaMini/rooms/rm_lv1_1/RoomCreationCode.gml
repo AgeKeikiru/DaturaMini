@@ -12,7 +12,7 @@ __|____ can see behind wall, but must jump over, possibly showing an item/breaka
 light platforming, fight mixed enemies in groups of 2-5
 */
 
-scr_segmentInit();
+scr_stageInit();
 
 with obj_ui{
 
@@ -22,3 +22,4 @@ with obj_ui{
 }
 
 global.rmNext = rm_lv1_2;
+global.bonus_time = [0, ((6 * 60) + 20) * room_speed];

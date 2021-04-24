@@ -2,6 +2,10 @@ event_inherited();
 
 audf_playSfx(sfx_death);
 
+if(!noCount){
+    global.bonus_kill[0] += 1;
+}
+
 value *= 1 + (ds_list_size(lst_uniqueHits) * 0.25) + (global.hyperChain * 0.5);
 
 while(value > 0){

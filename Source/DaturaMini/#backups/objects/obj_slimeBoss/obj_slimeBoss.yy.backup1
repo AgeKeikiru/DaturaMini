@@ -1,4 +1,4 @@
-// 2021-04-20 12:57:08
+// 2021-04-24 11:09:31
 #event properties (no comments/etc. here are saved)
 parent_index = obj_enemy;
 sprite_index = spr_slimeBoss_idle;
@@ -7,7 +7,7 @@ uses_physics = false;
 #event create
 event_inherited();
 
-intf_boss_implement(10);
+intf_boss_implement(50);
 
 cstate_time = -99999;
 
@@ -28,8 +28,11 @@ fn_spawnAdd = function(_x, _y){
         hp = 1.5;
         switchState(fn_state_atk_a2);
         value = 0;
+        noCount = true;
         
     }
+    
+    global.bonus_kill[1] += -1;
     
     return _r;
     

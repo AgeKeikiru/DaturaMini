@@ -21,4 +21,8 @@ if(menuControl && array_length(arr_menus)){
     
 }
 
+if(!global.nim){
+    global.bonus_time[0] += 1;
+}
+
 flowchart_step();

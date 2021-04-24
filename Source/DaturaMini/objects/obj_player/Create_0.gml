@@ -4,6 +4,8 @@ input_lock = true;
 
 lastAct = noone;
 
+switching = false;
+
 panTimer = 0;
 vertPan = 0;
 
@@ -80,22 +82,34 @@ vertPan = 0;
 
 		state_atk.run2 = function(){
 
+			static _s_atk2 = false;
+			
 			with(src){
 			
+				var _f_atk = function(){
+				    
+				    var _r = scr_place(obj_pAtk_imo, x + (image_xscale * 12), y);
+					_r.image_xscale = image_xscale;
+					
+					audf_playSfx(sfx_cut1);
+					
+					return _r;
+				    
+				}
+				
 				//on-enter actions
 				if(cstate_new){
 		
 					cstate_new = false;	
+					
+					_s_atk2 = false;
 		
 					force_x = image_xscale * 2;
 		
 					sprite_index = spr_imo_atk2;
 		
 					//create slash
-					var _atk = scr_place(obj_pAtk_imo, x + (image_xscale * 12), y);
-					_atk.image_xscale = image_xscale;
-					
-					audf_playSfx(sfx_cut1);
+					var _atk = _f_atk();
 					
 					if(global.hyperActive){
 					    
@@ -106,6 +120,18 @@ vertPan = 0;
 					    
 					}
 				
+				}
+				
+				if(cstate_time > lastAct.endLag * lastAct.lagCancel * 0.5 && !_s_atk2 && !global.hyperActive){
+				        
+			        _s_atk2 = true;
+			        
+			        var _atk = _f_atk();
+			        
+			        _atk.image_yscale = -1;
+			        _atk.y += -14;
+			        _atk.x += 2 * image_xscale;
+				    
 				}
 				
 				if(cstate_time > lastAct.endLag * lastAct.lagCancel){

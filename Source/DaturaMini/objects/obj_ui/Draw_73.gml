@@ -277,13 +277,13 @@ repeat(1){
         
         	//player = true; //idk why this is here
         
-        	draw_set_font(ft_small);
+        	draw_set_font(ft_micro);
         	draw_set_halign(fa_left);
         	draw_set_valign(fa_bottom);
         	draw_set_color(c_white);
         
         	draw_text(x + 2, y + camH + -2,
-        		"dbg."
+        		"dbg. K:" + string(global.bonus_kill[0]) + "/" + string(global.bonus_kill[1])
         	);
         
         }

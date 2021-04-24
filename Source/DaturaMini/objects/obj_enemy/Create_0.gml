@@ -1,5 +1,8 @@
 event_inherited();
 
+noCount = false; //if true, not counted towards enemy kill count
+global.bonus_kill[1] += 1;
+
 arr_timers[0] = 1;
 
 value = 0; //point value

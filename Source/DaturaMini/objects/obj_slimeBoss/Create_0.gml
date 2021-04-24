@@ -2,6 +2,10 @@ event_inherited();
 
 intf_boss_implement(50);
 
+if(TESTING_MODE){
+    //hp = 10;
+}
+
 cstate_time = -99999;
 
 s_idle = sprite_index;
@@ -21,8 +25,11 @@ fn_spawnAdd = function(_x, _y){
         hp = 1.5;
         switchState(fn_state_atk_a2);
         value = 0;
+        noCount = true;
         
     }
+    
+    global.bonus_kill[1] += -1;
     
     return _r;
     

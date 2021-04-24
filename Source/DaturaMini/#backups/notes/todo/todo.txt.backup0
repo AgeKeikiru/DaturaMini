@@ -1,5 +1,4 @@
-// 2021-04-21 22:42:06
-stage stat bonuses
+// 2021-04-24 11:12:19
 hit sparks
 options menu
 gamepad support
@@ -8,15 +7,9 @@ gamepad support
     disable health regen
     hyper attacks do 25% damage against bosses
 
-pan camera down
-action cancelling
-    jump cancel
-    if [switch] is pressed during cancelLock and held when [attack/defend current] is pressed after cancelLock ends, switch before performing the next action
 hyper ready notification
 seperate facePlayer from stun effect
-end block state on death
-telegraph extra elevator in area 2
-add 2nd slash to imo neutral (cover upper half)
+//telegraph extra elevator in area 2
 dmc4 sprint
 
 blaze

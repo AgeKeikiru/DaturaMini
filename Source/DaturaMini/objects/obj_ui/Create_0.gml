@@ -1659,13 +1659,13 @@ approachStat = function(_val1, _val2){
     
     var _skip = io_check(en_ioType.PRESS, [en_input.MENU_ACCEPT, en_input.MENU_START]);
     
-    if(_val1 < _val2[0] || _val2[0] == 0){
+    if(_val1 < _val2[0] || (_val2[0] == 0 && _val1 != _val2[0])){
                 
         audf_playSfx(sfx_tick2);
         
-        _val1 += ceil(_val2[0] / room_speed);
+        _val1 += max(ceil(_val2[0] / room_speed), 1);
         
-        if(_val1 >= _val2[0] || _skip){
+        if(_val1 >= _val2[0] || _skip || _val2[0] == 0){
             
             _val1 = _val2[0];
             

@@ -1,3 +1,3 @@
 scr_init();
 
-room_goto(rm_lv1_1);
+room_goto(TESTING_MODE ? rm_lv1_boss : rm_title);

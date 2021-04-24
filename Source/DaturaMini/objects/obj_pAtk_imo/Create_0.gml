@@ -1,7 +1,7 @@
 event_inherited();
 
 duration = sprite_get_number(sprite_index);
-dmg = 2;
+dmg = 1;
 
 slowTo = SLOW_STD;
 
