@@ -1,4 +1,4 @@
-// 2021-03-23 16:12:09
+// 2021-07-04 22:58:48
 function intf_flowchart_implement() {
     
     fc_next = noone;
@@ -12,7 +12,7 @@ function flowchart_step(){
         
         fc_delay += -TICK;
         
-        if(fc_delay <= 0 && is_method(fc_next)){
+        if(fc_delay <= 0 && fc_next != noone){
             fc_next();
         }
         

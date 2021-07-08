@@ -294,11 +294,7 @@ repeat(1){
 
 #endregion
 
-#region //transitions
-
-    drawType();
-
-#endregion
+drawType();
 
 draw_set_color(c_white);
 draw_set_alpha(1);

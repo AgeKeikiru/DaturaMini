@@ -1,4 +1,4 @@
-// 2021-04-21 21:09:23
+// 2021-07-01 18:59:12
 #event properties (no comments/etc. here are saved)
 parent_index = -1;
 uses_physics = false;
@@ -9,6 +9,8 @@ uses_physics = false;
 	#macro GRAVITY 0.23
 	#macro MAX_JUMP 0.2
 	#macro BOSS_STUNMAX 10
+	#macro SPRINT_RATE 1
+	#macro SPRINT_THRESH 0.94
 	
 	depth = 0;
 	
@@ -37,6 +39,8 @@ uses_physics = false;
     fixed = false; //fixed position
 	weight = 1;
 	moveSpd = 1.3;
+	sprinting = 0;
+	sprintAftImg = noone;
 	jumpSpd = 2.5;
 	jumpTime = -1;
 	maxFall = 5; //terminal velocity
@@ -61,6 +65,9 @@ uses_physics = false;
 	aggro_above = 0;
 	aggro_w = -1;
 	aggro_h = -1;
+	
+	//character specific effects
+	sp_frozen = false;
 	
 	intf_platforming_implement();
 
@@ -158,6 +165,7 @@ uses_physics = false;
 						
 					}
 					
+					move_lock = false;
 					state_current = method(undefined, pstate_air);
 					exit;
 					
@@ -230,10 +238,8 @@ if(stun <= 0){
 		image_xscale = input_x;
 		spd_x = input_x * moveSpd;
 		
-		if(player && global.hyperActive){
-		    
+		if(player && (global.hyperActive || sprinting > SPRINT_THRESH)){
 		    spd_x *= 1.5;
-		    
 		}
 		
 		if(sprite_index == s_idle && s_idle != s_move){
@@ -257,7 +263,38 @@ if(state_current != noone){
 }
 
 if(cstate_curr != noone){
+	
 	cstate_curr();
+	
+	sprinting = 0;
+	
+}else if(player){
+    
+    sprinting += TICK * SPRINT_RATE * ((input_x == 0) ? -1 : 1);
+     
+    sprinting = clamp(sprinting, 0, 1);
+    
+    if(sprinting > SPRINT_THRESH){
+        
+        if(!instance_exists(sprintAftImg)){
+            
+            sprintAftImg = scr_place(obj_pAtk_afterimage, x, y);
+            sprintAftImg.depth = depth + 99;
+            
+        }
+        
+        sprintAftImg.x = x;
+        sprintAftImg.y = y;
+        sprintAftImg.sprite_index = sprite_index;
+        sprintAftImg.image_xscale = image_xscale;
+        
+    }else if(instance_exists(sprintAftImg)){
+        
+        instance_destroy(sprintAftImg);
+        sprinting = 0;
+        
+    }
+    
 }
 
 state_is_new = _state != state_current;
@@ -332,7 +369,15 @@ if(iFrames > 0 && (current_time mod room_speed) > (room_speed / 2)){
 }
 
 if(sprite_index != noone){
-	draw_sprite_ext(sprite_index, -1, x, y, image_xscale, image_yscale, image_angle + deadspin, (stun > 0) ? c_red : c_white, _a);
+	
+	var _col = c_white;
+	
+	if(stun > 0){
+	    _col = sp_frozen ? c_aqua : c_red;
+	}
+	
+	draw_sprite_ext(sprite_index, -1, x, y, image_xscale, image_yscale, image_angle + deadspin, _col, _a);
+	
 }
 
 #event draw_end

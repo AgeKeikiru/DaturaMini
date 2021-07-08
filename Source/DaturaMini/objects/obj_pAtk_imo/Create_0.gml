@@ -7,3 +7,5 @@ slowTo = SLOW_STD;
 
 shakeX = [3, 5];
 shakeY = [-2, 2];
+
+hitSpark = spr_spk_pierce;

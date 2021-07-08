@@ -11,7 +11,7 @@ function flowchart_step(){
         
         fc_delay += -TICK;
         
-        if(fc_delay <= 0 && is_method(fc_next)){
+        if(fc_delay <= 0 && fc_next != noone){
             fc_next();
         }
         

@@ -14,10 +14,8 @@ if(stun <= 0){
 		image_xscale = input_x;
 		spd_x = input_x * moveSpd;
 		
-		if(player && global.hyperActive){
-		    
+		if(player && (global.hyperActive || sprinting > SPRINT_THRESH)){
 		    spd_x *= 1.5;
-		    
 		}
 		
 		if(sprite_index == s_idle && s_idle != s_move){
@@ -41,7 +39,38 @@ if(state_current != noone){
 }
 
 if(cstate_curr != noone){
+	
 	cstate_curr();
+	
+	sprinting = 0;
+	
+}else if(player){
+    
+    sprinting += TICK * SPRINT_RATE * ((input_x == 0) ? -1 : 1);
+     
+    sprinting = clamp(sprinting, 0, 1);
+    
+    if(sprinting > SPRINT_THRESH){
+        
+        if(!instance_exists(sprintAftImg)){
+            
+            sprintAftImg = scr_place(obj_pAtk_afterimage, x, y);
+            sprintAftImg.depth = depth + 99;
+            
+        }
+        
+        sprintAftImg.x = x;
+        sprintAftImg.y = y;
+        sprintAftImg.sprite_index = sprite_index;
+        sprintAftImg.image_xscale = image_xscale;
+        
+    }else if(instance_exists(sprintAftImg)){
+        
+        instance_destroy(sprintAftImg);
+        sprinting = 0;
+        
+    }
+    
 }
 
 state_is_new = _state != state_current;

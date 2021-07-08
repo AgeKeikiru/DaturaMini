@@ -1,6 +1,59 @@
 #macro TICK (1 / room_speed)
+#macro SAVE_LOC working_directory + "SAV"
 
 global.debugView = false;
+
+function saveData(){
+        
+    if(file_exists(SAVE_LOC)){
+        file_delete(SAVE_LOC);
+    }
+    
+    var _f = file_text_open_write(SAVE_LOC);
+    
+    file_text_write_string(_f, ds_map_write(global.map_save));
+    
+    file_text_close(_f);
+    
+    show_debug_message("saving to " + SAVE_LOC);
+    
+}
+
+function loadData(){
+    
+    if(file_exists(SAVE_LOC)){
+        
+        show_debug_message("loading " + SAVE_LOC);
+        
+        var
+        _f = file_text_open_read(SAVE_LOC),
+        _map_load = ds_map_create();
+        
+        ds_map_read(_map_load, file_text_read_string(_f));
+        
+        if(_map_load[? en_save.VERSION] == SAVE_VERSION){
+        
+            ds_map_copy(global.map_save, _map_load);
+        
+        }else{
+            
+            show_debug_message("LOAD FAIL: VERSION MISMATCH");
+            
+        }
+    
+        file_text_close(_f);
+        
+        ds_map_destroy(_map_load);
+        
+    }
+    
+}
+
+function array_peek(_arr){
+    
+    return _arr[array_length(_arr) + -1];
+    
+}
 
 function checkDebugView(){
 	return global.debugView xor debug_mode;
@@ -39,7 +92,7 @@ function takeDmg(_inst, _dmg, _push, _lift, _stun, _iFrames){
 			
 			force_x = -image_xscale * _push;
 			spd_x = 0;
-			force_y = -(_lift + weight);
+			force_y = -max(abs(_lift) + weight, abs(force_y)) * sign(_lift);
 			spd_y = 0;
 		
 		}
@@ -197,6 +250,111 @@ function endNim(){
     with obj_ui{
         
         uiOffset[1] = 0;
+        
+    }
+    
+}
+
+function keyToString(_key){
+    
+    /*//
+    Script by D.W. O'Boyle (@dwoboyle)
+    How to use:
+    Simply call this script in a draw_text function. 
+    argument0 should be a keyboard key such as vk_enter or ord('Z').
+    //*/
+    
+    if(_key > 48 && _key < 91){ return chr(_key); }
+    
+    switch(_key){
+        
+        case 8:     return "Bksp"; break;
+        case 9:     return "Tab"; break;
+        case 13:    return "Enter"; break;
+        case 16:    return "Shift"; break;
+        case 17:    return "Ctrl"; break;
+        case 18:    return "Alt"; break;
+        //case 19:    return "Pause"; break;
+        case 20:    return "CAPS"; break;
+        //case 27:    return "Esc"; break;
+        case 32:    return "Space"; break;
+        //case 33:    return "PgUp"; break;
+        //case 34:    return "PgDn"; break;
+        //case 35:    return "End"; break;
+        //case 36:    return "Home"; break;
+        case 37:    return "Left"; break;
+        case 38:    return "Up"; break;
+        case 39:    return "Right"; break;
+        case 40:    return "Down"; break;
+        //case 45:    return "Ins"; break;
+        //case 46:    return "Del"; break;
+        case 96:    return "Num0"; break;
+        case 97:    return "Num1"; break;
+        case 98:    return "Num2"; break;
+        case 99:    return "Num3"; break;
+        case 100:   return "Num4"; break;
+        case 101:   return "Num5"; break;
+        case 102:   return "Num6"; break;
+        case 103:   return "Num7"; break;
+        case 104:   return "Num8"; break;
+        case 105:   return "Num9"; break;
+        case 106:   return "Num*"; break;
+        case 107:   return "Num+"; break;
+        case 109:   return "Num-"; break;
+        case 110:   return "Num."; break;
+        case 111:   return "Num/"; break;
+        //case 112:   return "F1"; break;
+        //case 113:   return "F2"; break;
+        //case 114:   return "F3"; break;
+        //case 115:   return "F4"; break;
+        //case 116:   return "F5"; break;
+        //case 117:   return "F6"; break;
+        //case 118:   return "F7"; break;
+        //case 119:   return "F8"; break;
+        //case 120:   return "F9"; break;
+        //case 121:   return "F10"; break;
+        //case 122:   return "F11"; break;
+        //case 123:   return "F12"; break;
+        case 144:   return "NumLk"; break;
+        //case 145:   return "ScrLk"; break;
+        case 186:   return ";"; break;
+        case 187:   return "="; break;
+        case 188:   return ","; break;
+        case 189:   return "-"; break;
+        case 190:   return "."; break;
+        case 191:   return "\\"; break;
+        case 192:   return "`"; break;
+        case 219:   return "/"; break;
+        case 220:   return "["; break;
+        case 221:   return "]"; break;
+        case 222:   return "'"; break;
+        default:    return ""; break;
+        
+    }
+    
+}
+
+function joyToString(_joy){
+    
+    switch(_joy){
+        
+        case gp_face1:      return "(A)"; break;
+        case gp_face2:      return "(B)"; break;
+        case gp_face3:      return "(X)"; break;
+        case gp_face4:      return "(Y)"; break;
+        case gp_shoulderl:  return "(LB)"; break;
+        case gp_shoulderlb: return "(LT)"; break;
+        case gp_shoulderr:  return "(RB)"; break;
+        case gp_shoulderrb: return "(RT)"; break;
+        case gp_select:     return "(SE)"; break;
+        case gp_start:      return "(ST)"; break;
+        case gp_padu:       return "(UP)"; break;
+        case gp_padd:       return "(DOWN)"; break;
+        case gp_padl:       return "(LEFT)"; break;
+        case gp_padr:       return "(RIGHT)"; break;
+        case gp_stickl:     return "(LS)"; break;
+        case gp_stickr:     return "(RS)"; break;
+        default:            return ""; break;
         
     }
     

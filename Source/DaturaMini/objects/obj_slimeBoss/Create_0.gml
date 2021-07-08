@@ -3,7 +3,7 @@ event_inherited();
 intf_boss_implement(50);
 
 if(TESTING_MODE){
-    //hp = 10;
+    hp = 5;
 }
 
 cstate_time = -99999;

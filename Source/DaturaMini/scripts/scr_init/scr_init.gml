@@ -8,6 +8,20 @@ function scr_init(){
 	
 	scr_place(obj_ui);
 	
+	global.gpDevice = 0;
+    
+    var _pads = gamepad_get_device_count();
+    
+    for(var _i = _pads + -1; _i >= 0; _i--){
+        
+        if(gamepad_is_connected(_i)){
+            global.gpDevice = _i;
+        }
+        
+    }
+	
+	loadData();
+	
 }
 
 #region //character data
@@ -36,7 +50,7 @@ function scr_init(){
     function lwo_charData() constructor{
         
         name = "";
-        unlockDesc = "???";
+        unlockDesc = "TBA";
         
         hintDesc = [
             
@@ -63,8 +77,20 @@ function scr_init(){
         hintDesc[2] += "Down-slash,\npulls enemies\nin";
         hintDesc[3] += "Block,\nmove to dodge";
         
-        introTxt[en_charID.IMO] = "\"Try not to get in the way too\nmuch.\"";
-        introTxt[en_charID.ARI] = "\"Ugh, how did I get stuck with\nyou?\"";
+        introTxt[en_charID.IMO] =       "\"" +
+                                        "Try not to get in the way too\n" +
+                                        "much." +
+                                        "\"";
+        
+        introTxt[en_charID.ARI] =       "\"" +
+                                        "Ugh, how did I get stuck with\n" +
+                                        "you?" +
+                                        "\"";
+                                        
+        introTxt[en_charID.BREIA] =     "\"" +
+                                        "Fat chance if I have to\n" +
+                                        "babysit you." +
+                                        "\"";
         
         s_icon = [spr_imo_idle, spr_imo_move];
         s_port = spr_imo_port;
@@ -80,8 +106,19 @@ function scr_init(){
         hintDesc[2] += "Down-crash,\nmore height\nimproves AoE";
         hintDesc[3] += "Sliding dodge,\nstuns enemies";
         
-        introTxt[en_charID.IMO] = "\"Ha! Just try to keep up then!\"";
-        introTxt[en_charID.ARI] = "\"Alright, we got this in the\nbag!\"";
+        introTxt[en_charID.IMO] =       "\"" +
+                                        "Ha! Just try to keep up then!" +
+                                        "\"";
+        
+        introTxt[en_charID.ARI] =       "\"" +
+                                        "Alright, we got this in the\n" +
+                                        "bag!" +
+                                        "\"";
+                                        
+        introTxt[en_charID.BREIA] =     "\"" +
+                                        "Quick eh? Why don't we have\n" +
+                                        "a race then!" +
+                                        "\"";
         
         s_icon = [spr_ari_idle, spr_ari_move];
         s_port = spr_ari_port;
@@ -92,15 +129,36 @@ function scr_init(){
         
         name = "Breia";
         unlockDesc = "Clear Stage 1";
-        //s_icon = [spr_imo_idle, spr_imo_move];
-        //s_port = spr_imo_port;
+        
+        hintDesc[0] += "Slug round,\nextra dmg vs\nfrozen enemies";
+        hintDesc[1] += "Ice grenade,\nhit midair\nfor bigger AoE";
+        hintDesc[2] += "Freeze shot,\nhit the ground\nfor AoE";
+        hintDesc[3] += "8-way dodge,\ncancels into\nself";
+        
+        introTxt[en_charID.IMO] =       "\"" +
+                                        "That's my line, if you get\n" +
+                                        "hit it's your own fault." +
+                                        "\"";
+        
+        introTxt[en_charID.ARI] =       "\"" +
+                                        "I'm not dragging your corpse\n" +
+                                        "back home, y'know." +
+                                        "\"";
+                                        
+        introTxt[en_charID.BREIA] =     "\"" +
+                                        "Let's get this done quick,\n" +
+                                        "yea?" +
+                                        "\"";
+        
+        s_icon = [spr_bre_idle, spr_bre_move];
+        s_port = spr_bre_port;
         
     }
     
     function lwo_tearData() : lwo_charData() constructor{
         
         name = "Tear";
-        unlockDesc = "Clear Stage 2\nwith no\ncontinues";
+        //unlockDesc = "Clear Stage 2\nwith no\ncontinues";
         //s_icon = [spr_imo_idle, spr_imo_move];
         //s_port = spr_imo_port;
         
@@ -109,7 +167,7 @@ function scr_init(){
     function lwo_witchyData() : lwo_charData() constructor{
         
         name = "Witchy";
-        unlockDesc = "Clear the game";
+        //unlockDesc = "Clear the game";
         //s_icon = [spr_imo_idle, spr_imo_move];
         //s_port = spr_imo_port;
         
@@ -118,19 +176,28 @@ function scr_init(){
     function lwo_altaiData() : lwo_charData() constructor{
         
         name = "Altai";
-        unlockDesc = "Clear any stage\non EXH with no\ncontinues";
+        //unlockDesc = "Clear any stage\non EXH with no\ncontinues";
         //s_icon = [spr_imo_idle, spr_imo_move];
         //s_port = spr_imo_port;
         
     }
     
+    //arrange mode chars
+    
     function lwo_veldData() : lwo_charData() constructor{
         
         name = "Veld";
+        //unlockDesc = "Clear the game";
         //s_icon = [spr_imo_idle, spr_imo_move];
         //s_port = spr_imo_port;
         
     }
+    
+    //harzer
+    //clear the game with no continues
+    
+    //jack
+    //clear the game with a certain score
     
     global.arr_chars = [
         
@@ -153,191 +220,32 @@ function scr_init(){
 
 #region //score data
 
-    function lwo_hiScore(_p, _team, _name) constructor{
+    enum en_hiScore{
         
-        points = _p;
+        POINTS,
+        TEAM,
+        NAME,
         
-        team = [];
-        array_copy(team, 0, _team, 0, array_length(_team));
+        LENGTH
         
-        name = _name;
+    }
+    
+    function new_hiScore(_p, _team, _name){
+        
+        var _arr = [];
+        array_copy(_arr, 0, _team, 0, array_length(_team));
+        
+        return [
+            _p,
+            _arr,
+            _name
+        ];
         
     }
     
     global.points = TESTING_MODE ? 999999 : 0;
     global.pointName = "";
     global.pointRank = 0;
-
-#endregion
-
-#region //input data
-
-    enum en_input {
-        
-        UNI_UP,
-        UNI_DOWN,
-        UNI_LEFT,
-        UNI_RIGHT,
-        
-        MENU_ACCEPT,
-        MENU_CANCEL,
-        MENU_START,
-        
-        GAME_JUMP,
-        GAME_ATK1,
-        GAME_ATK2,
-        GAME_DEF_CURRENT,
-        GAME_HYPER,
-        
-        GAME_ATK_CURRENT,
-        GAME_DEF1,
-        GAME_DEF2,
-        GAME_SWITCH,
-        
-        LENGTH
-        
-    }
-    
-    enum en_ioType {
-        
-        DOWN,
-        PRESS,
-        RELEASE
-        
-    }
-    
-    global.gpDevice = 0;
-    
-    function lwo_io(_name, _key, _joy, _group) constructor{
-    
-        name = _name;
-        
-        key = _key;
-        newKey = _key;
-        
-        joy = _joy;
-        newJoy = _joy;
-        
-        group = _group; //members of the same group cannot overlap, -1 cannot overlap with anything
-        
-    }
-    
-    function io_check(_type, _arr_key){
-        
-        var _r = [false, false, false];
-        
-        if(is_undefined(_arr_key)){
-            
-            _arr_key = array_create(en_input.LENGTH);
-            
-            for(var _i = 0; _i < en_input.LENGTH; _i++){
-                _arr_key[_i] = _i;
-            }
-            
-        }
-        
-        for(var _i = 0; _i < array_length(_arr_key); _i++){
-        
-            var _io = global.map_save[? en_save.IO][_arr_key[_i]];
-            
-            if(_io.key != noone){
-                
-                if(keyboard_check(_io.key)){ _r[en_ioType.DOWN] = true; }
-                if(keyboard_check_pressed(_io.key)){ _r[en_ioType.PRESS] = true; }
-                if(keyboard_check_released(_io.key)){ _r[en_ioType.RELEASE] = true; }
-                
-            }
-            
-            if(_io.joy != noone){
-                
-                if(gamepad_button_check(global.gpDevice, _io.joy)){ _r[en_ioType.DOWN] = true; }
-                if(gamepad_button_check_pressed(global.gpDevice, _io.joy)){ _r[en_ioType.PRESS] = true; }
-                if(gamepad_button_check_released(global.gpDevice, _io.joy)){ _r[en_ioType.RELEASE] = true; }
-                
-            }
-        
-        }
-        
-        return _r[_type];
-        
-    }
-
-#endregion
-
-#region //save data
-
-    enum en_save{
-        
-        CHAR_UNLOCK,
-        EXCHAR_UNLOCK,
-        
-        SCORES,
-        
-        SET_BGM,
-        SET_SFX,
-        
-        IO,
-        
-        LENGTH
-        
-    }
-    
-    global.map_save = ds_map_create();
-    
-    global.map_save[? en_save.CHAR_UNLOCK] = array_create(en_charID.LENGTH, 0);
-    global.map_save[? en_save.CHAR_UNLOCK][0] = 2;
-    global.map_save[? en_save.CHAR_UNLOCK][1] = 2;
-    
-    global.map_save[? en_save.EXCHAR_UNLOCK] = array_create(en_exCharID.LENGTH, false);
-    
-    global.map_save[? en_save.SCORES] = [
-        
-        new lwo_hiScore(10000, [0, 1], "KEI"),
-        new lwo_hiScore(9000, [1, 0], "IMO"),
-        new lwo_hiScore(8000, [0, 1], "ARI"),
-        new lwo_hiScore(7000, [1, 0], "BLZ"),
-        new lwo_hiScore(6000, [0, 1], "TEA"),
-        new lwo_hiScore(5000, [1, 0], "WCH"),
-        new lwo_hiScore(4000, [0, 1], "ALT"),
-        new lwo_hiScore(3000, [1, 0], "VLD"),
-        new lwo_hiScore(2000, [0, 1], "HRZ"),
-        new lwo_hiScore(1000, [1, 0], "JCK")
-        
-    ];
-    
-    global.map_save[? en_save.IO] = [
-    
-        new lwo_io("ALL:Up", vk_up, gp_padu, -1),
-        new lwo_io("ALL:Down", vk_down, gp_padd, -1),
-        new lwo_io("ALL:Left", vk_left, gp_padl, -1),
-        new lwo_io("ALL:Right", vk_right, gp_padr, -1),
-    
-        new lwo_io("MENU:Accept", ord("Z"), gp_face1, 0),
-        new lwo_io("MENU:Cancel", ord("X"), gp_face2, 0),
-        new lwo_io("MENU:Start", vk_enter, gp_start, 0),
-        
-        new lwo_io("GAME:Jump", vk_space, gp_face1, 1),
-        new lwo_io("GAME:Atk 1", ord("Z"), gp_face3, 1),
-        new lwo_io("GAME:Atk 2", ord("X"), gp_face4, 1),
-        new lwo_io("GAME:Def", ord("C"), noone, 1),
-        new lwo_io("GAME:Hyper", vk_shift, gp_face2, 1),
-        
-        new lwo_io("GAME:Atk", ord("D"), noone, 1),
-        new lwo_io("GAME:Def 1", ord("A"), gp_shoulderl, 1),
-        new lwo_io("GAME:Def 2", ord("S"), gp_shoulderr, 1),
-        new lwo_io("GAME:Switch", ord("F"), noone, 1)
-    
-    ];
-    
-    global.map_save[? en_save.SET_BGM] = 0.35;
-    global.map_save[? en_save.SET_SFX] = 0.3;
-    
-    if(TESTING_MODE){
-    
-        //global.map_save[? en_save.SET_BGM] = 0;
-        //global.map_save[? en_save.SET_SFX] = 0.2;
-    
-    }
 
 #endregion
 
@@ -351,7 +259,7 @@ function scr_init(){
 
 #endregion
 
-global.arr_team = [1, 0];
+global.arr_team = [1, 2];
 
 global.nim = false;
 

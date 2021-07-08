@@ -1,12 +1,19 @@
-// 2021-04-24 14:01:08
-==Datura Mini v0.0.2, 4/24/2021 Prototype Build==
+// 2021-07-07 22:50:25
+==Datura Mini v0.0.3, 7/9/2021 Prototype Build==
 
 By @A.Kei.KI, in GameMaker Studio 2
 
 Thank you for playing! I hope you come back for the next release <3
 
 
+==Additional Credits==
+
+@Lewmothmusic - Music
+
+
 ==Default Controls==
+
+Make sure your controller is plugged in prior to launching the game
 
 Enter       [A/Start]   Confirm
 Arrow Keys  [DPad]      Menu navigation/Movement
@@ -31,13 +38,19 @@ Del                     Fill hyper gauge
 
 ==Patch Notes==
 
-=v0.0.1=
-- Initial release
-- 2 available characters
-- 1 available stage
+=v0.0.3=
+- New character added, clear stage 1 to unlock
+- Controller input now automatically detects the lowest controller slot
+- Added Options and Keybinds menu functionality (Controls rebinding not yet implemented, but key assignments can be viewed)
+- Stage clear screen no longer hangs if [Max Hyper] count is 0
+- Added hitsparks to attacks
+- Ari Up-Atk now creates an explosion, the damage has been split between initial contact and the explosion
+- Adjusted knockback values for the following attacks:
+    - Imo Up-Atk (slight increase to lift on midair hit, significant increase to lift on grounded hit)
 
 =v0.0.2=
 - Attacks and defensive actions (including jumping) can now cancel into each-other
+- Moving uninterrupted for a short period of time will now increase movement speed
 - Holding Up or Down while stationary will now pan the camera
 - Added rudimentary xinput support (only reads slot 0)
 - Added placeholder audio
@@ -50,3 +63,8 @@ Del                     Fill hyper gauge
 - Imo now properly loses her blocking property if she is KO'd while blocking
 - Attacks will no longer reverse the movement of moving platforms
 - Stage clear screen now properly reflects the player's performance
+
+=v0.0.1=
+- Initial release
+- 2 available characters
+- 1 available stage

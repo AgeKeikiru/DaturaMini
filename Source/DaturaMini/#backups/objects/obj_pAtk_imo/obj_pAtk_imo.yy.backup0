@@ -1,4 +1,4 @@
-// 2021-04-24 10:18:59
+// 2021-07-07 19:05:04
 #event properties (no comments/etc. here are saved)
 parent_index = objA_pAtk;
 sprite_index = spr_imo_atkF;
@@ -14,3 +14,5 @@ slowTo = SLOW_STD;
 
 shakeX = [3, 5];
 shakeY = [-2, 2];
+
+hitSpark = spr_spk_pierce;

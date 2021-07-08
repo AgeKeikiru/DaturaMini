@@ -1,7 +1,7 @@
 event_inherited();
 
 duration = room_speed * 5;
-dmg = 1.5;
+dmg = 1;
 //push = 2;
 //lift = 0;
 //atkStun = 0;

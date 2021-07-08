@@ -1,4 +1,4 @@
-// 2021-04-21 16:34:24
+// 2021-07-07 22:34:54
 #event properties (no comments/etc. here are saved)
 parent_index = objA_pAtk;
 sprite_index = spr_ari_atkF;
@@ -15,3 +15,5 @@ atkStun = 0;
 
 passWall = false;
 passEnemy = false;
+
+hitSpark = spr_spk_bash;

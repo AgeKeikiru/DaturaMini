@@ -1,0 +1,16 @@
+// 2021-07-07 19:23:48
+#event properties (no comments/etc. here are saved)
+parent_index = objA_pAtk;
+sprite_index = spr_ari_atkDnF_b;
+uses_physics = false;
+
+#event create
+event_inherited();
+
+duration = sprite_get_number(sprite_index);
+dmg = 0.5;
+lift = 6;
+
+slowTo = SLOW_STD;
+
+shakeX = [-2, 2];

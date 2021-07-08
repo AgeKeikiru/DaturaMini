@@ -8,3 +8,5 @@ atkStun = 0;
 
 passWall = false;
 passEnemy = false;
+
+hitSpark = spr_spk_bash;

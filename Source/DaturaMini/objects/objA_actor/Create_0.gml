@@ -3,6 +3,8 @@
 	#macro GRAVITY 0.23
 	#macro MAX_JUMP 0.2
 	#macro BOSS_STUNMAX 10
+	#macro SPRINT_RATE 1
+	#macro SPRINT_THRESH 0.94
 	
 	depth = 0;
 	
@@ -31,6 +33,8 @@
     fixed = false; //fixed position
 	weight = 1;
 	moveSpd = 1.3;
+	sprinting = 0;
+	sprintAftImg = noone;
 	jumpSpd = 2.5;
 	jumpTime = -1;
 	maxFall = 5; //terminal velocity
@@ -55,6 +59,9 @@
 	aggro_above = 0;
 	aggro_w = -1;
 	aggro_h = -1;
+	
+	//character specific effects
+	sp_frozen = false;
 	
 	intf_platforming_implement();
 

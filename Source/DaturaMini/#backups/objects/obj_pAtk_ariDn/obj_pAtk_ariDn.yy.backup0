@@ -1,0 +1,20 @@
+// 2021-07-07 22:31:21
+#event properties (no comments/etc. here are saved)
+parent_index = objA_pAtk;
+sprite_index = spr_ari_atkDnF_a;
+uses_physics = false;
+
+#event create
+event_inherited();
+
+duration = sprite_get_number(sprite_index);
+dmg = 1;
+
+slowTo = SLOW_STD;
+
+hitSpark = spr_spk_bash;
+
+#event step
+event_inherited();
+
+hspeed = lerp(hspeed, 0, 0.2);

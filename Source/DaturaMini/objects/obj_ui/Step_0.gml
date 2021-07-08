@@ -17,6 +17,10 @@ if(menuControl && array_length(arr_menus)){
         
         _menu.fn_menuScroll();
         
+    }else if(io_check(en_ioType.PRESS, [en_input.MENU_CANCEL]) && _menu.onBack != noone){
+                
+        _menu.onBack();
+        
     }
     
 }

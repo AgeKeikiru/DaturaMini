@@ -1,6 +1,24 @@
 event_inherited();
 
-if(!hazard && object_is_ancestor(other.object_index, obj_enemy) && !other.checkState(other.fn_state_dead) && !other.player && ds_list_find_index(lst_hits, other.id) == -1 && other.iFrames <= 0 && !other.iState){
+if(fn_collCheck(other)){
+	
+	var _dmg = dmg;
+	
+	if(other.sp_frozen && other.stun > 0 && !sp_freeze){
+	    
+	    _dmg *= 1.5;
+	    //get unique shatter sound effect
+	    audf_playSfx(sfx_buff);
+	    other.stun = 0;
+	    
+	}
+	
+	other.sp_frozen = sp_freeze;
+	
+	if(sp_freeze){
+	    //get unique freeze sound effect
+	    audf_playSfx(sfx_cut2);
+	}
 	
 	audf_playSfx(hitSound);
 	
@@ -10,7 +28,9 @@ if(!hazard && object_is_ancestor(other.object_index, obj_enemy) && !other.checkS
 		ds_list_add(other.lst_uniqueHits, object_index);
 	}
 	
-	takeDmg(other, dmg * (global.hyperActive ? 2 : 1), push, lift, atkStun);
+	takeDmg(other, _dmg * (global.hyperActive ? 2 : 1), push, lift, atkStun);
+	
+	fn_addSpark(clamp(x, other.bbox_left, other.bbox_right), clamp(y, other.bbox_top, other.bbox_bottom));
 	
 	addHyper(global.map_hyperValue[? object_index] * 0.02);
 	
@@ -21,7 +41,7 @@ if(!hazard && object_is_ancestor(other.object_index, obj_enemy) && !other.checkS
 		other.switchState(other.boss ? other.fn_state_bossDead : other.fn_state_dead);
 		
 	}else if(other.boss){
-	    other.bossStun += dmg;
+	    other.bossStun += _dmg;
 	}
 	
 	if(slowTo > 0 && slowDur > 0){

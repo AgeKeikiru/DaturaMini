@@ -1,0 +1,62 @@
+// 2021-07-07 19:14:52
+#event properties (no comments/etc. here are saved)
+parent_index = objA_pAtk;
+sprite_index = spr_ari_atkUpF_r90;
+uses_physics = false;
+
+#event create
+event_inherited();
+
+duration = room_speed * 5;
+dmg = 1;
+//push = 2;
+//lift = 0;
+//atkStun = 0;
+
+passWall = false;
+passEnemy = false;
+
+lockOn = noone;
+
+moveSpd = 3.5;
+pv_d = moveSpd;
+
+slowTo = SLOW_STD;
+
+#event step
+event_inherited();
+
+if(!instance_exists(lockOn)){
+	
+	lockOn = collision_circle(x, y, 40, obj_enemy, false, true);
+	
+}else{
+
+	var
+	_dist = point_direction(x, y, lockOn.x, lockOn.y),
+	_angle = dsin(_dist + -direction),
+	_turn = 4;
+
+	if(_angle > 0){
+		direction += _turn;
+	}else if(_angle < 0){
+		direction += -_turn;
+	}
+
+	// Set speed
+	//x = x + (dcos(direction) * velocity);
+	//y = y - (dsin(direction) * velocity);
+
+}
+
+var _snap = 15;
+
+//image_angle = round(direction / _snap) * _snap;
+image_angle = direction;
+
+#event destroy
+event_inherited();
+
+with scr_place(obj_pAtk_breExpl, x, y){
+    dmg = 0.5;
+}

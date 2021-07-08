@@ -1,0 +1,18 @@
+// 2021-07-07 19:04:00
+#event properties (no comments/etc. here are saved)
+parent_index = -1;
+uses_physics = false;
+
+#event create
+duration = -1;
+
+#event step
+if(duration > 0){
+
+	duration--;
+	
+	if(duration <= 0){
+		instance_destroy();
+	}
+
+}

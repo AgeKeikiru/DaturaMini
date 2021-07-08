@@ -1,6 +1,6 @@
-// 2021-04-24 11:12:19
+// 2021-07-05 12:39:34
+save/load data (export test needed)
 hit sparks
-options menu
 gamepad support
     gamepad detection
 2nd loop (standard loop STD -> exhaust loop EXH)
@@ -9,27 +9,36 @@ gamepad support
 
 hyper ready notification
 seperate facePlayer from stun effect
-//telegraph extra elevator in area 2
-dmc4 sprint
-
-blaze
-    down: downward angle shot if used in air, create ice block platform if used on the ground
-    neutral: hitscan shot, use this effect in aerial down
-    up: ice grenade toss
-    def: back step, invincible, cancels any action
-    up > def > neutral, projectiles detonate grenade for a larger explosion
 
 veld
-    A: slash, hold for rapid slash (hits ahead and behind)
+    6HP/6EN
+    A: slash, hold for rapid shots
     up A: jumping thrust
     down A: flying swallow slash
     B: piercing glare, full screen 1px horizontal hitbox, no damage, short stun, cannot be cancelled
     up B: swing rifle overhead, shooting 5 shots going from 20-160 degrees
     down B: back step and 3 downward shots sweeping from 300-330 degrees
+    def1: counter stance
+    def2: blaze flash step
+    
+tear
+    4HP
+    atk: tba (twin lasers when merged)
+    up atk: tba (upward fission lasers when merged)
+    down atk: tba (defense laser when merged)
+    def: switch mode
+        must have at least 1 EN to activate
+        normal: force follows
+        merged: force disappears
+            EN slowly drains while active
+            switching chars ends merge
+            when hit, damage is absorbed, merge ends, and all EN is consumed
 
-stage 2 boss: tear
+stage 2: vr zone 2
+    2.2: 9-section maze, switches open doors to different sections
+        implement switches: trigger zones that only activate when UP is pressed while in the zone
+    boss: tear
 stage 3: jungle
 stage 4: jungle mountain
     4.2: elevator
     4.3: mountain base interior
-tear def: 8-way flight
