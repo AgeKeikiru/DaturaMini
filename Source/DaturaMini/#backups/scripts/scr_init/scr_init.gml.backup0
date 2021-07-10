@@ -1,5 +1,5 @@
-// 2021-07-07 22:35:58
-#macro TESTING_MODE true
+// 2021-07-10 15:11:22
+#macro TESTING_MODE false
 
 function scr_init(){
 	

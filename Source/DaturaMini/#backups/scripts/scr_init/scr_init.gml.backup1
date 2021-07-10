@@ -1,4 +1,4 @@
-// 2021-07-07 19:16:16
+// 2021-07-10 15:05:06
 #macro TESTING_MODE true
 
 function scr_init(){
@@ -260,7 +260,7 @@ function scr_init(){
 
 #endregion
 
-global.arr_team = [1, 0];
+global.arr_team = [1, 2];
 
 global.nim = false;
 

@@ -133,9 +133,9 @@ drawType = drawType_slant;
         
         if(_str != ">"){
             
-            hiScore_edit.name += _str;
+            hiScore_edit[@ en_hiScore.NAME] += _str;
             
-            if(string_length(hiScore_edit.name) >= 3){
+            if(string_length(hiScore_edit[en_hiScore.NAME]) >= 3){
                 
                 for(var _ix = 0; _ix < array_length(_menu.arr_items); _ix++){
                     
@@ -154,7 +154,7 @@ drawType = drawType_slant;
                 
             }
             
-        }else if(hiScore_edit.name != ""){
+        }else if(hiScore_edit[en_hiScore.NAME] != ""){
             
             menuControl = false;
             

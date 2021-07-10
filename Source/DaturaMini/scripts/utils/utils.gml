@@ -1,5 +1,5 @@
 #macro TICK (1 / room_speed)
-#macro SAVE_LOC working_directory + "SAV"
+#macro SAVE_LOC program_directory + "SAV"
 
 global.debugView = false;
 
