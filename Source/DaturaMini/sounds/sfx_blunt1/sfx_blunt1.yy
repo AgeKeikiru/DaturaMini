@@ -10,8 +10,8 @@
     "name": "audiogroup_default",
     "path": "audiogroups/audiogroup_default",
   },
-  "soundFile": "sfx_blunt1.mp3",
-  "duration": 0.701,
+  "soundFile": "sfx_blunt1.wav",
+  "duration": 0.924989,
   "parent": {
     "name": "Audio",
     "path": "folders/Audio.yy",

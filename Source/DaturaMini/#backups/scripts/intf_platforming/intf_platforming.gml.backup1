@@ -1,4 +1,4 @@
-// 2021-03-28 18:50:42
+// 2021-03-28 18:51:21
 function intf_platforming_implement(){
 
 	spd_x = 0; //velocity values
@@ -68,7 +68,7 @@ function on_passThru(){
 	_on = collision_rectangle(bbox_left, bbox_bottom + 1, bbox_right, bbox_bottom + 1, obj_cb_passThru, false, true),
 	_in = collision_rectangle(bbox_left, bbox_bottom, bbox_right, bbox_bottom, obj_cb_passThru, false, true);
 	
-	if(instance_exists(_on)){ return noone; }
+	if(instance_exists(_on) && _on.crumbled){ return noone; }
 
 	if(!_on){ return noone; }
 

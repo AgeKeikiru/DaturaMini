@@ -10,8 +10,8 @@
     "name": "audiogroup_default",
     "path": "audiogroups/audiogroup_default",
   },
-  "soundFile": "bgm_boss.mp3",
-  "duration": 57.6572456,
+  "soundFile": "bgm_boss.ogg",
+  "duration": 48.0,
   "parent": {
     "name": "Audio",
     "path": "folders/Audio.yy",

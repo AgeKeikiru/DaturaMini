@@ -10,8 +10,8 @@
     "name": "audiogroup_default",
     "path": "audiogroups/audiogroup_default",
   },
-  "soundFile": "sfx_cut2.mp3",
-  "duration": 0.605,
+  "soundFile": "sfx_cut2.wav",
+  "duration": 0.729342,
   "parent": {
     "name": "Audio",
     "path": "folders/Audio.yy",

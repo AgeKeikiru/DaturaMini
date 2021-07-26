@@ -1,5 +1,6 @@
 {
   "option_gameguid": "e468fc38-7bec-4c05-b3ef-b37290aef699",
+  "option_gameid": "0",
   "option_game_speed": 60,
   "option_mips_for_3d_textures": false,
   "option_draw_colour": 4294967295,

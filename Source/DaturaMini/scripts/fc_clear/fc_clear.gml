@@ -17,7 +17,7 @@ function fc_clear_1(){
         fade_txt = [0, 1];
         fade = [0, 0];
         
-        audf_playBgm(bgm_clear);
+        audf_playBgm(sfx_clearIntro);
         
         //breia unlock
         if(room == rm_lv1_boss && global.map_save[? en_save.CHAR_UNLOCK][2] == 0){
@@ -33,7 +33,7 @@ function fc_clear_2(){
     with obj_ui{
     
         fc_next = fc_clear_3;
-        fc_delay = 0.5;
+        fc_delay = 0.9;
         
         fade_stripe[1] = 1;
         fade[1] = 1;
@@ -49,6 +49,8 @@ function fc_clear_3(){
         clearDisp_score = global.points;
         clearPhase[1] = 1;
         fade = [0, 0];
+        
+        audf_playBgm(bgm_clear);
     
     }
     

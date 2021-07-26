@@ -10,3 +10,4 @@ slowTo = SLOW_STD;
 shakeX = [-6, -4];
 
 hitSpark = spr_spk_slash;
+hitSound = sfx_slashHit;

@@ -10,8 +10,8 @@
     "name": "audiogroup_default",
     "path": "audiogroups/audiogroup_default",
   },
-  "soundFile": "sfx_gameOver.mp3",
-  "duration": 6.091531,
+  "soundFile": "sfx_gameOver.ogg",
+  "duration": 10.545,
   "parent": {
     "name": "Audio",
     "path": "folders/Audio.yy",

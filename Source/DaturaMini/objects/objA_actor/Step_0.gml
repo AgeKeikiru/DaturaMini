@@ -56,6 +56,7 @@ if(cstate_curr != noone){
             
             sprintAftImg = scr_place(obj_pAtk_afterimage, x, y);
             sprintAftImg.depth = depth + 99;
+            sprintAftImg.mask_index = spr_noMask;
             
         }
         

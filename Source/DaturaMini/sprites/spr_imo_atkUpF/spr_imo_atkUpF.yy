@@ -175,6 +175,7 @@
   "layers": [
     {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"f8878a8a-2a7d-4e19-a3c2-455b924de8a4","tags":[],"resourceType":"GMImageLayer",},
   ],
+  "nineSlice": null,
   "parent": {
     "name": "Imo'lei",
     "path": "folders/CHARACTERS/Imo'lei.yy",

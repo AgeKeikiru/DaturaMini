@@ -10,8 +10,8 @@
     "name": "audiogroup_default",
     "path": "audiogroups/audiogroup_default",
   },
-  "soundFile": "sfx_confirm.mp3",
-  "duration": 1.07602,
+  "soundFile": "sfx_confirm.wav",
+  "duration": 2.938685,
   "parent": {
     "name": "Audio",
     "path": "folders/Audio.yy",

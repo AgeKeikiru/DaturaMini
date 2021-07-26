@@ -47,6 +47,8 @@ function drawType_gameOver(_fade, _stripe, _fadeTxt){
             
             endNim();
             
+            instance_activate_object(obj_player);
+            
             with obj_player{
                 
                 iFrames = 2;

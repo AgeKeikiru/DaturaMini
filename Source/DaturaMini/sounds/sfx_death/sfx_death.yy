@@ -10,8 +10,8 @@
     "name": "audiogroup_default",
     "path": "audiogroups/audiogroup_default",
   },
-  "soundFile": "sfx_death.mp3",
-  "duration": 1.541,
+  "soundFile": "sfx_death.wav",
+  "duration": 1.290499,
   "parent": {
     "name": "Audio",
     "path": "folders/Audio.yy",

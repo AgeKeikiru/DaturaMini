@@ -10,8 +10,8 @@
     "name": "audiogroup_default",
     "path": "audiogroups/audiogroup_default",
   },
-  "soundFile": "bgm_select.mp3",
-  "duration": 14.285,
+  "soundFile": "bgm_select.ogg",
+  "duration": 38.4,
   "parent": {
     "name": "Audio",
     "path": "folders/Audio.yy",

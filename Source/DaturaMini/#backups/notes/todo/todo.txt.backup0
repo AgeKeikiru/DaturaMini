@@ -1,8 +1,5 @@
-// 2021-07-05 12:39:34
-save/load data (export test needed)
-hit sparks
-gamepad support
-    gamepad detection
+// 2021-07-25 16:11:37
+control remapping
 2nd loop (standard loop STD -> exhaust loop EXH)
     disable health regen
     hyper attacks do 25% damage against bosses

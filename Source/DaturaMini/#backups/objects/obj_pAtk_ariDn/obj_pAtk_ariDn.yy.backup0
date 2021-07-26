@@ -1,4 +1,4 @@
-// 2021-07-07 22:31:21
+// 2021-07-13 19:24:52
 #event properties (no comments/etc. here are saved)
 parent_index = objA_pAtk;
 sprite_index = spr_ari_atkDnF_a;
@@ -13,6 +13,7 @@ dmg = 1;
 slowTo = SLOW_STD;
 
 hitSpark = spr_spk_bash;
+hitSound = sfx_blunt1;
 
 #event step
 event_inherited();

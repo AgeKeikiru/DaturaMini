@@ -1,7 +1,4 @@
-save/load data (export test needed)
-hit sparks
-gamepad support
-    gamepad detection
+control remapping
 2nd loop (standard loop STD -> exhaust loop EXH)
     disable health regen
     hyper attacks do 25% damage against bosses

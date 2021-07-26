@@ -1,4 +1,4 @@
-==Datura Mini v0.0.3, 7/9/2021 Prototype Build==
+==Datura Mini v0.0.4, 7/25/2021 Prototype Build==
 
 By @A.Kei.KI, in GameMaker Studio 2
 
@@ -7,7 +7,8 @@ Thank you for playing! I hope you come back for the next release <3
 
 ==Additional Credits==
 
-@Lewmothmusic - Music
+@Lewmothmusic       Music
+Sidearm Studios     SFX
 
 
 ==Default Controls==
@@ -37,9 +38,16 @@ Del                     Fill hyper gauge
 
 ==Patch Notes==
 
+=v0.0.4=
+- Grounded Imo Up-Atk now requires the attack button to be held to get the rising uppercut, tapping the button will now only create the ground wave
+- The afterimage used when sprinting no longer has a hitbox
+- Replaced placeholder audio
+- Added audio feedback when attacks successfully connect
+- Removed unintentional hitbox on the sprint afterimage
+
 =v0.0.3=
 - New character added, clear stage 1 to unlock
-- Controller input now automatically detects the lowest controller slot
+- Controller input now automatically detects the lowest controller slot (xinput only)
 - Added Options and Keybinds menu functionality (Controls rebinding not yet implemented, but key assignments can be viewed)
 - Stage clear screen no longer hangs if [Max Hyper] count is 0
 - Added hitsparks to attacks

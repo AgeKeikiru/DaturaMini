@@ -1,6 +1,6 @@
-// 2021-07-07 08:02:51
+// 2021-07-25 15:44:21
 #macro TICK (1 / room_speed)
-#macro SAVE_LOC working_directory + "SAV"
+#macro SAVE_LOC program_directory + "SAV"
 
 global.debugView = false;
 
@@ -93,7 +93,7 @@ function takeDmg(_inst, _dmg, _push, _lift, _stun, _iFrames){
 			
 			force_x = -image_xscale * _push;
 			spd_x = 0;
-			force_y = -(_lift + weight);
+			force_y = -max(abs(_lift) + weight, abs(force_y)) * sign(_lift);
 			spd_y = 0;
 		
 		}
@@ -383,12 +383,15 @@ function joyToString(_joy){
         
     }
     
-    function audf_playSfx(_sfx){
+    function audf_playSfx(_sfx, _gain){
         
         with obj_ui{
         
+            if(is_undefined(_gain)){
+                _gain = global.map_save[? en_save.SET_SFX];
+            }
+            
             var
-            _gain = global.map_save[? en_save.SET_SFX],
             _maxSounds = 60,
             _copies = 0;
             

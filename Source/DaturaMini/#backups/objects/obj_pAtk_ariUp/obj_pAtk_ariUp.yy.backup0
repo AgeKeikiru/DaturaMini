@@ -1,4 +1,4 @@
-// 2021-07-07 19:14:52
+// 2021-07-13 19:28:14
 #event properties (no comments/etc. here are saved)
 parent_index = objA_pAtk;
 sprite_index = spr_ari_atkUpF_r90;
@@ -22,6 +22,15 @@ moveSpd = 3.5;
 pv_d = moveSpd;
 
 slowTo = SLOW_STD;
+
+#event destroy
+event_inherited();
+
+audf_playSfx(sfx_explode);
+
+with scr_place(obj_pAtk_breExpl, x, y){
+    dmg = 0.5;
+}
 
 #event step
 event_inherited();
@@ -53,10 +62,3 @@ var _snap = 15;
 
 //image_angle = round(direction / _snap) * _snap;
 image_angle = direction;
-
-#event destroy
-event_inherited();
-
-with scr_place(obj_pAtk_breExpl, x, y){
-    dmg = 0.5;
-}

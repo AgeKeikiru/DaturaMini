@@ -10,8 +10,8 @@
     "name": "audiogroup_default",
     "path": "audiogroups/audiogroup_default",
   },
-  "soundFile": "sfx_whoosh1.mp3",
-  "duration": 0.773,
+  "soundFile": "sfx_whoosh1.wav",
+  "duration": 3.692313,
   "parent": {
     "name": "Audio",
     "path": "folders/Audio.yy",

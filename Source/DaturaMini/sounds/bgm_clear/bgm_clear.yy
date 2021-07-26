@@ -10,8 +10,8 @@
     "name": "audiogroup_default",
     "path": "audiogroups/audiogroup_default",
   },
-  "soundFile": "bgm_clear.mp3",
-  "duration": 48.0180626,
+  "soundFile": "bgm_clear.ogg",
+  "duration": 7.68,
   "parent": {
     "name": "Audio",
     "path": "folders/Audio.yy",

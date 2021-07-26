@@ -6,3 +6,4 @@ dmg = 1;
 slowTo = SLOW_STD;
 
 hitSpark = spr_spk_bash;
+hitSound = sfx_blunt1;

@@ -1,4 +1,4 @@
-// 2021-07-10 14:51:15
+// 2021-07-10 15:09:03
 #event properties (no comments/etc. here are saved)
 parent_index = -1;
 persistent = true;
@@ -140,7 +140,7 @@ drawType = drawType_slant;
         
         if(_str != ">"){
             
-            hiScore_edit[en_hiScore.NAME] += _str;
+            hiScore_edit[@ en_hiScore.NAME] += _str;
             
             if(string_length(hiScore_edit[en_hiScore.NAME]) >= 3){
                 

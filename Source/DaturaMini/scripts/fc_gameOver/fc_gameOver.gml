@@ -12,6 +12,8 @@ function fc_gameOver_1(){
             
         }
         
+        instance_deactivate_object(obj_player);
+        
         startNim();
     
     }

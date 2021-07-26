@@ -10,8 +10,8 @@
     "name": "audiogroup_default",
     "path": "audiogroups/audiogroup_default",
   },
-  "soundFile": "sfx_tick2.mp3",
-  "duration": 0.125,
+  "soundFile": "sfx_tick2.wav",
+  "duration": 0.642854,
   "parent": {
     "name": "Audio",
     "path": "folders/Audio.yy",

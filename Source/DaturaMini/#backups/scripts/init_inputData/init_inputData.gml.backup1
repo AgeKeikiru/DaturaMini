@@ -1,4 +1,4 @@
-// 2021-07-05 12:52:08
+// 2021-07-05 14:00:19
 enum en_input {
         
     UNI_UP,
@@ -34,7 +34,6 @@ enum en_ioType {
 
 enum en_io {
     
-    NAME,
     KEY,
     NEWKEY,
     JOY,
@@ -45,11 +44,31 @@ enum en_io {
     
 }
 
-function new_io(_name, _key, _joy, _group){
+global.arr_ioNames = [
+    
+    " ALL:UP    ",
+    " ALL:DOWN  ",
+    " ALL:LEFT  ",
+    " ALL:RIGHT ",
+    "MENU:ACCEPT",
+    "MENU:CANCEL",
+    "MENU:START ",
+    "GAME:JUMP  ",
+    "GAME:ATK 1 ",
+    "GAME:ATK 2 ",
+    "GAME:DEF   ",
+    "GAME:HYPER ",
+    "GAME:ATK   ",
+    "GAME:DEF 1 ",
+    "GAME:DEF 2 ",
+    "GAME:SWITCH"
+    
+];
+
+function new_io(_key, _joy, _group){
 
     return [
         
-        _name,
         _key,
         _key,
         _joy,

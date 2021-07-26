@@ -1,4 +1,6 @@
-// 2021-07-05 14:04:31
+// 2021-07-05 14:07:54
+#macro SAVE_VERSION 0
+
 enum en_save{
     
     VERSION,
@@ -21,7 +23,7 @@ enum en_save{
 
 global.map_save = ds_map_create();
 
-global.map_save[? en_save.VERSION] = 0;
+global.map_save[? en_save.VERSION] = SAVE_VERSION;
 
 global.map_save[? en_save.CHAR_UNLOCK] = array_create(en_charID.LENGTH, 0);
 global.map_save[? en_save.CHAR_UNLOCK][0] = 2;

@@ -10,8 +10,8 @@
     "name": "audiogroup_default",
     "path": "audiogroups/audiogroup_default",
   },
-  "soundFile": "bgm_ranking.mp3",
-  "duration": 22.3658161,
+  "soundFile": "bgm_ranking.ogg",
+  "duration": 28.8,
   "parent": {
     "name": "Audio",
     "path": "folders/Audio.yy",

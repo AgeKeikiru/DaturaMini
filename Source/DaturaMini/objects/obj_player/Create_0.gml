@@ -69,6 +69,8 @@ vertPan = 0;
 					sprite_index = spr_imo_atk1;
 				
 				}
+				
+				spd_y = 0;
 	
 				if(cstate_time > (global.hyperActive ? 0 : 0.05)){
 	
@@ -121,6 +123,8 @@ vertPan = 0;
 					}
 				
 				}
+				
+				spd_y = 0;
 				
 				if(cstate_time > lastAct.endLag * lastAct.lagCancel * 0.5 && !_s_atk2 && !global.hyperActive){
 				        
@@ -198,6 +202,7 @@ vertPan = 0;
 
 			static _s_aftImg = noone;
 			static _s_slash = noone;
+			static _s_hold = true;
 			
 			with(src){
 			
@@ -207,6 +212,8 @@ vertPan = 0;
 					cstate_new = false;
 					iState = true;
 					
+					_s_hold = true;
+					
 					state_current = method(undefined, pstate_air);
 		
 		            if(global.hyperActive){
@@ -214,7 +221,7 @@ vertPan = 0;
 		                force_x = image_xscale * -3;
 		                
 		                spd_y = 0;
-					    force_y = -4.5;
+					    //force_y = -4.5;
 					    
 					    sprite_index = spr_imo_atkDn2;
 		                
@@ -261,6 +268,15 @@ vertPan = 0;
 						    _atk.image_yscale = 5;
 						    _atk.dmg = 2;
 						    
+						}else if(!scr_playerIO([en_input.GAME_ATK1 + currPly.slot2, en_input.GAME_ATK_CURRENT], en_ioType.DOWN, true)){
+						    
+						    //no jump if attack button isnt held
+						    _s_hold = false;
+						    
+						    force_x *= 0.8;
+						    
+						    _atk.lift *= 1.4;
+						    
 						}
 						
 						audf_playSfx(sfx_shot2);
@@ -282,11 +298,11 @@ vertPan = 0;
 				if(cstate_time < 0.15 && !global.hyperActive){
 					
 					spd_y = 0;
-					force_y = -4.5;
+					force_y = -4.5 * _s_hold;
 					
 				}
 	
-				if((spd_y + force_y) > 0){
+				if((spd_y + force_y + -abs(force_x)) >= 0){
 	
 					instance_destroy(_s_aftImg);
 					instance_destroy(_s_slash);
@@ -817,7 +833,7 @@ vertPan = 0;
 					
 					}
 					
-					audf_playSfx(sfx_blunt1);
+					audf_playSfx(sfx_explode);
 					
 					shakeCam(random_range(-2, 2), random_range(10, 12));
 					
@@ -997,6 +1013,7 @@ vertPan = 0;
 					}
 					
 					audf_playSfx(sfx_shot2);
+					audf_playSfx(sfx_shot3);
 					shakeCam(random_range(1, 2), random_range(1, 2));
 				
 				}
@@ -1090,7 +1107,7 @@ vertPan = 0;
 					    
 					}
 					
-					audf_playSfx(sfx_hit);
+					audf_playSfx(sfx_cut2);
 				
 				}
 				
@@ -1206,7 +1223,8 @@ vertPan = 0;
 					    
 					}
 					
-					audf_playSfx(sfx_shot2);
+					audf_playSfx(sfx_shot1);
+					audf_playSfx(sfx_shot4);
 					shakeCam(random_range(1, 2), random_range(1, 2));
 				
 				}

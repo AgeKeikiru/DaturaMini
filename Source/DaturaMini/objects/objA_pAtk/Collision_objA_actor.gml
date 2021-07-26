@@ -1,14 +1,13 @@
 event_inherited();
 
-if(fn_collCheck(other)){
+if(fn_collCheck(other) && mask_index != spr_noMask){
 	
 	var _dmg = dmg;
 	
 	if(other.sp_frozen && other.stun > 0 && !sp_freeze){
 	    
 	    _dmg *= 1.5;
-	    //get unique shatter sound effect
-	    audf_playSfx(sfx_buff);
+	    audf_playSfx(sfx_iceBreak);
 	    other.stun = 0;
 	    
 	}
@@ -16,11 +15,10 @@ if(fn_collCheck(other)){
 	other.sp_frozen = sp_freeze;
 	
 	if(sp_freeze){
-	    //get unique freeze sound effect
-	    audf_playSfx(sfx_cut2);
+	    audf_playSfx(sfx_freeze);
 	}
 	
-	audf_playSfx(hitSound);
+	audf_playSfx(other.armored ? sfx_chipDmg : hitSound);
 	
 	ds_list_add(lst_hits, other.id);
 	

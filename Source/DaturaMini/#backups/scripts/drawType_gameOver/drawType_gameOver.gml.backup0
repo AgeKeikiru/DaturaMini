@@ -1,4 +1,4 @@
-// 2021-07-05 09:03:40
+// 2021-07-25 16:11:37
 function drawType_gameOver(_fade, _stripe, _fadeTxt){
     
     if(is_undefined(_fade)){ _fade = fade[0]; }
@@ -47,6 +47,8 @@ function drawType_gameOver(_fade, _stripe, _fadeTxt){
             drawType = drawType_slant;
             
             endNim();
+            
+            instance_activate_object(obj_player);
             
             with obj_player{
                 

@@ -67,6 +67,7 @@
   "layers": [
     {"visible":true,"isLocked":false,"blendMode":0,"opacity":20.0,"displayName":"default","resourceVersion":"1.0","name":"964bd931-c160-4770-8002-1a47f4838de0","tags":[],"resourceType":"GMImageLayer",},
   ],
+  "nineSlice": null,
   "parent": {
     "name": "COLLISION",
     "path": "folders/COLLISION.yy",

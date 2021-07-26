@@ -76,10 +76,3 @@ global.map_save[? en_save.IO] = [
 
 global.map_save[? en_save.SET_BGM] = 0.35;
 global.map_save[? en_save.SET_SFX] = 0.3;
-
-if(TESTING_MODE){
-
-    global.map_save[? en_save.SET_BGM] = 0;
-    //global.map_save[? en_save.SET_SFX] = 0.2;
-
-}

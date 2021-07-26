@@ -1,4 +1,4 @@
-// 2021-03-28 18:51:21
+// 2021-07-25 16:11:37
 function intf_platforming_implement(){
 
 	spd_x = 0; //velocity values

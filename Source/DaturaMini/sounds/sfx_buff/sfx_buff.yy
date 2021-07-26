@@ -10,8 +10,8 @@
     "name": "audiogroup_default",
     "path": "audiogroups/audiogroup_default",
   },
-  "soundFile": "sfx_buff.mp3",
-  "duration": 1.517,
+  "soundFile": "sfx_buff.wav",
+  "duration": 3.692313,
   "parent": {
     "name": "Audio",
     "path": "folders/Audio.yy",

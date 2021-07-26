@@ -10,8 +10,8 @@
     "name": "audiogroup_default",
     "path": "audiogroups/audiogroup_default",
   },
-  "soundFile": "sfx_pointGet.mp3",
-  "duration": 0.653,
+  "soundFile": "sfx_pointGet.wav",
+  "duration": 0.964292,
   "parent": {
     "name": "Audio",
     "path": "folders/Audio.yy",

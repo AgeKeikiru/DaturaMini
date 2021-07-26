@@ -382,12 +382,15 @@ function joyToString(_joy){
         
     }
     
-    function audf_playSfx(_sfx){
+    function audf_playSfx(_sfx, _gain){
         
         with obj_ui{
         
+            if(is_undefined(_gain)){
+                _gain = global.map_save[? en_save.SET_SFX];
+            }
+            
             var
-            _gain = global.map_save[? en_save.SET_SFX],
             _maxSounds = 60,
             _copies = 0;
             
