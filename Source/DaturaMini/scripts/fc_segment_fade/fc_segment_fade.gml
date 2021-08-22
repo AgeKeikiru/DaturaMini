@@ -42,6 +42,9 @@ function fc_segment_fadeOut_1(){
 
 function fc_segment_fadeOut_2(){
     
+    drawType = drawType_slant;
+    fade_txt = [0, 0];
+    
     room_goto(global.rmNext);
     
 }

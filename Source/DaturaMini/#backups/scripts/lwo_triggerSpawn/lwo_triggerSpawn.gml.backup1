@@ -1,0 +1,8 @@
+// 2021-08-14 12:46:55
+function lwo_triggerSpawn(_obj, _x, _y) constructor {
+    
+    obj = _obj;
+    xOff = _x;
+    yOff = _y;
+    
+}

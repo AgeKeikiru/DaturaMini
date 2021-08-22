@@ -67,6 +67,8 @@ function on_passThru(){
 	_on = collision_rectangle(bbox_left, bbox_bottom + 1, bbox_right, bbox_bottom + 1, obj_cb_passThru, false, true),
 	_in = collision_rectangle(bbox_left, bbox_bottom, bbox_right, bbox_bottom, obj_cb_passThru, false, true);
 	
+	if(object_is_ancestor(object_index, objA_pAtk)){ return noone; }
+	
 	if(instance_exists(_on) && _on.crumbled){ return noone; }
 
 	if(!_on){ return noone; }

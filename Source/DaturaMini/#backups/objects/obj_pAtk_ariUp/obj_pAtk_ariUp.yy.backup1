@@ -1,4 +1,4 @@
-// 2021-07-13 19:23:38
+// 2021-08-22 08:55:13
 #event properties (no comments/etc. here are saved)
 parent_index = objA_pAtk;
 sprite_index = spr_ari_atkUpF_r90;
@@ -17,19 +17,30 @@ passWall = false;
 passEnemy = false;
 
 lockOn = noone;
+explosive = true;
+trackSpd = 4;
 
 moveSpd = 3.5;
 pv_d = moveSpd;
 
 slowTo = SLOW_STD;
 
-hitSound = sfx_explode;
+glow = scr_place(obj_glow, x, y);
+glow.size = 1;
+glow.image_blend = c_red;
+glow.depth = depth + 10;
+glow.trailMax = 60;
 
 #event destroy
 event_inherited();
+if(explosive){
 
-with scr_place(obj_pAtk_breExpl, x, y){
-    dmg = 0.5;
+    audf_playSfx(sfx_explode);
+    
+    with scr_place(obj_pAtk_breExpl, x, y){
+        dmg = 0.5;
+    }
+
 }
 
 #event step
@@ -43,13 +54,12 @@ if(!instance_exists(lockOn)){
 
 	var
 	_dist = point_direction(x, y, lockOn.x, lockOn.y),
-	_angle = dsin(_dist + -direction),
-	_turn = 4;
+	_angle = dsin(_dist + -direction);
 
 	if(_angle > 0){
-		direction += _turn;
+		direction += trackSpd;
 	}else if(_angle < 0){
-		direction += -_turn;
+		direction += -trackSpd;
 	}
 
 	// Set speed

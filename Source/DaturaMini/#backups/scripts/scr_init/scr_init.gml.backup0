@@ -1,4 +1,4 @@
-// 2021-07-25 16:11:37
+// 2021-08-22 15:58:10
 #macro TESTING_MODE false
 
 function scr_init(){
@@ -69,6 +69,12 @@ function scr_init(){
     /**/
 
 #endregion
+
+global.txt_stageNum = "1";
+global.txt_stageName = "test";
+
+global.txt_bossClass = "";
+global.txt_bossName = "";
 
 global.arr_team = [1, 0];
 

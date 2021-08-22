@@ -1,0 +1,35 @@
+// 2021-08-21 20:31:56
+#event properties (no comments/etc. here are saved)
+parent_index = objA_pAtk;
+sprite_index = spr_tracerAtk;
+uses_physics = false;
+
+#event create
+event_inherited();
+
+duration = room_speed * 0.7;
+dmg = 1;
+push = 1.5;
+lift = 0;
+//atkStun = 0;
+
+passWall = false;
+passEnemy = false;
+
+hitSpark = spr_spk_bash;
+
+image_blend = c_yellow;
+
+#event destroy
+event_inherited();
+
+var _o = scr_place(obj_pAtk_tearDn_force2, x, y);
+_o.hazard = hazard;
+_o.image_blend = image_blend;
+
+#event step
+event_inherited();
+
+if(collision_rectangle(x + -1, y + -80, x + 1, y + 80, hazard ? obj_player : obj_enemy, true, true)){
+    instance_destroy();
+}

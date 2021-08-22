@@ -8,13 +8,12 @@ if(!instance_exists(lockOn)){
 
 	var
 	_dist = point_direction(x, y, lockOn.x, lockOn.y),
-	_angle = dsin(_dist + -direction),
-	_turn = 4;
+	_angle = dsin(_dist + -direction);
 
 	if(_angle > 0){
-		direction += _turn;
+		direction += trackSpd;
 	}else if(_angle < 0){
-		direction += -_turn;
+		direction += -trackSpd;
 	}
 
 	// Set speed

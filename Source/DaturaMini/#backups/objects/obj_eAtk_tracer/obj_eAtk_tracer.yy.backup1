@@ -1,0 +1,20 @@
+// 2021-08-22 08:58:30
+#event properties (no comments/etc. here are saved)
+parent_index = obj_pAtk_ariUp;
+sprite_index = spr_tracerAtk;
+uses_physics = false;
+
+#event create
+event_inherited();
+
+hazard = true;
+image_blend = CC_ENEMY_PINK;
+
+lockOn = obj_player;
+trackSpd = 3;
+explosive = false;
+
+moveSpd = 3;
+pv_d = moveSpd;
+
+glow.image_blend = image_blend;

@@ -55,6 +55,7 @@ if(cstate_curr != noone){
         if(!instance_exists(sprintAftImg)){
             
             sprintAftImg = scr_place(obj_pAtk_afterimage, x, y);
+            sprintAftImg.src = id;
             sprintAftImg.depth = depth + 99;
             sprintAftImg.mask_index = spr_noMask;
             
@@ -131,7 +132,7 @@ force_y = scr_approach(force_y, 0, 0.15 * global.timeFlow);
 
 if(boss && bossStun > 0){
     
-    bossStun += -(0.5 * global.timeFlow) / room_speed;
+    bossStun += -(1 * global.timeFlow) / room_speed;
     
 }
 

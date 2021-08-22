@@ -1,4 +1,4 @@
-// 2021-07-25 16:11:37
+// 2021-08-22 16:41:43
 control remapping
 2nd loop (standard loop STD -> exhaust loop EXH)
     disable health regen
@@ -7,22 +7,29 @@ control remapping
 hyper ready notification
 seperate facePlayer from stun effect
 
+arr control changes
+    current atk -> atk 1
+    switch char -> atk 2
+    
+
+consider
+    mini hud element toggle option
+
 veld
-    6HP/6EN
+    6HP/8EN
     A: slash, hold for rapid shots
     up A: jumping thrust
     down A: flying swallow slash
     B: piercing glare, full screen 1px horizontal hitbox, no damage, short stun, cannot be cancelled
     up B: swing rifle overhead, shooting 5 shots going from 20-160 degrees
     down B: back step and 3 downward shots sweeping from 300-330 degrees
-    def1: counter stance
-    def2: blaze flash step
+    def: counter stance
     
 tear
     4HP
-    atk: tba (twin lasers when merged)
-    up atk: tba (upward fission lasers when merged)
-    down atk: tba (defense laser when merged)
+    atk: ari neutral w/antigrav, force also shoots, aim force with direction input (twin lasers when merged, pierce enemies and terrain)
+    up atk: spiral bullet aoe (upward fission lasers when merged, high speed)
+    down atk: back-to-back with force, 4 hitscans in both directions alternating between force and tear (defense laser when merged)
     def: switch mode
         must have at least 1 EN to activate
         normal: force follows
@@ -31,10 +38,6 @@ tear
             switching chars ends merge
             when hit, damage is absorbed, merge ends, and all EN is consumed
 
-stage 2: vr zone 2
-    2.2: 9-section maze, switches open doors to different sections
-        implement switches: trigger zones that only activate when UP is pressed while in the zone
-    boss: tear
 stage 3: jungle
 stage 4: jungle mountain
     4.2: elevator

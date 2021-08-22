@@ -1,4 +1,4 @@
-// 2021-07-25 16:09:35
+// 2021-08-21 10:14:32
 #event properties (no comments/etc. here are saved)
 parent_index = objA_actor;
 uses_physics = false;
@@ -69,6 +69,8 @@ hitSpark = noone;
 hitSparkX = 0;
 hitSparkY = 0;
 
+glow = noone;
+
 //character specific effects
 sp_freeze = 0; //for breia, 0:none, 1:add freeze, 2:break freeze
 
@@ -106,7 +108,9 @@ fn_collCheck = function(_other){
 }
 
 #event destroy Insert description here
-// You can write your code in this editor
+if(instance_exists(glow)){
+    glow.live = false;
+}
 
 
 #event step
@@ -133,8 +137,16 @@ if(collision_rectangle(bbox_left + -1, bbox_top + -1, bbox_right + 1, bbox_botto
     instance_destroy();
 }
 
-if((x != clamp(x, obj_ui.x, obj_ui.x + obj_ui.camW) || y != clamp(y, obj_ui.y, obj_ui.y + obj_ui.camH)) && !hazard){
+if((x != clamp(x, obj_ui.x, obj_ui.x + obj_ui.camW) || y != clamp(y, obj_ui.y, obj_ui.y + obj_ui.camH + 20)) && !hazard){
     instance_destroy();
+}
+
+#event step_end
+event_inherited();
+
+if(instance_exists(glow)){
+    glow.x = x;
+    glow.y = y;
 }
 
 #event collision:objA_actor

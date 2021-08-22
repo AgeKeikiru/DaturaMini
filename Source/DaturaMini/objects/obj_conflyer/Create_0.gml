@@ -65,6 +65,16 @@ fn_state_atk_a1 = function(){
 		
 		sprite_index = spr_conflyer_atk1;
 		facePlayer();
+		
+		var _ply = instance_find(obj_player, 0);
+		
+		if(_ply != noone){
+			
+			direction = point_direction(x, y, _ply.x, mean(_ply.bbox_bottom, _ply.bbox_top));
+			
+			arr_warns[0] = new lwo_warningBeam(x, mean(bbox_bottom,bbox_top), direction);
+			
+		}
 				
 	}
 	
@@ -82,14 +92,7 @@ fn_state_atk_a2 = function(){
 	if(cstate_new){
 		
 		var
-		_force = -3,
-		_ply = instance_find(obj_player, 0);
-		
-		if(_ply != noone){
-			
-			direction = point_direction(x, y, _ply.x, mean(_ply.bbox_bottom, _ply.bbox_top));
-			
-		}
+		_force = -3;
 		
 		cstate_new = false;
 		force_x = lengthdir_x(_force, direction);
@@ -102,6 +105,8 @@ fn_state_atk_a2 = function(){
 		
 		_o.pv_x = lengthdir_x(_force, direction);
 		_o.pv_y = lengthdir_y(_force, direction);
+		
+		//TODO EXH launch 2 extra
 		
 	}
 	

@@ -10,3 +10,5 @@ passWall = false;
 passEnemy = false;
 
 hitSpark = spr_spk_bash;
+
+image_blend = CC_HP_GREEN;

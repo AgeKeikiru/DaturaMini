@@ -3,6 +3,10 @@
 #macro CC_EN_BLUE $c6ac4f
 #macro CC_EN_RECHARGE $929292
 #macro CC_UI_ACCENT $9c3cff
+#macro CC_IMO_RED $c3c3ff
+#macro CC_ARI_GREEN $c3ffd9
+#macro CC_BRE_PURP $d18aa8
+#macro CC_ENEMY_PINK $bb00ff
 
 #macro SCORE_DIGITS 9
 #macro SCORE_CAP 999999999
@@ -151,7 +155,8 @@ repeat(1){
         
         #region //mini ui
     
-            if(uiMini > 0){
+            //disabled, considering adding a toggle to enable
+            /*if(uiMini > 0){
             
                 var
                 _mW = 3,
@@ -208,7 +213,7 @@ repeat(1){
                 
                 draw_rectangle(_mX, _mY, _mX, _mY + (_mH * 2) + _mH2, false);
                 
-            }
+            }/**/
         
         #endregion
         

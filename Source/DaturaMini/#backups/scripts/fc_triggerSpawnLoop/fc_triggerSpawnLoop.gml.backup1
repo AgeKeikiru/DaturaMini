@@ -1,0 +1,12 @@
+// 2021-08-14 12:46:55
+function fc_triggerSpawnLoop() {
+    
+    if(array_length(arr_spawns)){
+    
+        fc_delay = 0.1;
+        
+        
+    
+    }
+    
+}

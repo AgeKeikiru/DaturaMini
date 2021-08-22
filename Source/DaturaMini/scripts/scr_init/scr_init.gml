@@ -69,6 +69,12 @@ function scr_init(){
 
 #endregion
 
+global.txt_stageNum = "1";
+global.txt_stageName = "test";
+
+global.txt_bossClass = "";
+global.txt_bossName = "";
+
 global.arr_team = [1, 0];
 
 global.nim = false;

@@ -14,6 +14,9 @@ light platforming, fight mixed enemies in groups of 2-5
 
 scr_stageInit();
 
+global.txt_stageNum = "1";
+global.txt_stageName = "VR\nZONE I";
+
 with obj_ui{
 
 	fc_next = fc_intro_1;

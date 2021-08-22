@@ -1,4 +1,4 @@
-// 2021-07-05 09:11:30
+// 2021-08-22 15:57:42
 function fc_segment_fadeIn_1(){
     
     with obj_ui{
@@ -42,6 +42,9 @@ function fc_segment_fadeOut_1(){
 }
 
 function fc_segment_fadeOut_2(){
+    
+    drawType = drawType_slant;
+    fade_txt = [0, 0];
     
     room_goto(global.rmNext);
     

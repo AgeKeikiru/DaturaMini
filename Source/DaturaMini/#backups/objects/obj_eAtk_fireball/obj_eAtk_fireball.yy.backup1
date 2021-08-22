@@ -1,0 +1,25 @@
+// 2021-08-20 22:40:31
+#event properties (no comments/etc. here are saved)
+parent_index = objA_pAtk;
+sprite_index = spr_conflyer_atkF;
+uses_physics = false;
+
+#event create
+event_inherited();
+
+duration = room_speed * 2;
+
+passWall = false;
+passEnemy = false;
+hazard = true;
+
+image_blend = CC_UI_ACCENT;
+
+#event step
+event_inherited();
+
+if(on_ground()){
+
+	instance_destroy();
+
+}

@@ -1,4 +1,4 @@
-// 2021-07-05 09:11:10
+// 2021-08-22 15:56:31
 function fc_segment_fadeIn_1(){
     
     with obj_ui{
@@ -26,18 +26,25 @@ function fc_segment_fadeIn_2(){
 
 function fc_segment_fadeOut_1(){
     
-    fc_next = fc_segment_fadeOut_2;
-    fc_delay = 0.5;
+    with obj_ui{
     
-    drawType = drawType_slant;
+        fc_next = fc_segment_fadeOut_2;
+        fc_delay = 0.5;
+        
+        drawType = drawType_slant;
+        
+        startNim();
+        
+        fade = [0, 1];
     
-    startNim();
-    
-    fade = [0, 1];
+    }
     
 }
 
 function fc_segment_fadeOut_2(){
+    
+    drawType = drawType_slant;
+    fade_txt = [0, 0];
     
     room_goto(global.rmNext);
     

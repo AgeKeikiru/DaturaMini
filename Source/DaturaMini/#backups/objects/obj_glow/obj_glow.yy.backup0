@@ -1,0 +1,76 @@
+// 2021-08-20 23:35:36
+#event properties (no comments/etc. here are saved)
+parent_index = -1;
+uses_physics = false;
+
+#event create
+arr_trail = [ [x, y] ];
+
+size = 3;
+trailMax = 30;
+
+live = true;
+
+#event step
+var
+_subtrail = 2,
+_lastPos = arr_trail[0];
+
+if(live){
+
+	for(var _i = 0; _i <= _subtrail; _i++){
+
+		array_insert(
+			arr_trail,
+			0,
+			[
+				lerp(_lastPos[0], x, _i / _subtrail),
+				lerp(_lastPos[1], y, _i / _subtrail)
+			]
+		);
+
+	}
+
+	if(array_length(arr_trail) > trailMax){
+		array_resize(arr_trail, trailMax);
+	}
+
+}else{
+	
+	if(array_length(arr_trail) > 1){
+		array_resize(arr_trail, array_length(arr_trail) + -1);
+	}else{
+		instance_destroy();
+	}
+	
+}
+
+#event draw
+draw_set_color(image_blend);
+
+var _len = array_length(arr_trail);
+
+for(var _i = 0; _i < _len; _i++){
+	
+	draw_set_alpha((1 + -(_i / _len)) * 0.3);
+	
+	draw_circle(arr_trail[_i][0], arr_trail[_i][1], (size / 2) * (1 + -(_i / _len)), false);
+	
+}
+
+if(live){
+
+	draw_set_color(c_white);
+	draw_set_alpha(1);
+
+	draw_circle(x, y, size, false);
+
+	draw_set_color(image_blend);
+	draw_set_alpha(0.4);
+
+	draw_circle(x, y, size + 1, false);
+
+}
+
+draw_set_color(c_white);
+draw_set_alpha(1);

@@ -65,13 +65,13 @@ function drawType_slant(_fade, _stripe, _fadeTxt){
         draw_text(_x + 1, _y + -_off, "0");
         
         draw_set_halign(fa_left);
-        draw_text(_x + -1, _y + _off, "1");
+        draw_text(_x + -1, _y + _off, global.txt_stageNum);
         
         draw_set_alpha(1 + -abs(1 + -_fadeTxt));
         draw_set_font(ft_title);
         draw_set_halign(fa_center);
         
-        draw_text(x + 180, y + 120, "VR\nZONE I");
+        draw_text(x + 180, y + 120, global.txt_stageName);
         
         draw_set_alpha(1);
         

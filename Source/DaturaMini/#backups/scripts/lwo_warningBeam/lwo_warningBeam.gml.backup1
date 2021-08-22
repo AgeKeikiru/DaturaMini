@@ -1,0 +1,8 @@
+// 2021-08-14 17:11:34
+function lwo_warningBeam(_x, _y, _dir) constructor{
+    
+    ox = _x;
+    oy = _y;
+    dir = _dir;
+    
+}

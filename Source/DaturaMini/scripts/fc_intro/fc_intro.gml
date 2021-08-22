@@ -20,7 +20,7 @@ function fc_intro_2(){
     with obj_ui{
     
         fc_next = fc_intro_3;
-        fc_delay = 1;
+        fc_delay = 1.5;
         
         fade_txt[1] = 1.03;
     

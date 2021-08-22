@@ -1,6 +1,5 @@
 var
 _subtrail = 2,
-_trailMax = 30,
 _lastPos = arr_trail[0];
 
 if(live){
@@ -18,8 +17,8 @@ if(live){
 
 	}
 
-	if(array_length(arr_trail) > _trailMax){
-		array_resize(arr_trail, _trailMax);
+	if(array_length(arr_trail) > trailMax){
+		array_resize(arr_trail, trailMax);
 	}
 
 }else{

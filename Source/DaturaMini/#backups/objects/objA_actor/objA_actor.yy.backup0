@@ -1,4 +1,4 @@
-// 2021-07-15 17:10:55
+// 2021-08-22 14:27:37
 #event properties (no comments/etc. here are saved)
 parent_index = -1;
 uses_physics = false;
@@ -8,7 +8,7 @@ uses_physics = false;
 
 	#macro GRAVITY 0.23
 	#macro MAX_JUMP 0.2
-	#macro BOSS_STUNMAX 10
+	#macro BOSS_STUNMAX 15
 	#macro SPRINT_RATE 1
 	#macro SPRINT_THRESH 0.94
 	
@@ -16,6 +16,7 @@ uses_physics = false;
 	
 	s_idle = noone;
 	s_move = noone;
+	s_shake = 0;
 	
 	player = false;
 	hazard = false;
@@ -70,6 +71,7 @@ uses_physics = false;
 	sp_frozen = false;
 	
 	intf_platforming_implement();
+	intf_warnBeam_implement();
 
 #endregion
 
@@ -115,15 +117,20 @@ uses_physics = false;
 			iState = false;
 			blocking = false;
 			
+			globalvar G_id;
+			G_id = id;
+			
 			with obj_pAtk_afterimage{
 			    
-			    if(id != global.hyperAfterImg){
+			    if(id != global.hyperAfterImg && src == G_id){
 			        instance_destroy();
 			    }
 			    
 			}
 			
 			hazard = false;
+			
+			arr_warns = [];
 		
 		}
 		
@@ -279,6 +286,7 @@ if(cstate_curr != noone){
         if(!instance_exists(sprintAftImg)){
             
             sprintAftImg = scr_place(obj_pAtk_afterimage, x, y);
+            sprintAftImg.src = id;
             sprintAftImg.depth = depth + 99;
             sprintAftImg.mask_index = spr_noMask;
             
@@ -355,13 +363,16 @@ force_y = scr_approach(force_y, 0, 0.15 * global.timeFlow);
 
 if(boss && bossStun > 0){
     
-    bossStun += -(0.5 * global.timeFlow) / room_speed;
+    bossStun += -(1 * global.timeFlow) / room_speed;
     
 }
 
 image_speed = global.timeFlow;
 
 #event draw
+
+warnBeam_draw();
+
 var
 _a = 1;
 
@@ -371,13 +382,20 @@ if(iFrames > 0 && (current_time mod room_speed) > (room_speed / 2)){
 
 if(sprite_index != noone){
 	
-	var _col = c_white;
+	var _col = image_blend;
 	
 	if(stun > 0){
 	    _col = sp_frozen ? c_aqua : c_red;
 	}
 	
-	draw_sprite_ext(sprite_index, -1, x, y, image_xscale, image_yscale, image_angle + deadspin, _col, _a);
+	if(object_index == obj_player && en < 1){
+    	_col = merge_color(c_blue, c_white, abs(sin(current_time / 60)) * 0.5);
+    }
+	
+	//note: do not apply sprite shake to Y axis
+	draw_sprite_ext(sprite_index, -1, x + s_shake, y, image_xscale, image_yscale, image_angle + deadspin, _col, _a);
+	
+	s_shake = -lerp(s_shake, 0, 0.2);
 	
 }
 

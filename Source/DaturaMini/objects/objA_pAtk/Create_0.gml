@@ -63,6 +63,8 @@ hitSpark = noone;
 hitSparkX = 0;
 hitSparkY = 0;
 
+glow = noone;
+
 //character specific effects
 sp_freeze = 0; //for breia, 0:none, 1:add freeze, 2:break freeze
 

@@ -253,7 +253,14 @@ if(_newState != noone && _newState.canRun() && _newState.enCost <= en && (checkS
     _p2 = 0.9,
     _panTgt = 0;
     
-    if(!io_check(en_ioType.DOWN, [en_input.UNI_LEFT, en_input.UNI_RIGHT]) && io_check(en_ioType.DOWN, [en_input.UNI_UP, en_input.UNI_DOWN]) && checkState(noone) && !global.nim){
+    if(
+        !io_check(en_ioType.DOWN, [en_input.UNI_LEFT, en_input.UNI_RIGHT])
+        && io_check(en_ioType.DOWN, [en_input.UNI_UP, en_input.UNI_DOWN])
+        && checkState(noone)
+        && !global.nim
+        && obj_player.cam_xTgt == -1
+        && obj_player.cam_yTgt == -1
+    ){
     	
     	if(panTimer < 1.5){
     		panTimer += TICK;
@@ -363,6 +370,18 @@ if(global.debugView){
     if(keyboard_check_pressed(vk_delete)){
     	
         global.hyper = 1;
+    	
+    }
+    
+    if(keyboard_check_pressed(vk_numpad1)){
+    	
+    	room_goto(rm_lv1_1);
+    	
+    }
+    
+    if(keyboard_check_pressed(vk_numpad2)){
+    	
+    	room_goto(rm_lv2_1);
     	
     }
 

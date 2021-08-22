@@ -63,6 +63,11 @@ function lwo_imoData() : lwo_charData() constructor{
                                     "Fat chance if I have to\n" +
                                     "babysit you." +
                                     "\"";
+                                    
+    introTxt[en_charID.TEAR] =     "\"" +
+                                    "Hmph, always wanted to see\n" +
+                                    "if you were all talk." +
+                                    "\"";
     
     s_icon = [spr_imo_idle, spr_imo_move];
     s_port = spr_imo_port;
@@ -90,6 +95,11 @@ function lwo_ariData() : lwo_charData() constructor{
     introTxt[en_charID.BREIA] =     "\"" +
                                     "Quick eh? Why don't we have\n" +
                                     "a race then!" +
+                                    "\"";
+                                    
+    introTxt[en_charID.TEAR] =     "\"" +
+                                    "Aw man, why do I get stuck\n" +
+                                    "with the chaperone!" +
                                     "\"";
     
     s_icon = [spr_ari_idle, spr_ari_move];
@@ -121,6 +131,11 @@ function lwo_breiaData() : lwo_charData() constructor{
                                     "Let's get this done quick,\n" +
                                     "yea?" +
                                     "\"";
+                                    
+    introTxt[en_charID.TEAR] =     "\"" +
+                                    "Took the words right out\n" +
+                                    "of my mouth." +
+                                    "\"";
     
     s_icon = [spr_bre_idle, spr_bre_move];
     s_port = spr_bre_port;
@@ -130,8 +145,34 @@ function lwo_breiaData() : lwo_charData() constructor{
 function lwo_tearData() : lwo_charData() constructor{
     
     name = "Tear";
-    //unlockDesc = "Clear Stage 2\nwith no\ncontinues";
-    //s_icon = [spr_imo_idle, spr_imo_move];
+    unlockDesc = "Clear Stage 2\nwith no\ncontinues";
+    
+    hintDesc[0] += "Slug round,\nextra dmg vs\nfrozen enemies";
+    hintDesc[1] += "Ice grenade,\nhit midair\nfor bigger AoE";
+    hintDesc[2] += "Freeze shot,\nhit the ground\nfor AoE";
+    hintDesc[3] += "8-way dodge,\ncancels into\nself";
+    
+    introTxt[en_charID.IMO] =       "\"" +
+                                    "That attitude is precisely\n" +
+                                    "why we're on this mission." +
+                                    "\"";
+    
+    introTxt[en_charID.ARI] =       "\"" +
+                                    "Good enthusiasm, just make\n" +
+                                    "sure not to overdo it." +
+                                    "\"";
+                                    
+    introTxt[en_charID.BREIA] =     "\"" +
+                                    "Agreed, there's no time to\n" +
+                                    "lose." +
+                                    "\"";
+                                    
+    introTxt[en_charID.TEAR] =     "\"" +
+                                    "You're with me then? Let's\n" +
+                                    "not waste any time." +
+                                    "\"";
+    
+    s_icon = [spr_tear_idle, spr_tear_idle];
     //s_port = spr_imo_port;
     
 }
@@ -159,14 +200,14 @@ function lwo_altaiData() : lwo_charData() constructor{
 function lwo_veldData() : lwo_charData() constructor{
     
     name = "Veld";
-    //unlockDesc = "Clear the game";
+    //unlockDesc = "Clear the game \non EXH";
     //s_icon = [spr_imo_idle, spr_imo_move];
     //s_port = spr_imo_port;
     
 }
 
 //harzer
-//clear the game with no continues
+//clear the game on ARR with no continues
 
 //jack
 //clear the game with a certain score

@@ -1,4 +1,4 @@
-// 2021-04-20 11:59:48
+// 2021-08-15 21:51:26
 #event properties (no comments/etc. here are saved)
 parent_index = objA_pAtk;
 uses_physics = false;
@@ -20,6 +20,8 @@ shakeX = [0, 0];
 shakeY = [0, 0];
 
 hitSound = noone;
+
+src = noone;
 
 #event step
 event_inherited();

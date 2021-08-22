@@ -21,6 +21,6 @@ if(collision_rectangle(bbox_left + -1, bbox_top + -1, bbox_right + 1, bbox_botto
     instance_destroy();
 }
 
-if((x != clamp(x, obj_ui.x, obj_ui.x + obj_ui.camW) || y != clamp(y, obj_ui.y, obj_ui.y + obj_ui.camH)) && !hazard){
+if((x != clamp(x, obj_ui.x, obj_ui.x + obj_ui.camW) || y != clamp(y, obj_ui.y, obj_ui.y + obj_ui.camH + 20)) && !hazard){
     instance_destroy();
 }

@@ -54,6 +54,8 @@ fn_state_atk_a1 = function(){
 				
 	}
 	
+	//TODO EXH reduce windup
+	
 	if(cstate_time > 0.5){
 	
 		switchState(fn_state_atk_a2);

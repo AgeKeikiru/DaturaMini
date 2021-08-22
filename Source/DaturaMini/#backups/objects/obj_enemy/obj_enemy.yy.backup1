@@ -1,4 +1,4 @@
-// 2021-04-24 11:07:38
+// 2021-08-14 12:46:55
 #event properties (no comments/etc. here are saved)
 parent_index = objA_actor;
 uses_physics = false;
@@ -124,6 +124,10 @@ fn_state_bossDead = function(){
 event_inherited();
 
 audf_playSfx(sfx_death);
+
+if(!noCount){
+    global.bonus_kill[0] += 1;
+}
 
 value *= 1 + (ds_list_size(lst_uniqueHits) * 0.25) + (global.hyperChain * 0.5);
 

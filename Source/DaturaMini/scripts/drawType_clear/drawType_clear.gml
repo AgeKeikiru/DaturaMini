@@ -90,7 +90,7 @@ function drawType_clear(_fade, _stripe, _fadeTxt){
     
     if(clearPhase[1] == 5 && io_check(en_ioType.PRESS, [en_input.MENU_ACCEPT, en_input.MENU_START])){
         
-        fc_next = fc_allClear_1;
+        fc_next = (global.rmNext == room) ? fc_allClear_1 : fc_segment_fadeOut_2;
         fc_delay = 1.5;
         
         fade = [2, 1];

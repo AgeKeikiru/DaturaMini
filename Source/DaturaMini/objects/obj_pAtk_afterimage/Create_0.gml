@@ -14,3 +14,5 @@ shakeX = [0, 0];
 shakeY = [0, 0];
 
 hitSound = noone;
+
+src = noone;

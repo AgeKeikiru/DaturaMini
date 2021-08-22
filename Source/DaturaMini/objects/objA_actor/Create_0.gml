@@ -2,7 +2,7 @@
 
 	#macro GRAVITY 0.23
 	#macro MAX_JUMP 0.2
-	#macro BOSS_STUNMAX 10
+	#macro BOSS_STUNMAX 15
 	#macro SPRINT_RATE 1
 	#macro SPRINT_THRESH 0.94
 	
@@ -10,6 +10,7 @@
 	
 	s_idle = noone;
 	s_move = noone;
+	s_shake = 0;
 	
 	player = false;
 	hazard = false;
@@ -64,6 +65,7 @@
 	sp_frozen = false;
 	
 	intf_platforming_implement();
+	intf_warnBeam_implement();
 
 #endregion
 
@@ -109,15 +111,20 @@
 			iState = false;
 			blocking = false;
 			
+			globalvar G_id;
+			G_id = id;
+			
 			with obj_pAtk_afterimage{
 			    
-			    if(id != global.hyperAfterImg){
+			    if(id != global.hyperAfterImg && src == G_id){
 			        instance_destroy();
 			    }
 			    
 			}
 			
 			hazard = false;
+			
+			arr_warns = [];
 		
 		}
 		

@@ -38,7 +38,7 @@ function fc_boss_3(){
         fc_next = fc_boss_4;
         fc_delay = 0.6;
         
-        txtMain[1] = "ABERRATION\nCLASS";
+        txtMain[1] = global.txt_bossClass + "\nCLASS";
     
     }
     
@@ -51,7 +51,7 @@ function fc_boss_4(){
         fc_next = fc_boss_5;
         fc_delay = 0.8;
         
-        txtMain[1] += "\n\nDOMINANT\nOOZE";
+        txtMain[1] += "\n\n" + global.txt_bossName;
     
     }
     
@@ -67,8 +67,10 @@ function fc_boss_5(){
         fade[1] = 1;
         txtMain = ["", ""];
         
-        with obj_slimeBoss{
-            cstate_time = 0;
+        with obj_enemy{
+            if(boss){
+                cstate_time = 0;
+            }
         }
     
     }
