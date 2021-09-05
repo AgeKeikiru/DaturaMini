@@ -61,4 +61,43 @@ if(global.hyperActive){
     
 }
 
+if(currPly.podActive && forcePod.vis){
+    
+    if(checkState(currPly.state_atk.run)){
+        
+        var
+        _c = forceScanTri();
+        
+        gpu_set_blendmode(bm_add);
+        draw_set_alpha((sin(current_time / 20) > 0) ? 0.1 : 0.2);
+        
+        draw_triangle_color(_c[0][0], _c[0][1], _c[1][0], _c[1][1], _c[2][0], _c[2][1], c_lime, c_black, c_black, false);
+        
+        draw_set_alpha(draw_get_alpha() + 0.5);
+        
+        draw_triangle_color(_c[0][0], _c[0][1], _c[1][0], _c[1][1], _c[2][0], _c[2][1], CC_HP_GREEN, c_black, c_black, true);
+        
+        if(instance_exists(forcePod.lockon)){
+            
+            draw_set_color(CC_HP_GREEN);
+            
+            draw_rectangle(forcePod.lockon.bbox_left, forcePod.lockon.bbox_top, forcePod.lockon.bbox_right, forcePod.lockon.bbox_bottom, true);
+            
+        }
+        
+        gpu_set_blendmode(bm_normal);
+        
+        draw_set_color(c_white);
+        draw_set_alpha(1);
+        
+    }
+    
+    with forcePod.glow{
+        event_perform(ev_draw, 0);
+    }
+    
+    draw_sprite_ext(spr_tear_force, (current_time / 200), forcePod.xx, forcePod.yy, 1, 1, forcePod.angle, c_white, 1);
+    
+}
+
 draw_set_color(c_white);

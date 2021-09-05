@@ -1,4 +1,4 @@
-// 2021-08-21 20:31:56
+// 2021-08-30 20:20:45
 #event properties (no comments/etc. here are saved)
 parent_index = objA_pAtk;
 sprite_index = spr_tracerAtk;
@@ -17,6 +17,8 @@ passWall = false;
 passEnemy = false;
 
 hitSpark = spr_spk_bash;
+
+altBlend = true;
 
 image_blend = c_yellow;
 

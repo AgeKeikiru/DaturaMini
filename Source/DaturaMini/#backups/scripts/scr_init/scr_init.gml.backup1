@@ -1,4 +1,4 @@
-// 2021-08-22 14:32:09
+// 2021-08-23 18:36:18
 #macro TESTING_MODE true
 
 function scr_init(){
@@ -76,7 +76,7 @@ global.txt_stageName = "test";
 global.txt_bossClass = "";
 global.txt_bossName = "";
 
-global.arr_team = [1, 0];
+global.arr_team = [3, 0];
 
 global.nim = false;
 

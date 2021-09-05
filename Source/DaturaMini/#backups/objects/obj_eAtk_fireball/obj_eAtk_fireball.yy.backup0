@@ -1,4 +1,4 @@
-// 2021-08-20 22:44:41
+// 2021-08-30 19:07:53
 #event properties (no comments/etc. here are saved)
 parent_index = objA_pAtk;
 sprite_index = spr_conflyer_atkF;
@@ -12,6 +12,8 @@ duration = room_speed * 2;
 passWall = false;
 passEnemy = false;
 hazard = true;
+
+altBlend = true;
 
 image_blend = CC_ENEMY_PINK;
 

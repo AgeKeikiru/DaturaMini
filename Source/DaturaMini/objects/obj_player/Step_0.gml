@@ -28,13 +28,23 @@ event_inherited();
 		_stun = 0.3,
 		_if = _stun * 3;
 		
-		if(blocking && en >= 1){
+		if((blocking && en >= 1) || currPly.podMerged){
 			
 			useEn(1);
 			
 			_push = 2;
 			_lift = 0;
 			_stun = 0;
+			
+			if(currPly.podMerged){
+			    
+			    with currPly{
+			        fn_forceSplit();
+			    }
+			    
+			    useEn(99);
+			    
+			}
 			
 		}else{
 			
@@ -54,7 +64,17 @@ event_inherited();
 
 #region //en recharge
 
-	if(enDelay > 0){
+	if(currPly.podMerged){
+	    
+	    en = clamp(en + -((global.timeFlow / room_speed) * 1), 0, enMax);
+	    
+	    if(en <= 0){
+	        
+	        switchState(currPly.state_def.run);
+	        
+	    }
+	    
+	}else if(enDelay > 0){
 		enDelay += -(global.timeFlow / room_speed) * (global.hyperActive ? 4 : 1);
 	}else{
 		en = clamp(en + ((global.timeFlow / room_speed) * (global.hyperActive ? 4 : 1)), 0, enMax);
@@ -185,6 +205,31 @@ if(_newState != noone && _newState.canRun() && _newState.enCost <= en && (checkS
 			
 }
 
+#region //forcePod handling
+
+    if(checkState(noone)){
+        
+        forcePod.tgtX = x + -(15 * image_xscale);
+        forcePod.tgtY = y + -22;
+        
+        forcePod.angle = -90 + (90 * image_xscale);
+        
+    }
+    
+    with forcePod{
+        
+        var _rate = 0.2;
+        
+        xx = lerp(xx, tgtX, _rate);
+        yy = lerp(yy, tgtY, _rate);
+        
+        glow.x = xx + -0.5;
+        glow.y = yy + -0.5;
+        
+    }
+
+#endregion
+
 #region //hyper
 
     if(scr_playerIO([en_input.GAME_HYPER]) && checkState(noone) && !global.hyperActive && global.hyper >= 1){
@@ -302,11 +347,18 @@ if(_newState != noone && _newState.canRun() && _newState.enCost <= en && (checkS
     
     camera_set_view_pos(view_camera[0], _cx, _cy);
     
-    layer_x("BG_pFront", _cx * _p1);
-    layer_y("BG_pFront", _cy * _p1);
+    var _f_layerPos = function(__ly, __x, __y, __p, __xOff, __yOff){
+        
+        layer_x(__ly, (__x * __p) + __xOff);
+        layer_y(__ly, (__y * __p) + __yOff);
+        
+    }
     
-    layer_x("BG_pRear", _cx * _p2);
-    layer_y("BG_pRear", _cy * _p2);
+    _f_layerPos("BG_pFront", _cx, _cy, 0.8, 0, 0);
+    _f_layerPos("BG_pRear", _cx, _cy, 0.9, 0, 0);
+    
+    _f_layerPos("BG_treeFront", _cx, _cy, 0, 0, -50);
+    _f_layerPos("BG_treeRear", _cx, _cy, 0.1, 70, -60);
     
     if(instance_number(obj_ui)){
         

@@ -6,7 +6,7 @@ for(var _i = 0; _i < _len; _i++){
 	
 	draw_set_alpha((1 + -(_i / _len)) * 0.3);
 	
-	draw_circle(arr_trail[_i][0], arr_trail[_i][1], (size / 2) * (1 + -(_i / _len)), false);
+	draw_circle(arr_trail[_i][0], arr_trail[_i][1], (size / (smallTail ? 2 : 1)) * (1 + -(_i / _len)), false);
 	
 }
 

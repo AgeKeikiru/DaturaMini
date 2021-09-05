@@ -1,4 +1,4 @@
-// 2021-08-21 20:31:48
+// 2021-08-21 20:31:56
 #event properties (no comments/etc. here are saved)
 parent_index = objA_pAtk;
 sprite_index = spr_tracerAtk;
@@ -30,6 +30,6 @@ _o.image_blend = image_blend;
 #event step
 event_inherited();
 
-if(collision_rectangle(x + -1, y + -100, x + 1, y + 100, hazard ? obj_player : obj_enemy, true, true)){
+if(collision_rectangle(x + -1, y + -80, x + 1, y + 80, hazard ? obj_player : obj_enemy, true, true)){
     instance_destroy();
 }

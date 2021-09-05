@@ -1,4 +1,4 @@
-// 2021-08-22 14:27:29
+// 2021-08-22 14:27:37
 #event properties (no comments/etc. here are saved)
 parent_index = -1;
 uses_physics = false;
@@ -8,7 +8,7 @@ uses_physics = false;
 
 	#macro GRAVITY 0.23
 	#macro MAX_JUMP 0.2
-	#macro BOSS_STUNMAX 10
+	#macro BOSS_STUNMAX 15
 	#macro SPRINT_RATE 1
 	#macro SPRINT_THRESH 0.94
 	

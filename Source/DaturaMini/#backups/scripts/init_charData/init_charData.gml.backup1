@@ -1,4 +1,4 @@
-// 2021-08-21 09:37:09
+// 2021-08-21 09:48:48
 enum en_charID{
     
     IMO,
@@ -201,14 +201,14 @@ function lwo_altaiData() : lwo_charData() constructor{
 function lwo_veldData() : lwo_charData() constructor{
     
     name = "Veld";
-    //unlockDesc = "Clear the game";
+    //unlockDesc = "Clear the game \non EXH";
     //s_icon = [spr_imo_idle, spr_imo_move];
     //s_port = spr_imo_port;
     
 }
 
 //harzer
-//clear the game with no continues
+//clear the game on ARR with no continues
 
 //jack
 //clear the game with a certain score

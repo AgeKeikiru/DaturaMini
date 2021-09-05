@@ -10,4 +10,6 @@ explosive = false;
 moveSpd = 3;
 pv_d = moveSpd;
 
+altBlend = true;
+
 glow.image_blend = image_blend;

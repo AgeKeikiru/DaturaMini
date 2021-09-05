@@ -111,6 +111,10 @@
 			iState = false;
 			blocking = false;
 			
+			if(object_index == obj_player){
+			    direction = 0;
+			}
+			
 			globalvar G_id;
 			G_id = id;
 			

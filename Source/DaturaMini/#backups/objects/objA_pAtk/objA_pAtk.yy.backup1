@@ -1,4 +1,4 @@
-// 2021-08-21 10:14:32
+// 2021-08-30 19:06:09
 #event properties (no comments/etc. here are saved)
 parent_index = objA_actor;
 uses_physics = false;
@@ -68,6 +68,8 @@ hitSound = sfx_hit;
 hitSpark = noone;
 hitSparkX = 0;
 hitSparkY = 0;
+
+altBlend = false;
 
 glow = noone;
 
@@ -208,6 +210,21 @@ if(fn_collCheck(other) && mask_index != spr_noMask){
 	shakeCam(random_range(shakeX[0], shakeX[1]), random_range(shakeY[0], shakeY[1]));
 	
 }
+
+#event draw
+
+var _col = image_blend;
+image_blend = c_white;
+
+event_inherited();
+
+gpu_set_blendmode(bm_add);
+
+image_blend = _col;
+
+event_inherited();
+
+gpu_set_blendmode(bm_normal);
 
 #event draw_end
 event_inherited();

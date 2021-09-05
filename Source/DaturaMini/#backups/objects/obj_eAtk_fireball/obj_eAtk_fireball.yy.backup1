@@ -1,4 +1,4 @@
-// 2021-08-20 22:40:31
+// 2021-08-20 22:44:41
 #event properties (no comments/etc. here are saved)
 parent_index = objA_pAtk;
 sprite_index = spr_conflyer_atkF;
@@ -13,7 +13,7 @@ passWall = false;
 passEnemy = false;
 hazard = true;
 
-image_blend = CC_UI_ACCENT;
+image_blend = CC_ENEMY_PINK;
 
 #event step
 event_inherited();

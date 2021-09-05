@@ -1,4 +1,4 @@
-// 2021-07-25 15:43:58
+// 2021-09-01 17:48:13
 function fc_clear_1(){
     
     with obj_ui{
@@ -23,6 +23,11 @@ function fc_clear_1(){
         //breia unlock
         if(room == rm_lv1_boss && global.map_save[? en_save.CHAR_UNLOCK][2] == 0){
             global.map_save[? en_save.CHAR_UNLOCK][2] = 1;
+        }
+        
+        //tear unlock
+        if(room == rm_lv2_boss && global.map_save[? en_save.CHAR_UNLOCK][3] == 0){
+            global.map_save[? en_save.CHAR_UNLOCK][3] = 1;
         }
     
     }

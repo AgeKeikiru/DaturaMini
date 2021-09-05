@@ -23,21 +23,24 @@ veld
     up B: swing rifle overhead, shooting 5 shots going from 20-160 degrees
     down B: back step and 3 downward shots sweeping from 300-330 degrees
     def: counter stance
-    
-tear
-    4HP
-    atk: ari neutral w/antigrav, force also shoots, aim force with direction input (twin lasers when merged, pierce enemies and terrain)
-    up atk: spiral bullet aoe (upward fission lasers when merged, high speed)
-    down atk: back-to-back with force, 4 hitscans in both directions alternating between force and tear (defense laser when merged)
-    def: switch mode
-        must have at least 1 EN to activate
-        normal: force follows
-        merged: force disappears
-            EN slowly drains while active
-            switching chars ends merge
-            when hit, damage is absorbed, merge ends, and all EN is consumed
 
 stage 3: jungle
-stage 4: jungle mountain
-    4.2: elevator
-    4.3: mountain base interior
+    3.3: mountain climb
+    gate boss
+stage 4: mountain base
+    4.1: elevator
+    4.2: mountain base interior
+    
+circle
+    flyer movement
+    flank laser around the player
+    
+diamond
+    flyer movement, almost 0 delay between movements
+    direct laser to the player, also triggers tracers from every circle
+    
+square
+    lily replacement, fires tracers
+    
+froslime
+    slide attack, leaves long lasting elecballs in its path

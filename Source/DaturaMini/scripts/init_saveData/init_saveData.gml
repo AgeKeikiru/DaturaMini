@@ -28,8 +28,6 @@ global.map_save[? en_save.CHAR_UNLOCK] = array_create(en_charID.LENGTH, 0);
 global.map_save[? en_save.CHAR_UNLOCK][0] = 2;
 global.map_save[? en_save.CHAR_UNLOCK][1] = 2;
 
-//if(TESTING_MODE){ global.map_save[? en_save.CHAR_UNLOCK][2] = 2; }
-
 global.map_save[? en_save.EXCHAR_UNLOCK] = array_create(en_exCharID.LENGTH, 0);
 
 //flags

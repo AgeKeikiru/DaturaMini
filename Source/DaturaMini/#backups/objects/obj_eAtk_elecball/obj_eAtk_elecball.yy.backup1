@@ -1,4 +1,4 @@
-// 2021-08-20 22:31:41
+// 2021-08-20 22:50:29
 #event properties (no comments/etc. here are saved)
 parent_index = objA_pAtk;
 sprite_index = spr_paraslime_atkF;
@@ -15,7 +15,7 @@ hazard = true;
 
 decel = 0.9; //additional slowdown multiplier
 
-image_blend = c_fuchsia;
+image_blend = CC_ENEMY_PINK;
 
 #event step
 

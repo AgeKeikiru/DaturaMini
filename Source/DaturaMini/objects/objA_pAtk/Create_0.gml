@@ -63,6 +63,8 @@ hitSpark = noone;
 hitSparkX = 0;
 hitSparkY = 0;
 
+altBlend = false;
+
 glow = noone;
 
 //character specific effects

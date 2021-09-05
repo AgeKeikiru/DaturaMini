@@ -1,4 +1,4 @@
-#macro TESTING_MODE false
+#macro TESTING_MODE true
 
 function scr_init(){
 	
@@ -75,7 +75,7 @@ global.txt_stageName = "test";
 global.txt_bossClass = "";
 global.txt_bossName = "";
 
-global.arr_team = [1, 0];
+global.arr_team = [2, 0];
 
 global.nim = false;
 
@@ -97,6 +97,7 @@ global.bonus_time = [0, 6000];
 global.bonus_kill = [28, 0];
 global.bonus_token = [16, 0];
 global.bonus_hyper = [0, 3];
+global.noMiss = true;
 
 #macro HYPER_DURATION 8
 #macro CC_HYPINK $feaeff

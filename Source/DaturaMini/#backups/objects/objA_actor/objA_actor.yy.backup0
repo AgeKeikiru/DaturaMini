@@ -1,4 +1,4 @@
-// 2021-08-22 14:27:37
+// 2021-08-29 12:29:55
 #event properties (no comments/etc. here are saved)
 parent_index = -1;
 uses_physics = false;
@@ -116,6 +116,10 @@ uses_physics = false;
 			cstate_curr = _state;
 			iState = false;
 			blocking = false;
+			
+			if(object_index == obj_player){
+			    direction = 0;
+			}
 			
 			globalvar G_id;
 			G_id = id;

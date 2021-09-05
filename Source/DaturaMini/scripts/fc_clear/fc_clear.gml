@@ -23,6 +23,11 @@ function fc_clear_1(){
         if(room == rm_lv1_boss && global.map_save[? en_save.CHAR_UNLOCK][2] == 0){
             global.map_save[? en_save.CHAR_UNLOCK][2] = 1;
         }
+        
+        //tear unlock
+        if(room == rm_lv2_boss && global.noMiss && global.map_save[? en_save.CHAR_UNLOCK][3] == 0){
+            global.map_save[? en_save.CHAR_UNLOCK][3] = 1;
+        }
     
     }
     

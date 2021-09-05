@@ -6,4 +6,6 @@ passWall = false;
 passEnemy = false;
 hazard = true;
 
+altBlend = true;
+
 image_blend = CC_ENEMY_PINK;

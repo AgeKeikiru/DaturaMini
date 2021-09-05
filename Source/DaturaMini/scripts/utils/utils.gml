@@ -47,6 +47,8 @@ function loadData(){
         
     }
     
+    if(TESTING_MODE){ global.map_save[? en_save.CHAR_UNLOCK][3] = 2; }
+    
 }
 
 function array_peek(_arr){

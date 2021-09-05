@@ -58,7 +58,8 @@ function drawType_charSelect(){
                 _i = real(_menu.arr_items[_ix, _iy].name),
                 _char = global.arr_chars[_i],
                 _dx = _x + (_offY * _ix),
-                _dy = _y + (_offY * _iy);
+                _dy = _y + (_offY * _iy),
+                _yOff = _menu.menuX == _ix && _menu.menuY == _iy && sin(current_time / 50) > 0;
                 
                 if(!global.map_save[? en_save.CHAR_UNLOCK][_i]){
                     image_blend = c_black;
@@ -66,7 +67,7 @@ function drawType_charSelect(){
                     image_blend = c_gray;
                 }
                 
-                draw_sprite_ext(_char.s_icon[_menu.menuX == _ix && _menu.menuY == _iy], -1, _dx, _dy, 1, 1, 0, image_blend, 1);
+                draw_sprite_ext(_char.s_icon[0], 0, _dx, _dy + -_yOff, 1, 1, 0, image_blend, 1);
                 
                 image_blend = c_white;
                 

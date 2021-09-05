@@ -1,4 +1,4 @@
-// 2021-07-25 16:11:37
+// 2021-09-01 18:03:16
 #macro TICK (1 / room_speed)
 #macro SAVE_LOC program_directory + "SAV"
 
@@ -47,6 +47,8 @@ function loadData(){
         ds_map_destroy(_map_load);
         
     }
+    
+    if(TESTING_MODE){ global.map_save[? en_save.CHAR_UNLOCK][3] = 2; }
     
 }
 

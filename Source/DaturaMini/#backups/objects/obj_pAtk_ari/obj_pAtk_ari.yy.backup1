@@ -1,4 +1,4 @@
-// 2021-08-20 23:21:11
+// 2021-08-20 23:21:59
 #event properties (no comments/etc. here are saved)
 parent_index = objA_pAtk;
 sprite_index = spr_ari_atkF;
@@ -19,23 +19,3 @@ passEnemy = false;
 hitSpark = spr_spk_bash;
 
 image_blend = CC_HP_GREEN;
-
-glow = scr_place(obj_glow, x, y);
-glow.image_blend = c_green;
-
-#event destroy
-event_inherited();
-
-if(instance_exists(glow)){
-    glow.live = false;
-}
-
-#event step
-event_inherited();
-
-if(instance_exists(glow)){
-    
-    glow.x = x;
-    glow.y = y;
-    
-}

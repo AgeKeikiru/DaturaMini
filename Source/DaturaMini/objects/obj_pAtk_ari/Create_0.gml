@@ -11,4 +11,6 @@ passEnemy = false;
 
 hitSpark = spr_spk_bash;
 
+altBlend = true;
+
 image_blend = CC_HP_GREEN;
