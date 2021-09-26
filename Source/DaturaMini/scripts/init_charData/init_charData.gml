@@ -173,7 +173,7 @@ function lwo_tearData() : lwo_charData() constructor{
                                     "\"";
     
     s_icon = [spr_tear_idle, spr_tear_idle];
-    //s_port = spr_imo_port;
+    s_port = spr_tear_port;
     
 }
 

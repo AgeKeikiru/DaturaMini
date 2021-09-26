@@ -1,4 +1,4 @@
-// 2021-07-05 09:13:12
+// 2021-09-25 19:41:10
 function fc_charSelect_1(){
     
     with obj_ui{
@@ -16,6 +16,7 @@ function fc_charSelect_1(){
         txtMain = ["", ""];
         
         global.points = 0;
+        global.noMiss = true;
         
         var _menu = new lwo_menuBody();
         

@@ -1,4 +1,4 @@
-// 2021-07-05 09:11:53
+// 2021-07-05 09:13:12
 function fc_charSelect_1(){
     
     with obj_ui{
@@ -43,52 +43,68 @@ function fc_charSelect_1(){
 
 function fc_charSelect_2(){
     
-    fc_delay = 0.2;
-    fc_next = fc_charSelect_3;
+    with obj_ui{
     
-    menuControl = false;
+        fc_delay = 0.2;
+        fc_next = fc_charSelect_3;
+        
+        menuControl = false;
+        
+        clearPhase[1] = 1;
+        fade[1] = 0.2;
+        
+        txtMain = ["", ""];
     
-    clearPhase[1] = 1;
-    fade[1] = 0.2;
-    
-    txtMain = ["", ""];
+    }
     
 }
 
 function fc_charSelect_3(){
     
-    fc_delay = 2;
-    fc_next = fc_charSelect_4;
+    with obj_ui{
     
-    var _i = global.arr_team[0];
+        fc_delay = 2;
+        fc_next = fc_charSelect_4;
+        
+        var _i = global.arr_team[0];
+        
+        txtMain = ["", global.arr_chars[global.arr_team[0]].introTxt[_i]];
     
-    txtMain = ["", global.arr_chars[global.arr_team[0]].introTxt[_i]];
+    }
     
 }
 
 function fc_charSelect_4(){
     
-    fc_delay = 2;
-    fc_next = fc_charSelect_5;
+    with obj_ui{
     
-    clearPhase[1] = 2;
+        fc_delay = 2;
+        fc_next = fc_charSelect_5;
+        
+        clearPhase[1] = 2;
+        
+        var _i = global.arr_team[0];
+        
+        txtMain = ["", global.arr_chars[global.arr_team[1]].introTxt[_i]];
     
-    var _i = global.arr_team[0];
-    
-    txtMain = ["", global.arr_chars[global.arr_team[1]].introTxt[_i]];
+    }
     
 }
 
 function fc_charSelect_5(){
     
-    fc_delay = 0.5;
-    fc_next = fc_charSelect_6;
+    with obj_ui{
     
-    fade[1] = 1;
+        fc_delay = 0.5;
+        fc_next = fc_charSelect_6;
+        
+        fade[1] = 1;
+        
+        txtMain = ["", ""];
+        
+        audio_sound_gain(bgmCurr, 0, 500);
     
-    txtMain = ["", ""];
-    
-    audio_sound_gain(bgmCurr, 0, 500);
+    }
     
 }
 

@@ -1,10 +1,12 @@
-// 2021-07-25 16:11:37
+// 2021-09-05 10:03:53
 function fc_gameOver_1(){
     
     with obj_ui{
     
         fc_next = fc_gameOver_2;
         fc_delay = 0.8;
+        
+        global.noMiss = false;
         
         with obj_player{
             

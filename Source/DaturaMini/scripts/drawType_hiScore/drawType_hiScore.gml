@@ -60,7 +60,7 @@ function drawType_hiScore(_score, _y, _scoreRank, _preLetter){
     
     for(var _i = 0; _i < 2; _i++){
         
-        draw_sprite(_chars[_i], -1, x + _offX + 90 + (16 * _i), _y);
+        draw_sprite(_chars[_i], 0, x + _offX + 90 + (16 * _i), _y);
         
     }
     

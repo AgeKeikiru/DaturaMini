@@ -1,4 +1,4 @@
-// 2021-09-01 18:01:45
+// 2021-09-25 19:35:13
 enum en_charID{
     
     IMO,
@@ -174,7 +174,7 @@ function lwo_tearData() : lwo_charData() constructor{
                                     "\"";
     
     s_icon = [spr_tear_idle, spr_tear_idle];
-    //s_port = spr_imo_port;
+    s_port = spr_tear_port;
     
 }
 

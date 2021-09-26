@@ -1,4 +1,4 @@
-==Datura Mini v0.1.1, x/xx/2021 Prototype Build==
+==Datura Mini v0.1.1, 9/25/2021 Prototype Build==
 
 By @A.Kei.KI, in GameMaker Studio 2
 

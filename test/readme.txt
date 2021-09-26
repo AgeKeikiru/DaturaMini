@@ -1,4 +1,4 @@
-==Datura Mini v0.0.4, 7/25/2021 Prototype Build==
+==Datura Mini v0.1.1, 9/25/2021 Prototype Build==
 
 By @A.Kei.KI, in GameMaker Studio 2
 
@@ -9,6 +9,7 @@ Thank you for playing! I hope you come back for the next release <3
 
 @Lewmothmusic       Music
 Sidearm Studios     SFX
+@ChequeredInk       Fonts
 
 
 ==Default Controls==
@@ -34,9 +35,22 @@ PgUp                    Heal current character
 PgDn                    KO current character
 End                     Game Over shortcut
 Del                     Fill hyper gauge
+Numpad 1-2              Jump to specific stage
 
 
 ==Patch Notes==
+
+=v0.1.1=
+- The missing wall in Stage 2 has been fixed
+- Projectiles have been recolored to improve visibility
+- New character added
+
+=v0.0.5=
+- Stage 2 added
+- Enemy projectile colors have been standardized to improve recognition
+- Removed vertical camera control during fixed camera sections
+- Afterimages no longer prematurely disappear
+- Projectiles no longer disappear when too close to the bottom of the screen
 
 =v0.0.4=
 - Grounded Imo Up-Atk now requires the attack button to be held to get the rising uppercut, tapping the button will now only create the ground wave

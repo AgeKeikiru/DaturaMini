@@ -24,7 +24,7 @@ global.txt_stageName = "VR\nZONE II";
 with obj_ui{
 
 	fc_next = fc_intro_1;
-	audf_playBgm(bgm_stage1);
+	audf_playBgm(bgm_stage2);
 
 }
 

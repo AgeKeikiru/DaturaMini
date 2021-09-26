@@ -5,6 +5,8 @@ function fc_gameOver_1(){
         fc_next = fc_gameOver_2;
         fc_delay = 0.8;
         
+        global.noMiss = false;
+        
         with obj_player{
             
             visible = false;

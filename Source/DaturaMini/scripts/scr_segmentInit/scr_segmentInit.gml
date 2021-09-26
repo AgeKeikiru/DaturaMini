@@ -24,6 +24,5 @@ function scr_stageInit(){
     global.bonus_kill = [0, 0];
     global.bonus_token = [0, 0];
     global.bonus_hyper = [1, 2];
-	global.noMiss = true;
     
 }

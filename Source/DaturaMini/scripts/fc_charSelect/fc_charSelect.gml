@@ -15,6 +15,7 @@ function fc_charSelect_1(){
         txtMain = ["", ""];
         
         global.points = 0;
+        global.noMiss = true;
         
         var _menu = new lwo_menuBody();
         

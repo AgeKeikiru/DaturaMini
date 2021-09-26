@@ -1,4 +1,4 @@
-#macro TESTING_MODE true
+#macro TESTING_MODE false
 
 function scr_init(){
 	

@@ -1,4 +1,4 @@
-// 2021-08-21 09:48:48
+// 2021-09-01 18:01:45
 enum en_charID{
     
     IMO,
@@ -148,10 +148,10 @@ function lwo_tearData() : lwo_charData() constructor{
     name = "Tear";
     unlockDesc = "Clear Stage 2\nwith no\ncontinues";
     
-    hintDesc[0] += "Slug round,\nextra dmg vs\nfrozen enemies";
-    hintDesc[1] += "Ice grenade,\nhit midair\nfor bigger AoE";
-    hintDesc[2] += "Freeze shot,\nhit the ground\nfor AoE";
-    hintDesc[3] += "8-way dodge,\ncancels into\nself";
+    hintDesc[0] += "Auto-aim shot,\npierce beam\nwith merge";
+    hintDesc[1] += "Spiral shot,\nstun beam\nwith merge";
+    hintDesc[2] += "2-way shot,\nseeker beam\nwith merge";
+    hintDesc[3] += "Pod merge,\nabsorbs\n1 hit";
     
     introTxt[en_charID.IMO] =       "\"" +
                                     "That attitude is precisely\n" +
