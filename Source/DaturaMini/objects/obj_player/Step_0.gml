@@ -357,7 +357,7 @@ if(_newState != noone && _newState.canRun() && _newState.enCost <= en && (checkS
     _f_layerPos("BG_pFront", _cx, _cy, 0.8, 0, 0);
     _f_layerPos("BG_pRear", _cx, _cy, 0.9, 0, 0);
     
-    _f_layerPos("BG_treeFront", _cx, _cy, 0, 0, -50);
+    _f_layerPos("BG_treeFront", _cx, _cy, 0, 0, -50 * (room != rm_lv3_2));
     _f_layerPos("BG_treeRear", _cx, _cy, 0.1, 70, -60);
     
     if(instance_number(obj_ui)){

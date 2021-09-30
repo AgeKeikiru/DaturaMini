@@ -7,4 +7,4 @@ if(TESTING_MODE){
 
 }
 
-room_goto(TESTING_MODE ? rm_lv3_1 : rm_title);
+room_goto(TESTING_MODE ? rm_lv3_2 : rm_title);
